@@ -51,10 +51,19 @@ if not SECRET_KEY:
 ALLOWED_HOSTS = env_list("ALLOWED_HOSTS", "localhost,127.0.0.1")
 CSRF_TRUSTED_ORIGINS = env_list("CSRF_TRUSTED_ORIGINS", "")
 
+# Render (render.com) tells the app its public hostname; trust it automatically.
+RENDER_EXTERNAL_HOSTNAME = env("RENDER_EXTERNAL_HOSTNAME")
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+    CSRF_TRUSTED_ORIGINS.append(f"https://{RENDER_EXTERNAL_HOSTNAME}")
+
 SITE_NAME = env("SITE_NAME", "Apartment Finder")
 
-# Public base URL of the site; used for Supabase email-confirmation redirects.
-SITE_URL = env("SITE_URL", "http://127.0.0.1:8000").rstrip("/")
+# Public base URL of the site; used for Supabase auth redirects (email links, Google login).
+SITE_URL = (
+    env("SITE_URL")
+    or (f"https://{RENDER_EXTERNAL_HOSTNAME}" if RENDER_EXTERNAL_HOSTNAME else "http://127.0.0.1:8000")
+).rstrip("/")
 
 INSTALLED_APPS = [
     "django.contrib.auth",
