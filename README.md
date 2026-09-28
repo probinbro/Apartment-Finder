@@ -9,10 +9,16 @@ and admins review submissions and manage listings, images and users.
 - Public site: homepage with search, listings with filters/sorting/pagination, detail pages with photo gallery
 - Accounts via **Supabase Auth**: email/password, **Continue with Google**, email confirmation, session refresh
 - **List your home**: users submit properties → admins approve or reject (with a note) → approved listings go live
+- **Online booking** instead of phone calls: renters send a booking request → the apartment is marked **Booked** →
+  the landlord gets an email and a request in their dashboard → accept (phone number revealed) or decline (apartment released).
+  Unanswered requests expire after `BOOKING_HOLD_DAYS`; a database constraint prevents double-booking.
+- **Bangladeshi context**: prices in Taka with lakh grouping (৳1,50,000), advance months, service charge, floor,
+  family/bachelor/female-only preference, Dhaka/Chattogram/Sylhet demo listings, Asia/Dhaka time zone
+- **Saved apartments** (favourites) with one-click ♥
 - Admin panel: dashboard, listing requests, apartment CRUD, publish/unpublish, image manager (upload, primary, replace, delete), media library, users & roles, property types/amenities, contact messages
 - Images validated and re-encoded with **Pillow** (type/size checks, EXIF stripped), stored in Supabase Storage
 - Row Level Security enabled on every table; the service-role key never reaches the browser
-- 80 automated tests (Supabase is mocked)
+- 99 automated tests (Supabase is mocked)
 
 ## Tech stack
 
@@ -24,7 +30,8 @@ Python 3.12+ · Django 6 · Supabase (Auth, PostgreSQL, Storage) · Pillow · HT
 config/          settings, root URLs, WSGI
 core/            home/about/contact, Supabase REST client + storage backend, image processing, RLS, template tags
 users/           profile model, Supabase auth backend, login/register/Google/logout, session refresh middleware
-apartments/      listing models, search filters, public views, "list your home" owner views, demo data
+apartments/      listing models, search filters, public views, "list your home" owner views, favourites, demo data
+bookings/        booking model, state transitions (services.py), notification emails, renter/landlord views
 admin_panel/     admin dashboard and management views
 templates/       base layout, reusable partials, page templates
 static/          css/main.css, js/main.js, js/auth-callback.js
@@ -59,6 +66,11 @@ Open http://127.0.0.1:8000.
 | `SUPABASE_STORAGE_BUCKET` | Bucket name, default `apartment-media` |
 | `SUPABASE_OAUTH_PROVIDERS` | `google` to show the Google button (after enabling it in Supabase) |
 | `SITE_URL` | Public URL of the site (auto-detected on Render) |
+| `BREVO_API_KEY` | Brevo API key for booking emails (recommended on Render, which blocks SMTP on free plans) |
+| `DEFAULT_FROM_EMAIL` | Sender, e.g. `Apartment Finder <you@gmail.com>` — must be a verified sender in Brevo |
+| `EMAIL_HOST` etc. | Alternative: SMTP settings (e.g. Gmail + App Password) |
+| `ADMIN_NOTIFICATION_EMAILS` | Receives booking emails for listings without a landlord account (defaults to all admins) |
+| `BOOKING_HOLD_DAYS` | How long an unanswered booking holds an apartment (default 3) |
 
 Never commit `.env` — it is in `.gitignore`.
 
@@ -73,6 +85,15 @@ Never commit `.env` — it is in `.gitignore`.
 4. **Google login** – create an OAuth *Web application* client in Google Cloud Console with the redirect URI
    `https://<project-ref>.supabase.co/auth/v1/callback`, then paste its Client ID/Secret into
    Supabase → Authentication → Providers → Google, and set `SUPABASE_OAUTH_PROVIDERS=google`.
+
+### Booking emails (Brevo, free)
+
+1. Sign up at https://www.brevo.com (free: 300 emails/day).
+2. **Senders, domains & IPs → Senders** → add and verify the email you want to send from.
+3. **SMTP & API → API keys** → generate a key.
+4. Set `BREVO_API_KEY` and `DEFAULT_FROM_EMAIL` in `.env` (and in Render → Environment).
+
+Without these, emails are printed to the terminal instead of being sent.
 
 ### Admin account
 
@@ -114,5 +135,5 @@ its author and licence; source pages are listed in `apartments/demo/listings.jso
 
 ## Future improvements
 
-Favorites/saved apartments · map view (lat/long fields already exist) · reviews · messaging owners ·
+Map view (lat/long fields already exist) · reviews · messaging owners ·
 email notifications for listing approvals · recommendations · full-text search.

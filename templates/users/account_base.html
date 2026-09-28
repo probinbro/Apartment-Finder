@@ -6,7 +6,9 @@
 <a href="{% url 'users:dashboard' %}" class="{% if url_name == 'dashboard' %}active{% endif %}">{% icon "dashboard" 18 %} Dashboard</a>
 <a href="{% url 'users:profile' %}" class="{% if url_name == 'profile' %}active{% endif %}">{% icon "user" 18 %} Profile</a>
 <a href="{% url 'users:saved' %}" class="{% if url_name == 'saved' %}active{% endif %}">{% icon "heart" 18 %} Saved apartments</a>
+<a href="{% url 'bookings:my_bookings' %}" class="{% if url_name == 'my_bookings' or url_name == 'book' %}active{% endif %}">{% icon "calendar" 18 %} My bookings</a>
 <div class="dash-nav-title">My properties</div>
+<a href="{% url 'bookings:landlord_requests' %}" class="{% if url_name == 'landlord_requests' %}active{% endif %}">{% icon "mail" 18 %} Booking requests{% if landlord_pending_count %}<span class="count">{{ landlord_pending_count }}</span>{% endif %}</a>
 <a href="{% url 'apartments:my_listings' %}" class="{% if url_name == 'my_listings' or url_name == 'edit_listing' %}active{% endif %}">{% icon "building" 18 %} My listings</a>
 <a href="{% url 'apartments:submit' %}" class="{% if url_name == 'submit' %}active{% endif %}">{% icon "plus" 18 %} List your home</a>
 <div class="dash-nav-title">Explore</div>

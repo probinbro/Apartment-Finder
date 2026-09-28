@@ -40,7 +40,7 @@ class ApartmentDetailTests(TestCase):
         response = self.client.get(apartment.get_absolute_url())
         self.assertContains(response, "Sunny loft")
         self.assertContains(response, "Great light.")
-        self.assertContains(response, "$1,500")
+        self.assertContains(response, "৳1,500")
 
     def test_missing_apartment_is_friendly_404(self):
         response = self.client.get(reverse("apartments:detail", args=["does-not-exist"]))

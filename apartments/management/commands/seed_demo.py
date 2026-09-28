@@ -28,8 +28,8 @@ DEMO_MARKER = "demo"  # stored in extra_attributes to identify seeded rows
 DATA_FILE = Path(__file__).resolve().parents[2] / "demo" / "listings.json"
 USER_AGENT = "ApartmentFinderDemoSeeder/1.0 (Django demo data loader)"
 CONTACTS = [
-    ("Maria Lopez", "+1 555 201 4478"), ("James Carter", "+1 555 318 9021"),
-    ("Aisha Khan", "+1 555 442 7310"), ("Daniel Kim", "+1 555 514 5969"),
+    ("Mizanur Rahman", "+880 1711-234567"), ("Farzana Akter", "+880 1819-456123"),
+    ("Tanvir Hasan", "+880 1552-789012"), ("Nusrat Jahan", "+880 1911-345678"),
 ]
 
 
@@ -98,9 +98,14 @@ class Command(BaseCommand):
                 size_sqft=item["size"],
                 furnishing=item["furnishing"],
                 availability=Apartment.Availability.AVAILABLE if index % 5 else Apartment.Availability.COMING_SOON,
+                advance_months=item.get("advance", 2),
+                service_charge=Decimal(item.get("service", "0")),
+                tenant_preference=item.get("tenant", Apartment.TenantPreference.ANY),
+                floor_number=item.get("floor"),
+                total_floors=item.get("floors"),
                 contact_name=contact_name,
                 contact_phone=contact_phone,
-                contact_email="listings@example.com",
+                contact_email="",  # booking emails go to admins for demo listings
                 status=item.get("status", Apartment.Status.PUBLISHED),
                 is_featured=item["featured"],
                 extra_attributes={"source": DEMO_MARKER},

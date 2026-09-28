@@ -78,7 +78,17 @@ class Apartment(models.Model):
     class Availability(models.TextChoices):
         AVAILABLE = "available", "Available now"
         COMING_SOON = "coming_soon", "Available soon"
+        BOOKED = "booked", "Booked"
         RENTED = "rented", "Rented"
+
+    # Availabilities in which a published listing can receive a booking request.
+    BOOKABLE_AVAILABILITIES = (Availability.AVAILABLE, Availability.COMING_SOON)
+
+    class TenantPreference(models.TextChoices):
+        ANY = "any", "Anyone"
+        FAMILY = "family", "Family"
+        BACHELOR = "bachelor", "Bachelor"
+        FEMALE = "female", "Female only"
 
     class Furnishing(models.TextChoices):
         FURNISHED = "furnished", "Furnished"
@@ -107,6 +117,19 @@ class Apartment(models.Model):
     furnishing = models.CharField(max_length=20, choices=Furnishing.choices, default=Furnishing.UNFURNISHED)
     availability = models.CharField(max_length=20, choices=Availability.choices, default=Availability.AVAILABLE, db_index=True)
     available_from = models.DateField(null=True, blank=True)
+
+    # Bangladeshi rental terms
+    advance_months = models.PositiveSmallIntegerField(
+        "Advance (months)", default=2, help_text="Months of rent paid in advance as security."
+    )
+    service_charge = models.DecimalField(
+        "Service charge / month", max_digits=10, decimal_places=2, default=0,
+        help_text="Building maintenance, guard, lift, generator etc.",
+    )
+    tenant_preference = models.CharField(max_length=20, choices=TenantPreference.choices, default=TenantPreference.ANY)
+    floor_number = models.PositiveSmallIntegerField("Floor", null=True, blank=True, help_text="0 for ground floor")
+    total_floors = models.PositiveSmallIntegerField("Total floors in building", null=True, blank=True)
+
     amenities = models.ManyToManyField(Amenity, blank=True, related_name="apartments")
     extra_attributes = models.JSONField(default=dict, blank=True)
 
@@ -150,6 +173,8 @@ class Apartment(models.Model):
             models.CheckConstraint(condition=Q(rent__gt=0), name="apartment_rent_positive"),
             models.CheckConstraint(condition=Q(size_sqft__isnull=True) | Q(size_sqft__gt=0), name="apartment_size_positive"),
             models.CheckConstraint(condition=Q(bedrooms__lte=50) & Q(bathrooms__lte=50), name="apartment_rooms_reasonable"),
+            models.CheckConstraint(condition=Q(service_charge__gte=0), name="apartment_service_charge_non_negative"),
+            models.CheckConstraint(condition=Q(advance_months__lte=24), name="apartment_advance_reasonable"),
         ]
 
     def __str__(self):
@@ -178,6 +203,26 @@ class Apartment(models.Model):
     @property
     def is_published(self):
         return self.status == self.Status.PUBLISHED
+
+    @property
+    def is_bookable(self):
+        return self.is_published and self.availability in self.BOOKABLE_AVAILABILITIES
+
+    @property
+    def advance_amount(self):
+        return self.rent * self.advance_months
+
+    @property
+    def move_in_cost(self):
+        """Advance plus the first month's rent and service charge — what a renter pays upfront."""
+        return self.advance_amount + self.rent + self.service_charge
+
+    @property
+    def floor_display(self):
+        if self.floor_number is None:
+            return ""
+        label = "Ground floor" if self.floor_number == 0 else f"Floor {self.floor_number}"
+        return f"{label} of {self.total_floors}" if self.total_floors else label
 
     @property
     def owner_can_edit(self):
@@ -249,3 +294,16 @@ class ApartmentImage(models.Model):
 
     def __str__(self):
         return f"Image {self.pk} of {self.apartment_id}"
+
+
+class SavedApartment(models.Model):
+    """A user's favourite listing."""
+
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="saved_apartments")
+    apartment = models.ForeignKey(Apartment, on_delete=models.CASCADE, related_name="saved_by")
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table = "saved_apartments"
+        ordering = ["-created_at"]
+        constraints = [models.UniqueConstraint(fields=["user", "apartment"], name="unique_saved_apartment")]

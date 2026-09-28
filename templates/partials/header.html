@@ -23,7 +23,7 @@
         {% endif %}
         <div class="user-menu">
           <button class="user-menu-btn" type="button" data-dropdown="user-dropdown" aria-haspopup="true" aria-expanded="false">
-            {% include "partials/avatar.html" with person=user %}
+            {% include "partials/avatar.html" with person=user %}{% if landlord_pending_count %}<span class="dot-badge" title="New booking requests"></span>{% endif %}
             <span class="truncate" style="max-width:140px">{{ user.display_name }}</span>
             {% icon "chevron-down" 16 %}
           </button>
@@ -31,6 +31,8 @@
             <div class="dropdown-head"><strong>{{ user.display_name }}</strong>{{ user.email }}</div>
             <a href="{% url 'users:dashboard' %}">{% icon "dashboard" 18 %} Dashboard</a>
             <a href="{% url 'users:profile' %}">{% icon "user" 18 %} Profile</a>
+            <a href="{% url 'bookings:my_bookings' %}">{% icon "calendar" 18 %} My bookings</a>
+            <a href="{% url 'bookings:landlord_requests' %}">{% icon "mail" 18 %} Booking requests{% if landlord_pending_count %} <span class="badge badge-accent" style="margin-left:auto">{{ landlord_pending_count }}</span>{% endif %}</a>
             <a href="{% url 'apartments:my_listings' %}">{% icon "building" 18 %} My listings</a>
             <a href="{% url 'users:saved' %}">{% icon "heart" 18 %} Saved apartments</a>
             {% if user.is_admin %}<a href="{% url 'admin_panel:dashboard' %}">{% icon "settings" 18 %} Admin panel</a>{% endif %}

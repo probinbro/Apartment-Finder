@@ -1,0 +1,10 @@
+{% if user.is_authenticated %}
+<form method="post" action="{% url 'apartments:toggle_save' apartment.slug %}" class="save-form" data-no-loading>
+  {% csrf_token %}<input type="hidden" name="next" value="{{ request.get_full_path }}">
+  <button type="submit" class="save-btn{% if apartment.pk in saved_ids %} saved{% endif %}" aria-pressed="{% if apartment.pk in saved_ids %}true{% else %}false{% endif %}" aria-label="Save apartment" title="Save">
+    <span class="when-off">{% icon "heart" 18 %}</span><span class="when-on">{% icon "heart-filled" 18 %}</span>
+  </button>
+</form>
+{% else %}
+<a class="save-btn" href="{% url 'users:login' %}?next={{ request.get_full_path|urlencode }}" aria-label="Log in to save" title="Log in to save">{% icon "heart" 18 %}</a>
+{% endif %}

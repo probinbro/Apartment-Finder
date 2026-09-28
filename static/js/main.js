@@ -258,7 +258,33 @@
     });
   }
 
+  /* ---------- Save / unsave apartments without a page reload ---------- */
+  function initSaveButtons() {
+    document.addEventListener("submit", async (event) => {
+      const form = event.target.closest(".save-form");
+      if (!form) return;
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      const button = $(".save-btn", form);
+      try {
+        const response = await fetch(form.action, {
+          method: "POST",
+          body: new FormData(form),
+          headers: { "X-Requested-With": "fetch" },
+          credentials: "same-origin",
+        });
+        if (!response.ok) throw new Error(String(response.status));
+        const { saved } = await response.json();
+        button.classList.toggle("saved", saved);
+        button.setAttribute("aria-pressed", String(saved));
+      } catch (error) {
+        form.submit(); // fall back to a normal request
+      }
+    }, true);
+  }
+
   document.addEventListener("DOMContentLoaded", () => {
+    initSaveButtons();
     initNav();
     initDropdowns();
     initAlerts();

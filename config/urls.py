@@ -6,6 +6,7 @@ urlpatterns = [
     path("", include("core.urls")),
     path("", include("users.urls")),
     path("apartments/", include("apartments.urls")),
+    path("bookings/", include("bookings.urls")),
     path("manage/", include("admin_panel.urls")),
 ]
 

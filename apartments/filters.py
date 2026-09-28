@@ -32,14 +32,14 @@ def is_empty(value):
 class ApartmentSearchForm(forms.Form):
     q = forms.CharField(
         required=False, max_length=100, label="Location or keyword",
-        widget=forms.TextInput(attrs={"placeholder": "City, area, address or keyword"}),
+        widget=forms.TextInput(attrs={"placeholder": "Gulshan, Dhanmondi, Uttara..."}),
     )
     city = forms.CharField(required=False, max_length=100)
     area = forms.CharField(required=False, max_length=100, label="Area / neighborhood")
     min_rent = forms.DecimalField(required=False, min_value=0, max_digits=10, decimal_places=2, label="Min rent",
-                                  widget=forms.NumberInput(attrs={"placeholder": "Min", "step": "50"}))
+                                  widget=forms.NumberInput(attrs={"placeholder": "Min", "step": "1000"}))
     max_rent = forms.DecimalField(required=False, min_value=0, max_digits=10, decimal_places=2, label="Max rent",
-                                  widget=forms.NumberInput(attrs={"placeholder": "Max", "step": "50"}))
+                                  widget=forms.NumberInput(attrs={"placeholder": "Max", "step": "1000"}))
     bedrooms = forms.TypedChoiceField(required=False, choices=BEDROOM_CHOICES, coerce=int, empty_value=None)
     bathrooms = forms.TypedChoiceField(required=False, choices=BATHROOM_CHOICES, coerce=int, empty_value=None)
     property_type = forms.ModelChoiceField(
@@ -47,6 +47,10 @@ class ApartmentSearchForm(forms.Form):
     )
     availability = forms.ChoiceField(required=False, choices=ANY + list(Apartment.Availability.choices))
     furnishing = forms.ChoiceField(required=False, choices=ANY + list(Apartment.Furnishing.choices))
+    tenant_preference = forms.ChoiceField(
+        required=False, label="Suitable for",
+        choices=ANY + [("family", "Family"), ("bachelor", "Bachelor"), ("female", "Female")],
+    )
     min_size = forms.IntegerField(required=False, min_value=0, label="Min size (sq ft)")
     amenities = forms.ModelMultipleChoiceField(
         required=False, queryset=Amenity.objects.all(), to_field_name="slug", widget=forms.CheckboxSelectMultiple
@@ -54,7 +58,7 @@ class ApartmentSearchForm(forms.Form):
     sort = forms.ChoiceField(required=False, choices=[(k, v[0]) for k, v in SORT_OPTIONS.items()])
 
     # Fields shown in the collapsible "More filters" panel.
-    advanced_fields = ("area", "bathrooms", "availability", "furnishing", "min_size", "amenities")
+    advanced_fields = ("area", "bathrooms", "availability", "tenant_preference", "furnishing", "min_size", "amenities")
 
     def clean(self):
         cleaned = super().clean()
@@ -99,6 +103,8 @@ FILTERS = {
     "property_type": lambda qs, v: qs.filter(property_type=v),
     "availability": lambda qs, v: qs.filter(availability=v),
     "furnishing": lambda qs, v: qs.filter(furnishing=v),
+    # "Anyone" listings suit every household type.
+    "tenant_preference": lambda qs, v: qs.filter(tenant_preference__in=[v, Apartment.TenantPreference.ANY]),
     "min_size": lambda qs, v: qs.filter(size_sqft__gte=v),
     "amenities": _amenities,
 }

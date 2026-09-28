@@ -1,0 +1,16 @@
+{% autoescape off %}Hi {{ booking.full_name }},
+{% if booking.status == "accepted" %}
+Good news — the landlord accepted your booking for "{{ apartment.title }}" ({{ apartment.location_display }}).
+
+Contact {{ apartment.contact_name }} to arrange the viewing and move-in:{% if apartment.contact_phone %}
+Phone: {{ apartment.contact_phone }}{% endif %}{% if apartment.contact_email %}
+Email: {{ apartment.contact_email }}{% endif %}
+{% else %}
+Unfortunately the landlord couldn't accept your request for "{{ apartment.title }}" ({{ apartment.location_display }}).
+{% endif %}{% if booking.landlord_note %}
+Landlord's message: {{ booking.landlord_note }}
+{% endif %}
+Your bookings: {{ tenant_url }}
+
+— {{ SITE_NAME }}
+{% endautoescape %}

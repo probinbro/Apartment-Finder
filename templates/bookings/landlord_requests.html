@@ -1,0 +1,32 @@
+{% extends "users/account_base.html" %}
+
+{% block title %}Booking requests{% endblock %}
+
+{% block dash_content %}
+<div class="dash-head">
+  <div>
+    <h1>Booking requests</h1>
+    <p>Renters who want to book your apartments. Accept to share your contact details, or decline to release the apartment.</p>
+  </div>
+</div>
+
+<div class="stat-grid" style="grid-template-columns:repeat(2,minmax(0,1fr));max-width:520px">
+  <a class="stat" href="?status=pending"><div class="stat-icon warning">{% icon "clock" 22 %}</div><div><strong>{{ counts.pending }}</strong><span>Waiting for you</span></div></a>
+  <a class="stat" href="?status=accepted"><div class="stat-icon">{% icon "check" 22 %}</div><div><strong>{{ counts.accepted }}</strong><span>Accepted</span></div></a>
+</div>
+
+<div class="tabs">
+  <a href="{% url 'bookings:landlord_requests' %}" class="{% if not status %}active{% endif %}">All</a>
+  {% for value, label in status_choices %}<a href="?status={{ value }}" class="{% if status == value %}active{% endif %}">{{ label }}</a>{% endfor %}
+</div>
+
+{% if page_obj.object_list %}
+  {% for booking in page_obj %}{% include "bookings/partials/booking_card.html" with mode="landlord" %}{% endfor %}
+  {% include "partials/pagination.html" %}
+{% elif has_listings %}
+  {% include "partials/empty_state.html" with empty_icon="mail" title="No booking requests here" text="When a renter books one of your apartments, it shows up here and we email you right away." %}
+{% else %}
+  {% url 'apartments:submit' as submit_url %}
+  {% include "partials/empty_state.html" with empty_icon="key" title="You haven't listed a home yet" text="List your flat for free. Once approved, renters can book it and you'll get their requests here and by email." action_url=submit_url action_label="List your home" %}
+{% endif %}
+{% endblock %}

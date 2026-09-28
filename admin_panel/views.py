@@ -17,6 +17,9 @@ from django.views.decorators.http import require_POST
 from apartments import services as image_services
 from apartments.forms import ApartmentForm, ImageCaptionForm, ImageReplaceForm, ImageUploadForm
 from apartments.models import Amenity, Apartment, ApartmentImage, PropertyType
+from bookings import services as booking_services
+from bookings.forms import LandlordResponseForm
+from bookings.models import Booking
 from core.models import ContactMessage
 from core.supabase.client import SupabaseAdminClient, SupabaseError, is_admin_configured
 from users.models import User
@@ -60,6 +63,8 @@ def dashboard_view(request):
             "images": ApartmentImage.objects.count(),
             "unread_messages": ContactMessage.objects.filter(is_read=False).count(),
             "pending": status_counts.get(Apartment.Status.PENDING, 0),
+            "booked": Apartment.objects.filter(availability=Apartment.Availability.BOOKED).count(),
+            "pending_bookings": Booking.objects.filter(status=Booking.Status.PENDING).count(),
             "rejected": status_counts.get(Apartment.Status.REJECTED, 0),
         },
         "pending_requests": Apartment.objects.filter(status=Apartment.Status.PENDING)
@@ -179,6 +184,25 @@ def request_review_view(request, pk):
             messages.info(request, f"“{apartment.title}” was rejected. The owner will see your note.")
         return redirect("admin_panel:requests")
     return render(request, "admin_panel/requests/review.html", {"apartment": apartment, "form": form})
+
+
+# --------------------------------------------------------------------------
+# Bookings (all listings; admins act as landlord for listings without an owner)
+# --------------------------------------------------------------------------
+
+
+@admin_required
+def booking_list_view(request):
+    booking_services.expire_stale_bookings()
+    queryset = Booking.objects.select_related("apartment", "apartment__owner", "tenant")
+    status = request.GET.get("status", "")
+    if status in Booking.Status.values:
+        queryset = queryset.filter(status=status)
+    context = {
+        "page_obj": _paginate(request, queryset), "status": status,
+        "status_choices": Booking.Status.choices, "response_form": LandlordResponseForm(),
+    }
+    return render(request, "admin_panel/bookings.html", context)
 
 
 # --------------------------------------------------------------------------

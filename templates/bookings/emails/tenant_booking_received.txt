@@ -1,0 +1,10 @@
+{% autoescape off %}Hi {{ booking.full_name }},
+
+We've sent your booking request for "{{ apartment.title }}" ({{ apartment.location_display }}, {{ apartment.rent|money }}/month) to the landlord.
+
+The apartment is on hold for you until {{ booking.expires_at|date:"j M, g:i A" }}. You'll get another email when the landlord responds; once accepted, their phone number is shared with you.
+
+View your bookings: {{ tenant_url }}
+
+— {{ SITE_NAME }}
+{% endautoescape %}

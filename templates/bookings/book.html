@@ -1,0 +1,60 @@
+{% extends "users/account_base.html" %}
+
+{% block title %}Book · {{ apartment.title }}{% endblock %}
+
+{% block dash_content %}
+<div class="dash-head">
+  <div>
+    <nav class="breadcrumbs"><a href="{{ apartment.get_absolute_url }}">{{ apartment.title|truncatechars:40 }}</a> {% icon "chevron-right" 14 %} <span>Book</span></nav>
+    <h1>Book this apartment</h1>
+    <p>Send a booking request to the landlord. The apartment is held for you for up to {{ BOOKING_HOLD_DAYS }} days while they respond.</p>
+  </div>
+</div>
+
+<div class="book-layout">
+  <form method="post" class="form-card" novalidate>
+    {% csrf_token %}
+    {% include "partials/form_errors.html" %}
+    <div class="form-section">
+      <h3>Your details</h3>
+      <p>Shared only with the landlord of this apartment.</p>
+      <div class="form-grid">
+        {% include "partials/field.html" with field=form.full_name span=True %}
+        {% include "partials/field.html" with field=form.phone %}
+        {% include "partials/field.html" with field=form.email %}
+        {% include "partials/field.html" with field=form.household %}
+        {% include "partials/field.html" with field=form.occupants %}
+      </div>
+    </div>
+    <div class="form-section">
+      <h3>Dates</h3>
+      <p>When would you like to see the flat and move in?</p>
+      <div class="form-grid">
+        {% include "partials/field.html" with field=form.visit_date %}
+        {% include "partials/field.html" with field=form.move_in_date %}
+        {% include "partials/field.html" with field=form.message span=True %}
+      </div>
+    </div>
+    <div class="form-section">
+      {% include "partials/field.html" with field=form.agree %}
+    </div>
+    <div class="form-actions">
+      <a class="btn btn-ghost" href="{{ apartment.get_absolute_url }}">Cancel</a>
+      <button class="btn btn-accent btn-lg" type="submit">{% icon "calendar" 18 %} Send booking request</button>
+    </div>
+  </form>
+
+  <aside class="detail-card book-summary">
+    {% if cover %}<img src="{{ cover.image.url }}" alt="">{% endif %}
+    <h3 style="margin-bottom:4px">{{ apartment.title }}</h3>
+    <p class="text-sm text-muted">{% icon "map-pin" 14 %} {{ apartment.location_display }}</p>
+    <ul class="cost-breakdown">
+      <li><span>Monthly rent</span><strong>{{ apartment.rent|money }}</strong></li>
+      <li><span>Service charge</span><strong>{% if apartment.service_charge %}{{ apartment.service_charge|money }}{% else %}Included{% endif %}</strong></li>
+      <li><span>Advance ({{ apartment.advance_months }} mo)</span><strong>{{ apartment.advance_amount|money }}</strong></li>
+      <li class="total"><span>Due at move-in</span><strong>{{ apartment.move_in_cost|money }}</strong></li>
+    </ul>
+    <p class="text-sm text-muted mb-0">{% icon "shield" 14 %} No payment is taken online. Visit the flat and sign an agreement with the landlord before paying any advance.</p>
+  </aside>
+</div>
+{% endblock %}

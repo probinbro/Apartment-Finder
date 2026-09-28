@@ -1,0 +1,8 @@
+{% autoescape off %}{{ booking.full_name }} cancelled their {% if was_accepted %}accepted {% endif %}booking for "{{ apartment.title }}" ({{ apartment.location_display }}).
+
+Your apartment is available for booking again.
+
+Dashboard: {{ landlord_url }}
+
+— {{ SITE_NAME }}
+{% endautoescape %}

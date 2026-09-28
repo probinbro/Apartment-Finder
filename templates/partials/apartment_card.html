@@ -7,9 +7,11 @@
       <div class="img-placeholder">{% icon "building" 48 %}</div>
     {% endif %}
     <div class="apt-card-badges">
-      {% if apartment.is_featured %}<span class="badge badge-accent">{% icon "star" 12 %} Featured</span>{% endif %}
+      {% if apartment.availability == "booked" %}<span class="badge badge-booked">{% icon "lock" 12 %} Booked</span>
+      {% elif apartment.is_featured %}<span class="badge badge-accent">{% icon "star" 12 %} Featured</span>{% endif %}
       <span class="badge">{{ apartment.property_type }}</span>
     </div>
+    <div class="apt-card-save">{% include "partials/save_button.html" %}</div>
     <div class="apt-card-price">{{ apartment.rent|money }} <small>/ month</small></div>
   </div>
   <div class="apt-card-body">
@@ -18,7 +20,8 @@
     <div class="apt-card-specs">
       <span>{% icon "bed" 16 %} {{ apartment.bedrooms_display }}</span>
       <span>{% icon "bath" 16 %} {{ apartment.bathrooms }} bath</span>
-      {% if apartment.size_sqft %}<span>{% icon "ruler" 16 %} {{ apartment.size_sqft|floatformat:"0g" }} ft²</span>{% endif %}
+      {% if apartment.tenant_preference != "any" %}<span>{% icon "users" 16 %} {{ apartment.get_tenant_preference_display }}</span>{% endif %}
+      {% if apartment.size_sqft %}<span>{% icon "ruler" 16 %} {{ apartment.size_sqft|floatformat:"0g" }} sft</span>{% endif %}
     </div>
   </div>
 </article>

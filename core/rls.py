@@ -20,12 +20,17 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+# Only touches tables that don't have RLS yet: ALTER TABLE takes an exclusive
+# lock, so re-running it on every deploy would block live traffic.
 ENABLE_RLS_ON_ALL_TABLES = """
 DO $$
 DECLARE t record;
 BEGIN
-    FOR t IN SELECT tablename FROM pg_tables WHERE schemaname = 'public' LOOP
-        EXECUTE format('ALTER TABLE public.%I ENABLE ROW LEVEL SECURITY', t.tablename);
+    FOR t IN
+        SELECT c.relname FROM pg_class c JOIN pg_namespace n ON n.oid = c.relnamespace
+        WHERE n.nspname = 'public' AND c.relkind = 'r' AND NOT c.relrowsecurity
+    LOOP
+        EXECUTE format('ALTER TABLE public.%I ENABLE ROW LEVEL SECURITY', t.relname);
     END LOOP;
 END $$;
 """
@@ -55,7 +60,23 @@ def _table_exists(cursor, table):
     return cursor.fetchone()[0]
 
 
-def apply_rls(connection):
+def _policy_exists(cursor, table, name):
+    cursor.execute("SELECT 1 FROM pg_policies WHERE schemaname = 'public' AND tablename = %s AND policyname = %s", [table, name])
+    return cursor.fetchone() is not None
+
+
+def _ensure_policy(cursor, table, name, sql, replace):
+    if not _table_exists(cursor, table):
+        return
+    if _policy_exists(cursor, table, name):
+        if not replace:
+            return
+        cursor.execute(f'DROP POLICY "{name}" ON public.{table}')
+    cursor.execute(sql)
+
+
+def apply_rls(connection, replace_policies=False):
+    """Idempotent: creates only what is missing unless `replace_policies` is set."""
     if connection.vendor != "postgresql":
         return False
     with connection.cursor() as cursor:
@@ -65,17 +86,15 @@ def apply_rls(connection):
             return True
 
         for table, condition in PUBLIC_READ_POLICIES.items():
-            if not _table_exists(cursor, table):
-                continue
-            cursor.execute(f'DROP POLICY IF EXISTS "public_read" ON public.{table}')
-            cursor.execute(
-                f'CREATE POLICY "public_read" ON public.{table} FOR SELECT TO anon, authenticated USING ({condition})'
+            _ensure_policy(
+                cursor, table, "public_read",
+                f'CREATE POLICY "public_read" ON public.{table} FOR SELECT TO anon, authenticated USING ({condition})',
+                replace_policies,
             )
-
-        if _table_exists(cursor, "profiles"):
-            cursor.execute('DROP POLICY IF EXISTS "own_profile_read" ON public.profiles')
-            cursor.execute(
-                f'CREATE POLICY "own_profile_read" ON public.profiles FOR SELECT TO authenticated USING ({OWN_PROFILE_POLICY})'
-            )
-    logger.info("Supabase RLS policies applied.")
+        _ensure_policy(
+            cursor, "profiles", "own_profile_read",
+            f'CREATE POLICY "own_profile_read" ON public.profiles FOR SELECT TO authenticated USING ({OWN_PROFILE_POLICY})',
+            replace_policies,
+        )
+    logger.info("Supabase RLS checked.")
     return True

@@ -13,8 +13,8 @@
 
 <div class="stat-grid">
   <div class="stat"><div class="stat-icon">{% icon "building" 22 %}</div><div><strong>{{ published_count }}</strong><span>Apartments available</span></div></div>
-  <div class="stat"><div class="stat-icon accent">{% icon "heart" 22 %}</div><div><strong>0</strong><span>Saved apartments</span></div></div>
-  <div class="stat"><div class="stat-icon info">{% icon "calendar" 22 %}</div><div><strong>{{ user.created_at|date:"M Y" }}</strong><span>Member since</span></div></div>
+  <a class="stat" href="{% url 'users:saved' %}"><div class="stat-icon accent">{% icon "heart" 22 %}</div><div><strong>{{ saved_ids|length }}</strong><span>Saved apartments</span></div></a>
+  <a class="stat" href="{% url 'bookings:my_bookings' %}"><div class="stat-icon info">{% icon "calendar" 22 %}</div><div><strong>{{ open_booking_count }}</strong><span>Active bookings</span></div></a>
   <div class="stat"><div class="stat-icon warning">{% icon "user" 22 %}</div><div><strong>{% if user.full_name and user.phone %}100%{% elif user.full_name or user.phone %}60%{% else %}30%{% endif %}</strong><span>Profile complete</span></div></div>
 </div>
 
@@ -49,8 +49,8 @@
     <div class="panel">
       <div class="panel-head"><h2>Coming soon</h2></div>
       <ul class="list-simple">
-        <li>{% icon "heart" 18 %}<div class="grow">Save favorite apartments</div></li>
-        <li>{% icon "message" 18 %}<div class="grow">Message owners directly</div></li>
+        <li>{% icon "message" 18 %}<div class="grow">Chat with landlords</div></li>
+        <li>{% icon "map-pin" 18 %}<div class="grow">Map view of apartments</div></li>
         <li>{% icon "star" 18 %}<div class="grow">Reviews &amp; ratings</div></li>
         <li>{% icon "sparkles" 18 %}<div class="grow">Personalized recommendations</div></li>
       </ul>

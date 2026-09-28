@@ -1,0 +1,22 @@
+{% autoescape off %}New booking request — {{ SITE_NAME }}
+
+{{ booking.full_name }} wants to book your apartment. It is now marked Booked and held for them while you decide.
+
+Apartment: {{ apartment.title }}
+Address:   {{ apartment.address }}, {{ apartment.location_display }}
+Rent:      {{ apartment.rent|money }}/month
+
+Renter:    {{ booking.full_name }}
+Phone:     {{ booking.phone }}
+Email:     {{ booking.email }}
+Household: {{ booking.get_household_display }}, {{ booking.occupants }} {{ booking.occupants|pluralize:"person,people" }}
+Move-in:   {{ booking.move_in_date|date:"j M Y" }}{% if booking.visit_date %}
+Viewing:   {{ booking.visit_date|date:"j M Y" }}{% endif %}
+{% if booking.message %}
+Message:
+{{ booking.message }}
+{% endif %}
+Please respond within {{ booking.expires_at|timeuntil }}, otherwise the request expires.
+
+Accept or decline: {{ landlord_url }}
+{% endautoescape %}

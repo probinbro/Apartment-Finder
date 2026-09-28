@@ -1,35 +1,43 @@
 [
  {
-  "title": "Sunny 2-bed apartment with city views",
-  "city": "Austin",
-  "area": "Downtown",
-  "address": "301 Congress Avenue, Unit 1204",
-  "type": "apartment",
-  "beds": 2,
-  "baths": 2,
-  "size": 1050,
-  "rent": "2150",
+  "title": "Luxury 3-bed flat with lake view in Gulshan 2",
+  "city": "Dhaka",
+  "area": "Gulshan 2",
+  "address": "House 24, Road 71, Gulshan 2",
+  "type": "flat",
+  "beds": 3,
+  "baths": 3,
+  "size": 2200,
+  "rent": "120000",
+  "service": "10000",
+  "advance": 3,
+  "tenant": "family",
+  "floor": 7,
+  "floors": 12,
   "furnishing": "furnished",
   "featured": true,
   "amen": [
    "wi-fi",
    "air-conditioning",
-   "balcony",
    "elevator",
-   "gym",
-   "laundry"
+   "power-backup",
+   "gas-line",
+   "car-parking",
+   "24-7-security",
+   "cctv",
+   "gym"
   ],
-  "desc": "Bright corner apartment on the 12th floor with floor-to-ceiling windows and open views over downtown.\n\nThe open-plan living and dining area flows onto a private balcony, and the modern kitchen has an island bench, stone counters and full-size appliances. Both bedrooms have built-in wardrobes; the main bedroom has an en-suite with a walk-in shower.\n\nThe building has a residents' gym, secure bike storage and a 24-hour concierge. Two blocks from Congress Avenue cafes and the Lady Bird Lake trail.",
+  "desc": "Premium, fully furnished 3-bedroom flat on the 7th floor with a view over Gulshan Lake.\n\nSpacious drawing and dining, a modern kitchen with Titas gas line and three bedrooms with attached bathrooms and verandas. Imported fittings and split ACs in every room.\n\nThe building has two lifts, full generator backup, one covered car parking, 24/7 guards, CCTV and a residents' gym. Walking distance to Gulshan 2 circle, embassies and international schools. Suitable for families and expats.",
   "photos": [
    {
-    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/83/Apartment_building%2C_St_Clement%2C_Jersey.JPG/1920px-Apartment_building%2C_St_Clement%2C_Jersey.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-    "room": "Building exterior",
-    "credit": "Danrok (CC BY-SA 3.0), Wikimedia Commons",
-    "source": "https://commons.wikimedia.org/wiki/File:Apartment_building,_St_Clement,_Jersey.JPG"
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/17/Beside_lake_2_-_panoramio.jpg/1920px-Beside_lake_2_-_panoramio.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "room": "Building",
+    "credit": "Sabbir Sohan (CC BY-SA 3.0), Wikimedia Commons",
+    "source": "https://commons.wikimedia.org/wiki/File:Beside_lake_2_-_panoramio.jpg"
    },
    {
     "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8a/Lounge%2C_Interior_of_apartment_in_Brisbane%2C_2025%2C.jpg/1920px-Lounge%2C_Interior_of_apartment_in_Brisbane%2C_2025%2C.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-    "room": "Living and dining area",
+    "room": "Drawing & dining",
     "credit": "Chris Olszewski (CC BY-SA 4.0), Wikimedia Commons",
     "source": "https://commons.wikimedia.org/wiki/File:Lounge,_Interior_of_apartment_in_Brisbane,_2025,.jpg"
    },
@@ -47,196 +55,71 @@
    },
    {
     "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5d/Bedroom%2C_Interior_of_apartment_in_Brisbane%2C_2025%2C_01.jpg/1920px-Bedroom%2C_Interior_of_apartment_in_Brisbane%2C_2025%2C_01.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-    "room": "Main bedroom",
+    "room": "Master bedroom",
     "credit": "Chris Olszewski (CC BY-SA 4.0), Wikimedia Commons",
     "source": "https://commons.wikimedia.org/wiki/File:Bedroom,_Interior_of_apartment_in_Brisbane,_2025,_01.jpg"
    },
    {
     "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/79/Bathroom%2C_Interior_of_apartment_in_Brisbane%2C_2025%2C_08.jpg/1920px-Bathroom%2C_Interior_of_apartment_in_Brisbane%2C_2025%2C_08.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-    "room": "En-suite bathroom",
+    "room": "Attached bathroom",
     "credit": "Chris Olszewski (CC BY-SA 4.0), Wikimedia Commons",
     "source": "https://commons.wikimedia.org/wiki/File:Bathroom,_Interior_of_apartment_in_Brisbane,_2025,_08.jpg"
    }
-  ]
- },
- {
-  "title": "Cozy studio near the university",
-  "city": "Austin",
-  "area": "West Campus",
-  "address": "2410 Rio Grande Street, Apt 3B",
-  "type": "studio",
-  "beds": 0,
-  "baths": 1,
-  "size": 480,
-  "rent": "1150",
-  "furnishing": "furnished",
-  "featured": false,
-  "amen": [
-   "wi-fi",
-   "air-conditioning",
-   "laundry"
   ],
-  "desc": "A warm, fully furnished studio a five-minute walk from campus, ideal for students or young professionals.\n\nLarge windows fill the space with light, and the layout fits a comfortable sofa, a double bed and a dedicated study nook. Kitchenette with two-burner cooktop and full fridge.\n\nShared laundry in the building. Internet included in the rent.",
-  "photos": [
-   {
-    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4a/Studio_apartment_in_Finland.jpg/1920px-Studio_apartment_in_Finland.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-    "room": "Living space",
-    "credit": "Aaaatu (CC BY-SA 4.0), Wikimedia Commons",
-    "source": "https://commons.wikimedia.org/wiki/File:Studio_apartment_in_Finland.jpg"
-   },
-   {
-    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/df/At_Home_%28Unsplash%29.jpg/1920px-At_Home_%28Unsplash%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-    "room": "Lounge corner",
-    "credit": "Naomi Hébert naomish (CC0), Wikimedia Commons",
-    "source": "https://commons.wikimedia.org/wiki/File:At_Home_(Unsplash).jpg"
-   },
-   {
-    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7d/Bathroom_of_Khan_Pool_Suite_in_Amantaka_luxury_Resort_%26_Hotel_in_Luang_Prabang_Laos.jpg/1920px-Bathroom_of_Khan_Pool_Suite_in_Amantaka_luxury_Resort_%26_Hotel_in_Luang_Prabang_Laos.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-    "room": "Bathroom",
-    "credit": "Basile Morin (CC BY-SA 4.0), Wikimedia Commons",
-    "source": "https://commons.wikimedia.org/wiki/File:Bathroom_of_Khan_Pool_Suite_in_Amantaka_luxury_Resort_%26_Hotel_in_Luang_Prabang_Laos.jpg"
-   }
-  ]
+  "status": "published"
  },
  {
-  "title": "Modern loft with exposed brick",
-  "city": "Chicago",
-  "area": "West Loop",
-  "address": "1000 W Fulton Market, Loft 4C",
-  "type": "loft",
-  "beds": 1,
-  "baths": 1,
-  "size": 980,
-  "rent": "2450",
-  "furnishing": "semi_furnished",
-  "featured": true,
-  "amen": [
-   "wi-fi",
-   "air-conditioning",
-   "elevator",
-   "parking",
-   "pet-friendly"
-  ],
-  "desc": "Authentic warehouse conversion with 14-foot ceilings, original brick walls and oversized factory windows.\n\nThe open living area includes a mezzanine that works as a bedroom or home office. Polished concrete floors, stainless-steel kitchen and in-unit washer/dryer.\n\nSteps from the Fulton Market restaurants and the Morgan Green/Pink Line station. One garage parking space available.",
-  "photos": [
-   {
-    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/31/Vintage_Flats_Apartments_-_fmr_Visco-Meter_Corporation%2C_Buerk_Tool_et_al._-_Buffalo%2C_New_York_-_20230204.jpg/1920px-Vintage_Flats_Apartments_-_fmr_Visco-Meter_Corporation%2C_Buerk_Tool_et_al._-_Buffalo%2C_New_York_-_20230204.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-    "room": "Building exterior",
-    "credit": "Andre Carrotflower (CC BY-SA 4.0), Wikimedia Commons",
-    "source": "https://commons.wikimedia.org/wiki/File:Vintage_Flats_Apartments_-_fmr_Visco-Meter_Corporation,_Buerk_Tool_et_al._-_Buffalo,_New_York_-_20230204.jpg"
-   },
-   {
-    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c3/Budapest_Apartment_%28Unsplash%29.jpg/1920px-Budapest_Apartment_%28Unsplash%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-    "room": "Living room",
-    "credit": "Justin Schüler blacktakeover (CC0), Wikimedia Commons",
-    "source": "https://commons.wikimedia.org/wiki/File:Budapest_Apartment_(Unsplash).jpg"
-   },
-   {
-    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/54/Hayloft_Apartment.jpg/1920px-Hayloft_Apartment.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-    "room": "Loft interior",
-    "credit": "Сергій111111 (CC BY-SA 4.0), Wikimedia Commons",
-    "source": "https://commons.wikimedia.org/wiki/File:Hayloft_Apartment.jpg"
-   },
-   {
-    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3d/Reconstruction_original_design_of_the_Berlin_kitchen_by_Charlotte_Perriand_and_the_Berlin_Stair_by_Jean_Prouv%C3%A9.jpg/1920px-Reconstruction_original_design_of_the_Berlin_kitchen_by_Charlotte_Perriand_and_the_Berlin_Stair_by_Jean_Prouv%C3%A9.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-    "room": "Mezzanine and dining",
-    "credit": "Philippstargard (CC BY-SA 4.0), Wikimedia Commons",
-    "source": "https://commons.wikimedia.org/wiki/File:Reconstruction_original_design_of_the_Berlin_kitchen_by_Charlotte_Perriand_and_the_Berlin_Stair_by_Jean_Prouv%C3%A9.jpg"
-   }
-  ]
- },
- {
-  "title": "Family-friendly 3-bed duplex with garden",
-  "city": "Chicago",
-  "area": "Lincoln Park",
-  "address": "2215 N Orchard Street",
-  "type": "duplex",
-  "beds": 3,
-  "baths": 2,
-  "size": 1650,
-  "rent": "3400",
-  "furnishing": "unfurnished",
-  "featured": false,
-  "amen": [
-   "wi-fi",
-   "parking",
-   "laundry",
-   "pet-friendly",
-   "power-backup"
-  ],
-  "desc": "Spacious two-level home on a quiet, tree-lined street, close to top-rated schools and Lincoln Park Zoo.\n\nThe ground floor has a light-filled living room and an updated kitchen opening onto a private garden. Upstairs are three bedrooms and a renovated family bathroom.\n\nIncludes one off-street parking space, basement storage and in-unit laundry. Pets welcome.",
-  "photos": [
-   {
-    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/86/Apartment_Building%2C_410_Laurens_Street%2C_Baltimore%2C_MD_21217_%2832595619330%29.jpg/1920px-Apartment_Building%2C_410_Laurens_Street%2C_Baltimore%2C_MD_21217_%2832595619330%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-    "room": "Building exterior",
-    "credit": "Baltimore Heritage from Baltimore, MD, USA (CC0), Wikimedia Commons",
-    "source": "https://commons.wikimedia.org/wiki/File:Apartment_Building,_410_Laurens_Street,_Baltimore,_MD_21217_(32595619330).jpg"
-   },
-   {
-    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6d/Personal_apartment_of_Simone_Guillissen_Hoa_-_Living_Room.jpg/1920px-Personal_apartment_of_Simone_Guillissen_Hoa_-_Living_Room.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-    "room": "Living room",
-    "credit": "Linsy Raaffels (CC BY-SA 4.0), Wikimedia Commons",
-    "source": "https://commons.wikimedia.org/wiki/File:Personal_apartment_of_Simone_Guillissen_Hoa_-_Living_Room.jpg"
-   },
-   {
-    "url": "https://upload.wikimedia.org/wikipedia/commons/c/c1/Saechs_Wollgarnfabrik_Brueckenloft.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
-    "room": "Hallway and stairs",
-    "credit": "Lumu (talk) (CC BY-SA 3.0), Wikimedia Commons",
-    "source": "https://commons.wikimedia.org/wiki/File:Saechs_Wollgarnfabrik_Brueckenloft.jpg"
-   },
-   {
-    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/37/Bed_under_skylight.jpg/1920px-Bed_under_skylight.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-    "room": "Main bedroom",
-    "credit": "Kotivalo (CC BY-SA 4.0), Wikimedia Commons",
-    "source": "https://commons.wikimedia.org/wiki/File:Bed_under_skylight.jpg"
-   },
-   {
-    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1a/Red_modern_bathroom_interior._%2851528276166%29.jpg/1920px-Red_modern_bathroom_interior._%2851528276166%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-    "room": "Bathroom",
-    "credit": "Nenad Stojkovic (CC BY 2.0), Wikimedia Commons",
-    "source": "https://commons.wikimedia.org/wiki/File:Red_modern_bathroom_interior._(51528276166).jpg"
-   }
-  ]
- },
- {
-  "title": "Luxury penthouse with private terrace",
-  "city": "Seattle",
-  "area": "Belltown",
-  "address": "2600 2nd Avenue, Penthouse 2",
+  "title": "Penthouse with private rooftop in Baridhara",
+  "city": "Dhaka",
+  "area": "Baridhara",
+  "address": "Road 5, Baridhara Diplomatic Zone",
   "type": "penthouse",
-  "beds": 3,
-  "baths": 3,
-  "size": 2150,
-  "rent": "6200",
+  "beds": 4,
+  "baths": 4,
+  "size": 3400,
+  "rent": "250000",
+  "service": "15000",
+  "advance": 3,
+  "tenant": "family",
+  "floor": 14,
+  "floors": 14,
   "furnishing": "furnished",
   "featured": true,
   "amen": [
    "wi-fi",
    "air-conditioning",
-   "balcony",
    "elevator",
-   "gym",
-   "swimming-pool",
+   "power-backup",
+   "gas-line",
+   "car-parking",
    "24-7-security",
-   "parking"
+   "cctv",
+   "swimming-pool",
+   "rooftop-access"
   ],
-  "desc": "Top-floor penthouse with a wraparound terrace and sweeping views of Elliott Bay and the city skyline.\n\nDesigner-furnished living and dining rooms, a chef-grade kitchen and three generous bedroom suites, each with its own bathroom. Private elevator access.\n\nBuilding amenities include a rooftop pool, fitness centre, 24/7 security and two reserved parking spaces.",
+  "desc": "Top-floor penthouse in the quiet diplomatic zone with a private rooftop terrace and open city views.\n\nFour large bedroom suites, formal drawing room, family lounge, servant's room and a chef's kitchen. Designer furniture included.\n\nTwo reserved car parks, swimming pool, 100% generator backup and round-the-clock security.",
   "photos": [
+   {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/11/Apartment_in_under_construction%2C_South_Khulshi_%2802%29.jpg/1920px-Apartment_in_under_construction%2C_South_Khulshi_%2802%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "room": "Building",
+    "credit": "Moheen Reeyad (CC BY-SA 4.0), Wikimedia Commons",
+    "source": "https://commons.wikimedia.org/wiki/File:Apartment_in_under_construction,_South_Khulshi_(02).jpg"
+   },
    {
     "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4a/View_from_an_apartment_building_on_Turistskaya_street_-_panoramio_%281%29.jpg/1920px-View_from_an_apartment_building_on_Turistskaya_street_-_panoramio_%281%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-    "room": "Terrace view",
+    "room": "Rooftop view",
     "credit": "Alexey Komarov (CC BY 3.0), Wikimedia Commons",
     "source": "https://commons.wikimedia.org/wiki/File:View_from_an_apartment_building_on_Turistskaya_street_-_panoramio_(1).jpg"
    },
    {
     "url": "https://upload.wikimedia.org/wikipedia/commons/0/01/Regency_Suite_King_-_Living_Room_%285618023937%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
-    "room": "Living room",
+    "room": "Family lounge",
     "credit": "Matt @ PEK from Taipei, Taiwan (CC BY-SA 2.0), Wikimedia Commons",
     "source": "https://commons.wikimedia.org/wiki/File:Regency_Suite_King_-_Living_Room_(5618023937).jpg"
    },
    {
     "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/49/Modern_living_room_with_stylish_furniture_and_a_view_of_the_outdoors_in_a_cozy_apartment_setting.jpg/1920px-Modern_living_room_with_stylish_furniture_and_a_view_of_the_outdoors_in_a_cozy_apartment_setting.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-    "room": "Lounge",
+    "room": "Drawing room",
     "credit": "Shixart1985 (CC BY 2.0), Wikimedia Commons",
     "source": "https://commons.wikimedia.org/wiki/File:Modern_living_room_with_stylish_furniture_and_a_view_of_the_outdoors_in_a_cozy_apartment_setting.jpg"
    },
@@ -252,33 +135,97 @@
     "credit": "Basile Morin (CC BY-SA 4.0), Wikimedia Commons",
     "source": "https://commons.wikimedia.org/wiki/File:Bathtub_of_Khan_Pool_Suite_in_Amantaka_luxury_Resort_%26_Hotel_in_Luang_Prabang_Laos.jpg"
    }
-  ]
+  ],
+  "status": "published"
  },
  {
-  "title": "Bright 1-bed condo steps from the park",
-  "city": "Seattle",
-  "area": "Capitol Hill",
-  "address": "1530 Belmont Avenue E, #402",
-  "type": "condo",
-  "beds": 1,
-  "baths": 1,
-  "size": 720,
-  "rent": "2050",
+  "title": "Family flat near Dhanmondi Lake",
+  "city": "Dhaka",
+  "area": "Dhanmondi",
+  "address": "House 38, Road 9/A, Dhanmondi R/A",
+  "type": "flat",
+  "beds": 3,
+  "baths": 3,
+  "size": 1650,
+  "rent": "55000",
+  "service": "5000",
+  "advance": 2,
+  "tenant": "family",
+  "floor": 4,
+  "floors": 9,
   "furnishing": "semi_furnished",
-  "featured": false,
+  "featured": true,
   "amen": [
    "wi-fi",
-   "balcony",
    "elevator",
-   "laundry"
+   "power-backup",
+   "gas-line",
+   "car-parking",
+   "24-7-security",
+   "intercom"
   ],
-  "desc": "Airy one-bedroom condo on a quiet corner, one block from Volunteer Park.\n\nWhite-oak floors, a modern kitchen with dining space and a large bedroom with a double closet. Juliet balcony off the living room.\n\nShared rooftop deck and in-building laundry. Easy walk to Broadway shops and the light rail.",
+  "desc": "Well-maintained 3-bedroom flat two minutes from Dhanmondi Lake, in a quiet residential road.\n\nLarge drawing-dining, three bedrooms (two with attached bath), two verandas and a kitchen with Titas gas connection. Semi-furnished with wardrobes and kitchen cabinets.\n\nLift, generator, one car parking and guard. Close to schools, hospitals (Labaid, Popular) and Dhanmondi 27.",
   "photos": [
    {
-    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7d/Apartment_block_st_clement.jpg/1920px-Apartment_block_st_clement.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-    "room": "Building exterior",
-    "credit": "Danrok (CC BY-SA 3.0), Wikimedia Commons",
-    "source": "https://commons.wikimedia.org/wiki/File:Apartment_block_st_clement.jpg"
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fe/Purbachal_Expressway_15.jpg/1920px-Purbachal_Expressway_15.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "room": "Building",
+    "credit": "MdsShakil (CC BY-SA 4.0), Wikimedia Commons",
+    "source": "https://commons.wikimedia.org/wiki/File:Purbachal_Expressway_15.jpg"
+   },
+   {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9e/Living_room_Germany_2006.jpg/1920px-Living_room_Germany_2006.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "room": "Drawing room",
+    "credit": "Reiner Kraft from Gilroy, USA (CC BY 2.0), Wikimedia Commons",
+    "source": "https://commons.wikimedia.org/wiki/File:Living_room_Germany_2006.jpg"
+   },
+   {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9b/Modern_kitchen_and_dining_area_in_a_bright_apartment_on_a_sunny_day_with_simple_decor_and_furniture.jpg/1920px-Modern_kitchen_and_dining_area_in_a_bright_apartment_on_a_sunny_day_with_simple_decor_and_furniture.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "room": "Kitchen & dining",
+    "credit": "Shixart1985 (CC BY 2.0), Wikimedia Commons",
+    "source": "https://commons.wikimedia.org/wiki/File:Modern_kitchen_and_dining_area_in_a_bright_apartment_on_a_sunny_day_with_simple_decor_and_furniture.jpg"
+   },
+   {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3f/2007-02-26_apartment_bedroom_%28on_display%29_in_Zuoying_District%2C_Kaohsiung.jpg/1920px-2007-02-26_apartment_bedroom_%28on_display%29_in_Zuoying_District%2C_Kaohsiung.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "room": "Bedroom",
+    "credit": "Joe Lewis (CC BY-SA 2.0), Wikimedia Commons",
+    "source": "https://commons.wikimedia.org/wiki/File:2007-02-26_apartment_bedroom_(on_display)_in_Zuoying_District,_Kaohsiung.jpg"
+   }
+  ],
+  "status": "published"
+ },
+ {
+  "title": "Modern 3-bed apartment in Bashundhara R/A",
+  "city": "Dhaka",
+  "area": "Bashundhara R/A",
+  "address": "Block D, Road 8, Bashundhara R/A",
+  "type": "apartment",
+  "beds": 3,
+  "baths": 3,
+  "size": 1450,
+  "rent": "35000",
+  "service": "3000",
+  "advance": 2,
+  "tenant": "family",
+  "floor": 6,
+  "floors": 10,
+  "furnishing": "unfurnished",
+  "featured": true,
+  "amen": [
+   "elevator",
+   "power-backup",
+   "gas-line",
+   "car-parking",
+   "24-7-security",
+   "cctv",
+   "24h-water-supply"
+  ],
+  "desc": "Brand-new 3-bedroom apartment in a secure, gated block of Bashundhara Residential Area.\n\nBright rooms, three attached bathrooms, two balconies and a spacious kitchen. Tiles throughout.\n\nNear North South University, IUB, Apollo (Evercare) Hospital and Jamuna Future Park. Lift, generator, car parking and 24-hour water.",
+  "photos": [
+   {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2f/Feroja_Bhaban--2.JPG/1920px-Feroja_Bhaban--2.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "room": "Building",
+    "credit": "Shahinur70 (Public domain), Wikimedia Commons",
+    "source": "https://commons.wikimedia.org/wiki/File:Feroja_Bhaban--2.JPG"
    },
    {
     "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d0/Artchapiz1_artchapiz.es_apartment_rental_granada_01.jpg/1920px-Artchapiz1_artchapiz.es_apartment_rental_granada_01.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
@@ -298,123 +245,103 @@
     "credit": "Kotivalo (CC BY-SA 4.0), Wikimedia Commons",
     "source": "https://commons.wikimedia.org/wiki/File:Bedroom_in_loft_apt_2.jpg"
    }
-  ]
+  ],
+  "status": "published"
  },
  {
-  "title": "Spacious 2-bed with balcony and parking",
-  "city": "Boston",
-  "area": "Back Bay",
-  "address": "145 Commonwealth Avenue, Apt 3",
-  "type": "apartment",
-  "beds": 2,
-  "baths": 1,
-  "size": 990,
-  "rent": "3100",
+  "title": "Spacious flat in Uttara Sector 7",
+  "city": "Dhaka",
+  "area": "Uttara",
+  "address": "House 15, Road 18, Sector 7, Uttara",
+  "type": "flat",
+  "beds": 3,
+  "baths": 2,
+  "size": 1350,
+  "rent": "30000",
+  "service": "2500",
+  "advance": 2,
+  "tenant": "family",
+  "floor": 3,
+  "floors": 6,
   "furnishing": "unfurnished",
-  "featured": true,
-  "amen": [
-   "wi-fi",
-   "air-conditioning",
-   "balcony",
-   "parking",
-   "laundry"
-  ],
-  "desc": "Well-proportioned two-bedroom in a modern building with a large balcony and one deeded parking space.\n\nThe living room opens to the balcony; the kitchen features white cabinetry and a breakfast table. Both bedrooms fit queen beds.\n\nMinutes to Newbury Street, the Charles River Esplanade and Copley station.",
-  "photos": [
-   {
-    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4c/A_balcony_over_the_graves_-_geograph.org.uk_-_7706523.jpg/1920px-A_balcony_over_the_graves_-_geograph.org.uk_-_7706523.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-    "room": "Building exterior",
-    "credit": "Neil Owen (CC BY-SA 2.0), Wikimedia Commons",
-    "source": "https://commons.wikimedia.org/wiki/File:A_balcony_over_the_graves_-_geograph.org.uk_-_7706523.jpg"
-   },
-   {
-    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9e/Living_room_Germany_2006.jpg/1920px-Living_room_Germany_2006.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-    "room": "Living room",
-    "credit": "Reiner Kraft from Gilroy, USA (CC BY 2.0), Wikimedia Commons",
-    "source": "https://commons.wikimedia.org/wiki/File:Living_room_Germany_2006.jpg"
-   },
-   {
-    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9b/Modern_kitchen_and_dining_area_in_a_bright_apartment_on_a_sunny_day_with_simple_decor_and_furniture.jpg/1920px-Modern_kitchen_and_dining_area_in_a_bright_apartment_on_a_sunny_day_with_simple_decor_and_furniture.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-    "room": "Kitchen and dining",
-    "credit": "Shixart1985 (CC BY 2.0), Wikimedia Commons",
-    "source": "https://commons.wikimedia.org/wiki/File:Modern_kitchen_and_dining_area_in_a_bright_apartment_on_a_sunny_day_with_simple_decor_and_furniture.jpg"
-   },
-   {
-    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3f/2007-02-26_apartment_bedroom_%28on_display%29_in_Zuoying_District%2C_Kaohsiung.jpg/1920px-2007-02-26_apartment_bedroom_%28on_display%29_in_Zuoying_District%2C_Kaohsiung.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-    "room": "Bedroom",
-    "credit": "Joe Lewis (CC BY-SA 2.0), Wikimedia Commons",
-    "source": "https://commons.wikimedia.org/wiki/File:2007-02-26_apartment_bedroom_(on_display)_in_Zuoying_District,_Kaohsiung.jpg"
-   }
-  ]
- },
- {
-  "title": "Renovated studio in historic building",
-  "city": "Boston",
-  "area": "Beacon Hill",
-  "address": "72 Mount Vernon Street, Unit 1",
-  "type": "studio",
-  "beds": 0,
-  "baths": 1,
-  "size": 460,
-  "rent": "1850",
-  "furnishing": "furnished",
   "featured": false,
-  "status": "draft",
   "amen": [
-   "wi-fi",
-   "air-conditioning"
+   "elevator",
+   "power-backup",
+   "gas-line",
+   "car-parking",
+   "24-7-security"
   ],
-  "desc": "Charming studio in a restored 19th-century building on one of the most photographed streets in Boston.\n\nHigh ceilings, original moulding and a fully renovated kitchenette and bathroom.\n\nListing currently being updated and coming back soon.",
+  "desc": "Airy south-facing 3-bedroom flat in Uttara Sector 7, close to the park and Rajlakshmi.\n\nDrawing, dining, three bedrooms, two bathrooms, kitchen with gas line and a wide veranda.\n\nEasy access to the airport, metro rail (Uttara North) and Airport Road. Families preferred.",
   "photos": [
    {
-    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/ba/Haussmannian_building_%2828285608446%29.jpg/1920px-Haussmannian_building_%2828285608446%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-    "room": "Building exterior",
-    "credit": "Gary Todd from Xinzheng, China (CC0), Wikimedia Commons",
-    "source": "https://commons.wikimedia.org/wiki/File:Haussmannian_building_(28285608446).jpg"
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fa/Slum_in_Rabeya_Rahman_Lane%2C_Chittagong_%284%29.JPG/1920px-Slum_in_Rabeya_Rahman_Lane%2C_Chittagong_%284%29.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "room": "Building",
+    "credit": "Intakhab ctg (CC BY-SA 4.0), Wikimedia Commons",
+    "source": "https://commons.wikimedia.org/wiki/File:Slum_in_Rabeya_Rahman_Lane,_Chittagong_(4).JPG"
    },
    {
-    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9f/Comfort_Suite_Room_%2821291423793%29.jpg/1920px-Comfort_Suite_Room_%2821291423793%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-    "room": "Studio interior",
-    "credit": "Nishimuraya Kinosaki Onsen (CC BY 2.0), Wikimedia Commons",
-    "source": "https://commons.wikimedia.org/wiki/File:Comfort_Suite_Room_(21291423793).jpg"
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6d/Personal_apartment_of_Simone_Guillissen_Hoa_-_Living_Room.jpg/1920px-Personal_apartment_of_Simone_Guillissen_Hoa_-_Living_Room.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "room": "Living room",
+    "credit": "Linsy Raaffels (CC BY-SA 4.0), Wikimedia Commons",
+    "source": "https://commons.wikimedia.org/wiki/File:Personal_apartment_of_Simone_Guillissen_Hoa_-_Living_Room.jpg"
    },
    {
-    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4d/St._Regis_Singapore_Suite_Living_Room_%283504227855%29_%282%29.jpg/1920px-St._Regis_Singapore_Suite_Living_Room_%283504227855%29_%282%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-    "room": "Work area",
-    "credit": "Matt @ PEK from Taipei, Taiwan (CC BY-SA 2.0), Wikimedia Commons",
-    "source": "https://commons.wikimedia.org/wiki/File:St._Regis_Singapore_Suite_Living_Room_(3504227855)_(2).jpg"
+    "url": "https://upload.wikimedia.org/wikipedia/commons/c/c1/Saechs_Wollgarnfabrik_Brueckenloft.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+    "room": "Hallway",
+    "credit": "Lumu (talk) (CC BY-SA 3.0), Wikimedia Commons",
+    "source": "https://commons.wikimedia.org/wiki/File:Saechs_Wollgarnfabrik_Brueckenloft.jpg"
+   },
+   {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/37/Bed_under_skylight.jpg/1920px-Bed_under_skylight.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "room": "Bedroom",
+    "credit": "Kotivalo (CC BY-SA 4.0), Wikimedia Commons",
+    "source": "https://commons.wikimedia.org/wiki/File:Bed_under_skylight.jpg"
+   },
+   {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1a/Red_modern_bathroom_interior._%2851528276166%29.jpg/1920px-Red_modern_bathroom_interior._%2851528276166%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "room": "Bathroom",
+    "credit": "Nenad Stojkovic (CC BY 2.0), Wikimedia Commons",
+    "source": "https://commons.wikimedia.org/wiki/File:Red_modern_bathroom_interior._(51528276166).jpg"
    }
-  ]
+  ],
+  "status": "published"
  },
  {
-  "title": "Quiet 2-bed garden apartment",
-  "city": "Denver",
-  "area": "Highlands",
-  "address": "3321 W 32nd Avenue, Unit A",
-  "type": "apartment",
+  "title": "Affordable 2-bed flat in Mirpur DOHS",
+  "city": "Dhaka",
+  "area": "Mirpur DOHS",
+  "address": "Avenue 3, Road 6, Mirpur DOHS",
+  "type": "flat",
   "beds": 2,
   "baths": 2,
-  "size": 1120,
-  "rent": "2200",
-  "furnishing": "semi_furnished",
+  "size": 1100,
+  "rent": "22000",
+  "service": "2000",
+  "advance": 2,
+  "tenant": "family",
+  "floor": 5,
+  "floors": 8,
+  "furnishing": "unfurnished",
   "featured": false,
   "amen": [
-   "wi-fi",
-   "parking",
-   "laundry",
-   "pet-friendly"
+   "elevator",
+   "power-backup",
+   "gas-line",
+   "24-7-security",
+   "24h-water-supply"
   ],
-  "desc": "Peaceful ground-floor apartment with a private patio, in a small, well-kept building.\n\nOpen living and dining room, two bedrooms and two full bathrooms. Plenty of storage throughout.\n\nWalking distance to the Highlands Square shops and Tennyson Street restaurants. Off-street parking included.",
+  "desc": "Neat 2-bedroom flat inside the secure, green Mirpur DOHS area.\n\nDrawing-dining, two bedrooms with attached baths, kitchen and balcony.\n\nClose to Mirpur 10/11 metro stations, markets and schools. Small families preferred.",
   "photos": [
    {
-    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2c/Apartment_building_in_Le_Squez_area%2C_St_Clement%2C_Jersey.JPG/1920px-Apartment_building_in_Le_Squez_area%2C_St_Clement%2C_Jersey.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-    "room": "Building exterior",
-    "credit": "Danrok (CC BY-SA 3.0), Wikimedia Commons",
-    "source": "https://commons.wikimedia.org/wiki/File:Apartment_building_in_Le_Squez_area,_St_Clement,_Jersey.JPG"
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c8/Dolonchapa%2C_RUAP_%28140551%29.jpg/1920px-Dolonchapa%2C_RUAP_%28140551%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "room": "Building",
+    "credit": "Moheen Reeyad (CC BY-SA 4.0), Wikimedia Commons",
+    "source": "https://commons.wikimedia.org/wiki/File:Dolonchapa,_RUAP_(140551).jpg"
    },
    {
     "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/36/Comfort_Suite_Room_%2821922243131%29.jpg/1920px-Comfort_Suite_Room_%2821922243131%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-    "room": "Living and dining",
+    "room": "Drawing & dining",
     "credit": "Nishimuraya Kinosaki Onsen (CC BY 2.0), Wikimedia Commons",
     "source": "https://commons.wikimedia.org/wiki/File:Comfort_Suite_Room_(21922243131).jpg"
    },
@@ -430,25 +357,86 @@
     "credit": "TravelingOtter from Houston, Texas, USA (CC BY-SA 2.0), Wikimedia Commons",
     "source": "https://commons.wikimedia.org/wiki/File:Fantastic_Suite_Living_Room_-_W_Montreal_(3227672970).jpg"
    }
-  ]
+  ],
+  "status": "published"
  },
  {
-  "title": "Furnished room in shared house",
-  "city": "Denver",
-  "area": "Capitol Hill",
-  "address": "1245 Pennsylvania Street",
-  "type": "shared-room",
+  "title": "Furnished studio in Banani for professionals",
+  "city": "Dhaka",
+  "area": "Banani",
+  "address": "Road 11, Block E, Banani",
+  "type": "studio",
+  "beds": 0,
+  "baths": 1,
+  "size": 550,
+  "rent": "28000",
+  "service": "3000",
+  "advance": 2,
+  "tenant": "any",
+  "floor": 8,
+  "floors": 12,
+  "furnishing": "furnished",
+  "featured": true,
+  "amen": [
+   "wi-fi",
+   "air-conditioning",
+   "elevator",
+   "power-backup",
+   "24-7-security",
+   "cctv"
+  ],
+  "desc": "Stylish, fully furnished studio on Road 11 — perfect for working professionals and expats.\n\nOpen-plan living and sleeping area, kitchenette, split AC and high-speed internet included in service charge.\n\nSteps from Banani's restaurants, offices and Gulshan-Banani link roads.",
+  "photos": [
+   {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ae/Apartment_in_under_construction%2C_South_Khulshi_%2801%29.jpg/1920px-Apartment_in_under_construction%2C_South_Khulshi_%2801%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "room": "Building",
+    "credit": "Moheen Reeyad (CC BY-SA 4.0), Wikimedia Commons",
+    "source": "https://commons.wikimedia.org/wiki/File:Apartment_in_under_construction,_South_Khulshi_(01).jpg"
+   },
+   {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4a/Studio_apartment_in_Finland.jpg/1920px-Studio_apartment_in_Finland.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "room": "Studio",
+    "credit": "Aaaatu (CC BY-SA 4.0), Wikimedia Commons",
+    "source": "https://commons.wikimedia.org/wiki/File:Studio_apartment_in_Finland.jpg"
+   },
+   {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/df/At_Home_%28Unsplash%29.jpg/1920px-At_Home_%28Unsplash%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "room": "Lounge corner",
+    "credit": "Naomi Hébert naomish (CC0), Wikimedia Commons",
+    "source": "https://commons.wikimedia.org/wiki/File:At_Home_(Unsplash).jpg"
+   },
+   {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7d/Bathroom_of_Khan_Pool_Suite_in_Amantaka_luxury_Resort_%26_Hotel_in_Luang_Prabang_Laos.jpg/1920px-Bathroom_of_Khan_Pool_Suite_in_Amantaka_luxury_Resort_%26_Hotel_in_Luang_Prabang_Laos.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "room": "Bathroom",
+    "credit": "Basile Morin (CC BY-SA 4.0), Wikimedia Commons",
+    "source": "https://commons.wikimedia.org/wiki/File:Bathroom_of_Khan_Pool_Suite_in_Amantaka_luxury_Resort_%26_Hotel_in_Luang_Prabang_Laos.jpg"
+   }
+  ],
+  "status": "published"
+ },
+ {
+  "title": "Bachelor seat near Farmgate (male)",
+  "city": "Dhaka",
+  "area": "Tejgaon",
+  "address": "Green Road, near Farmgate",
+  "type": "bachelor-seat",
   "beds": 1,
   "baths": 1,
-  "size": 220,
-  "rent": "780",
+  "size": 150,
+  "rent": "6500",
+  "service": "0",
+  "advance": 1,
+  "tenant": "bachelor",
+  "floor": 2,
+  "floors": 6,
   "furnishing": "furnished",
   "featured": false,
   "amen": [
    "wi-fi",
-   "laundry"
+   "gas-line",
+   "24h-water-supply"
   ],
-  "desc": "Furnished private room in a friendly, professionally managed shared house.\n\nThe room comes with a bed, desk and wardrobe. Residents share a fully equipped kitchen, lounge and two bathrooms.\n\nAll utilities and high-speed internet included. Minimum 6-month lease.",
+  "desc": "Furnished seat in a shared flat for male students or job holders.\n\nBed, table, wardrobe and fan provided. Shared kitchen with gas, two bathrooms and cook (bua) service available.\n\nWalking distance to Farmgate, Karwan Bazar and Tejgaon metro station. Wi-Fi and utilities included.",
   "photos": [
    {
     "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/46/Phoenix_day_Residence_Inn_Marriott_Hotel_studio_suite_living_area.JPG/1920px-Phoenix_day_Residence_Inn_Marriott_Hotel_studio_suite_living_area.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
@@ -462,34 +450,86 @@
     "credit": "TravelingOtter from Houston, Texas, USA (CC BY-SA 2.0), Wikimedia Commons",
     "source": "https://commons.wikimedia.org/wiki/File:Executive_Suite_Living_Room_-_Four_Points_L%C3%A9vis_(3242119363).jpg"
    }
-  ]
+  ],
+  "status": "published"
  },
  {
-  "title": "Riverside 1-bed with gym access",
-  "city": "Portland",
-  "area": "Pearl District",
-  "address": "1200 NW Naito Parkway, #815",
-  "type": "condo",
+  "title": "Sublet room in Mohammadpur (female only)",
+  "city": "Dhaka",
+  "area": "Mohammadpur",
+  "address": "Tajmahal Road, Mohammadpur",
+  "type": "sublet",
   "beds": 1,
   "baths": 1,
-  "size": 760,
-  "rent": "1900",
-  "furnishing": "furnished",
-  "featured": true,
+  "size": 200,
+  "rent": "8000",
+  "service": "0",
+  "advance": 1,
+  "tenant": "female",
+  "floor": 4,
+  "floors": 6,
+  "furnishing": "semi_furnished",
+  "featured": false,
   "amen": [
-   "wi-fi",
-   "air-conditioning",
-   "elevator",
-   "gym",
-   "24-7-security"
+   "gas-line",
+   "24h-water-supply",
+   "elevator"
   ],
-  "desc": "Contemporary one-bedroom overlooking the Willamette River, in a full-service building.\n\nComfortable living area, compact modern kitchen and a bedroom with river views.\n\nResidents enjoy a fitness centre, secure entry and a riverside walking path right outside.",
+  "desc": "Safe sublet room with a friendly family, for a female student or working woman.\n\nPrivate room with attached bathroom and balcony. Kitchen sharing allowed.\n\nNear Asad Gate, Dhanmondi and several universities.",
   "photos": [
    {
-    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/85/Free_Trade_Wharf_apartment_residences_River_Thames_at_Shadwell_London_England.jpg/1920px-Free_Trade_Wharf_apartment_residences_River_Thames_at_Shadwell_London_England.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-    "room": "Riverside view",
-    "credit": "Acabashi (CC BY-SA 4.0), Wikimedia Commons",
-    "source": "https://commons.wikimedia.org/wiki/File:Free_Trade_Wharf_apartment_residences_River_Thames_at_Shadwell_London_England.jpg"
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/ba/Purbachal_Expressway_16.jpg/1920px-Purbachal_Expressway_16.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "room": "Building",
+    "credit": "MdsShakil (CC BY-SA 4.0), Wikimedia Commons",
+    "source": "https://commons.wikimedia.org/wiki/File:Purbachal_Expressway_16.jpg"
+   },
+   {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9f/Comfort_Suite_Room_%2821291423793%29.jpg/1920px-Comfort_Suite_Room_%2821291423793%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "room": "Room",
+    "credit": "Nishimuraya Kinosaki Onsen (CC BY 2.0), Wikimedia Commons",
+    "source": "https://commons.wikimedia.org/wiki/File:Comfort_Suite_Room_(21291423793).jpg"
+   },
+   {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4d/St._Regis_Singapore_Suite_Living_Room_%283504227855%29_%282%29.jpg/1920px-St._Regis_Singapore_Suite_Living_Room_%283504227855%29_%282%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "room": "Study area",
+    "credit": "Matt @ PEK from Taipei, Taiwan (CC BY-SA 2.0), Wikimedia Commons",
+    "source": "https://commons.wikimedia.org/wiki/File:St._Regis_Singapore_Suite_Living_Room_(3504227855)_(2).jpg"
+   }
+  ],
+  "status": "published"
+ },
+ {
+  "title": "Hill-view 3-bed flat in Khulshi",
+  "city": "Chattogram",
+  "area": "Khulshi",
+  "address": "Road 2, Khulshi Residential Area",
+  "type": "flat",
+  "beds": 3,
+  "baths": 3,
+  "size": 1600,
+  "rent": "40000",
+  "service": "4000",
+  "advance": 2,
+  "tenant": "family",
+  "floor": 5,
+  "floors": 9,
+  "furnishing": "semi_furnished",
+  "featured": true,
+  "amen": [
+   "elevator",
+   "power-backup",
+   "gas-line",
+   "car-parking",
+   "24-7-security",
+   "cctv"
+  ],
+  "desc": "Quiet, green hill-view flat in Chattogram's most sought-after residential area.\n\nLarge living room, three bedrooms with attached baths, two balconies and a modern kitchen.\n\nClose to GEC circle, international schools and Khulshi Club. Lift, generator and parking.",
+  "photos": [
+   {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fd/Apartments_in_South_Khulshi_%2801%29.jpg/1920px-Apartments_in_South_Khulshi_%2801%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "room": "Building & view",
+    "credit": "Moheen Reeyad (CC BY-SA 4.0), Wikimedia Commons",
+    "source": "https://commons.wikimedia.org/wiki/File:Apartments_in_South_Khulshi_(01).jpg"
    },
    {
     "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e4/PAJASA_Service_Apartment_Mumbai.jpg/1920px-PAJASA_Service_Apartment_Mumbai.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
@@ -503,32 +543,38 @@
     "credit": "Xandrium (CC0), Wikimedia Commons",
     "source": "https://commons.wikimedia.org/wiki/File:Thiranagama_Sri_Lanka_Riff_Hotel_5-star_resort_Suite_bedroom.jpg"
    }
-  ]
+  ],
+  "status": "published"
  },
  {
-  "title": "Charming 2-bed near cafes and shops",
-  "city": "Portland",
-  "area": "Alberta Arts",
-  "address": "1830 NE Alberta Street, Apt 2",
-  "type": "apartment",
+  "title": "Family flat in Nasirabad",
+  "city": "Chattogram",
+  "area": "Nasirabad",
+  "address": "Nasirabad Housing Society, Road 3",
+  "type": "flat",
   "beds": 2,
-  "baths": 1,
-  "size": 900,
-  "rent": "1700",
+  "baths": 2,
+  "size": 1150,
+  "rent": "20000",
+  "service": "1500",
+  "advance": 2,
+  "tenant": "family",
+  "floor": 2,
+  "floors": 6,
   "furnishing": "unfurnished",
   "featured": false,
   "amen": [
-   "wi-fi",
-   "laundry",
-   "pet-friendly"
+   "gas-line",
+   "24-7-security",
+   "24h-water-supply"
   ],
-  "desc": "Character apartment in a lively arts district, surrounded by galleries, coffee shops and food carts.\n\nLarge living room with mid-century style, a separate kitchen and two bedrooms.\n\nCats and small dogs welcome. Street parking available.",
+  "desc": "Comfortable 2-bedroom family flat in Nasirabad Housing Society.\n\nDrawing-dining, two bedrooms, two bathrooms and a kitchen with gas line.\n\nNear 2 No. Gate, schools and shopping.",
   "photos": [
    {
-    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/85/Apartment_balconies_%2828977916257%29.jpg/1920px-Apartment_balconies_%2828977916257%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-    "room": "Building exterior",
-    "credit": "Eric Fischer (CC BY 2.0), Wikimedia Commons",
-    "source": "https://commons.wikimedia.org/wiki/File:Apartment_balconies_(28977916257).jpg"
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/09/Khulshi_Town_Center_%2801%29.jpg/1920px-Khulshi_Town_Center_%2801%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "room": "Building",
+    "credit": "Moheen Reeyad (CC BY-SA 4.0), Wikimedia Commons",
+    "source": "https://commons.wikimedia.org/wiki/File:Khulshi_Town_Center_(01).jpg"
    },
    {
     "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2b/Interior%2C_Duncan_House%2C_Polymath_Park%2C_Acme%2C_PA.jpg/1920px-Interior%2C_Duncan_House%2C_Polymath_Park%2C_Acme%2C_PA.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
@@ -542,6 +588,59 @@
     "credit": "TravelingOtter from Houston, Texas, USA (CC BY-SA 2.0), Wikimedia Commons",
     "source": "https://commons.wikimedia.org/wiki/File:Executive_Suite_Living_Room_-_Four_Points_L%C3%A9vis_(3242121913).jpg"
    }
-  ]
+  ],
+  "status": "published"
+ },
+ {
+  "title": "Duplex house in Sylhet Uposhohor",
+  "city": "Sylhet",
+  "area": "Uposhohor",
+  "address": "Block B, Road 7, Uposhohor",
+  "type": "duplex",
+  "beds": 4,
+  "baths": 3,
+  "size": 2400,
+  "rent": "45000",
+  "service": "0",
+  "advance": 3,
+  "tenant": "family",
+  "floor": 0,
+  "floors": 2,
+  "furnishing": "unfurnished",
+  "featured": false,
+  "amen": [
+   "gas-line",
+   "car-parking",
+   "rooftop-access",
+   "24h-water-supply"
+  ],
+  "desc": "Spacious two-storey duplex with a small garden in Sylhet's planned Uposhohor area.\n\nFour bedrooms, family lounge, drawing and dining, rooftop and a private car porch.\n\nNear Sylhet city centre, Osmani Medical College and shopping malls.",
+  "photos": [
+   {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/00/Ali_Ahmed_Manzil%2C%28sakawat_crsc_nanar_bari%29.jpg/1920px-Ali_Ahmed_Manzil%2C%28sakawat_crsc_nanar_bari%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "room": "House",
+    "credit": "Sakawat crsc (CC BY-SA 3.0), Wikimedia Commons",
+    "source": "https://commons.wikimedia.org/wiki/File:Ali_Ahmed_Manzil,(sakawat_crsc_nanar_bari).jpg"
+   },
+   {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c3/Budapest_Apartment_%28Unsplash%29.jpg/1920px-Budapest_Apartment_%28Unsplash%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "room": "Living room",
+    "credit": "Justin Schüler blacktakeover (CC0), Wikimedia Commons",
+    "source": "https://commons.wikimedia.org/wiki/File:Budapest_Apartment_(Unsplash).jpg"
+   },
+   {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/54/Hayloft_Apartment.jpg/1920px-Hayloft_Apartment.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "room": "Family lounge",
+    "credit": "Сергій111111 (CC BY-SA 4.0), Wikimedia Commons",
+    "source": "https://commons.wikimedia.org/wiki/File:Hayloft_Apartment.jpg"
+   },
+   {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3d/Reconstruction_original_design_of_the_Berlin_kitchen_by_Charlotte_Perriand_and_the_Berlin_Stair_by_Jean_Prouv%C3%A9.jpg/1920px-Reconstruction_original_design_of_the_Berlin_kitchen_by_Charlotte_Perriand_and_the_Berlin_Stair_by_Jean_Prouv%C3%A9.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "room": "Dining & stairs",
+    "credit": "Philippstargard (CC BY-SA 4.0), Wikimedia Commons",
+    "source": "https://commons.wikimedia.org/wiki/File:Reconstruction_original_design_of_the_Berlin_kitchen_by_Charlotte_Perriand_and_the_Berlin_Stair_by_Jean_Prouv%C3%A9.jpg"
+   }
+  ],
+  "status": "published"
  }
 ]

@@ -15,7 +15,7 @@
   <a class="stat" href="{% url 'admin_panel:apartments' %}"><div class="stat-icon">{% icon "building" 22 %}</div><div><strong>{{ stats.total }}</strong><span>Total apartments</span></div></a>
   <a class="stat" href="{% url 'admin_panel:apartments' %}?status=published"><div class="stat-icon info">{% icon "eye" 22 %}</div><div><strong>{{ stats.published }}</strong><span>Active listings</span></div></a>
   <a class="stat" href="{% url 'admin_panel:apartments' %}?status=draft"><div class="stat-icon warning">{% icon "eye-off" 22 %}</div><div><strong>{{ stats.inactive }}</strong><span>Inactive listings</span></div></a>
-  <a class="stat" href="{% url 'admin_panel:users' %}"><div class="stat-icon accent">{% icon "users" 22 %}</div><div><strong>{{ stats.users }}</strong><span>Registered users</span></div></a>
+  <a class="stat" href="{% url 'admin_panel:bookings' %}?status=pending"><div class="stat-icon accent">{% icon "calendar" 22 %}</div><div><strong>{{ stats.pending_bookings }}</strong><span>Pending bookings</span></div></a>
 </div>
 
 {% if pending_requests %}
@@ -68,6 +68,8 @@
       <div class="panel-head"><h2>At a glance</h2></div>
       <ul class="list-simple">
         <li>{% icon "mail" 18 %}<div class="grow"><a href="{% url 'admin_panel:requests' %}">Pending requests</a></div><strong>{{ stats.pending }}</strong></li>
+        <li>{% icon "key" 18 %}<div class="grow"><a href="{% url 'admin_panel:bookings' %}">Booked apartments</a></div><strong>{{ stats.booked }}</strong></li>
+        <li>{% icon "users" 18 %}<div class="grow"><a href="{% url 'admin_panel:users' %}">Registered users</a></div><strong>{{ stats.users }}</strong></li>
         <li>{% icon "x" 18 %}<div class="grow">Rejected</div><strong>{{ stats.rejected }}</strong></li>
         <li>{% icon "eye-off" 18 %}<div class="grow">Unpublished</div><strong>{{ stats.unpublished }}</strong></li>
         <li>{% icon "layers" 18 %}<div class="grow">Archived</div><strong>{{ stats.archived }}</strong></li>

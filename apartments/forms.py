@@ -16,6 +16,7 @@ class ApartmentForm(forms.ModelForm):
             "address", "city", "area", "postal_code", "latitude", "longitude",
             "rent", "bedrooms", "bathrooms", "size_sqft",
             "furnishing", "availability", "available_from", "amenities",
+            "advance_months", "service_charge", "tenant_preference", "floor_number", "total_floors",
             "contact_name", "contact_phone", "contact_email", "owner",
         ]
         widgets = {
@@ -26,6 +27,8 @@ class ApartmentForm(forms.ModelForm):
             "bedrooms": forms.NumberInput(attrs={"min": "0", "max": "50"}),
             "bathrooms": forms.NumberInput(attrs={"min": "0", "max": "50"}),
             "size_sqft": forms.NumberInput(attrs={"min": "1"}),
+            "service_charge": forms.NumberInput(attrs={"min": "0", "step": "100"}),
+            "advance_months": forms.NumberInput(attrs={"min": "0", "max": "24"}),
         }
         help_texts = {"is_featured": "Show this listing in the homepage “Featured” section."}
 
@@ -93,6 +96,18 @@ class ApartmentForm(forms.ModelForm):
             raise ValidationError("Longitude must be between -180 and 180.")
         return lng
 
+    def clean_advance_months(self):
+        value = self.cleaned_data.get("advance_months")
+        if value is not None and value > 24:
+            raise ValidationError("Advance can be at most 24 months.")
+        return value
+
+    def clean_service_charge(self):
+        value = self.cleaned_data.get("service_charge")
+        if value is not None and value < 0:
+            raise ValidationError("Service charge cannot be negative.")
+        return value
+
     def clean_contact_phone(self):
         phone = (self.cleaned_data.get("contact_phone") or "").strip()
         validate_phone(phone)
@@ -102,6 +117,9 @@ class ApartmentForm(forms.ModelForm):
         cleaned = super().clean()
         if not cleaned.get("contact_phone") and not cleaned.get("contact_email"):
             self.add_error("contact_email", "Provide at least a contact phone number or email.")
+        floor, total = cleaned.get("floor_number"), cleaned.get("total_floors")
+        if floor is not None and total and floor > total:
+            self.add_error("floor_number", "Floor can't be higher than the building's total floors.")
         if (cleaned.get("latitude") is None) != (cleaned.get("longitude") is None):
             self.add_error("longitude", "Provide both latitude and longitude, or neither.")
         return cleaned
@@ -112,6 +130,7 @@ OWNER_EDITABLE_FIELDS = [
     "address", "city", "area", "postal_code",
     "rent", "bedrooms", "bathrooms", "size_sqft",
     "furnishing", "availability", "available_from", "amenities",
+    "advance_months", "service_charge", "tenant_preference", "floor_number", "total_floors",
     "contact_name", "contact_phone", "contact_email",
 ]
 
@@ -184,3 +203,8 @@ class ListingSubmissionForm(ApartmentForm):
     def __init__(self, *args, require_photos=True, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["photos"].required = require_photos
+        # Owners can't set "Booked"/"Rented" themselves; that is driven by bookings.
+        self.fields["availability"].choices = [
+            (value, label) for value, label in self.fields["availability"].choices
+            if value in Apartment.BOOKABLE_AVAILABILITIES
+        ]

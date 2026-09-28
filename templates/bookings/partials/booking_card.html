@@ -1,0 +1,74 @@
+{% comment %}
+  One booking. `mode` is "tenant" (renter's view) or "landlord" (landlord/admin view).
+{% endcomment %}
+{% with apartment=booking.apartment cover=booking.apartment.cover_image %}
+<article class="booking-card">
+  <div class="booking-card-top">
+    {% if cover %}<img src="{{ cover.image.url }}" alt="">{% else %}<div class="img-placeholder">{% icon "image" 28 %}</div>{% endif %}
+    <div>
+      <div class="flex items-center gap-2" style="flex-wrap:wrap">
+        {% include "bookings/partials/status_badge.html" %}
+        <span class="text-sm text-muted">Requested {{ booking.created_at|date:"M j, Y · g:i A" }}</span>
+      </div>
+      <h3 style="margin:6px 0 2px"><a href="{{ apartment.get_absolute_url }}">{{ apartment.title }}</a></h3>
+      <div class="text-sm text-muted">{{ apartment.location_display }} · {{ apartment.rent|money }}/month</div>
+      <div class="booking-meta">
+        {% if mode == "landlord" %}<span>{% icon "user" 15 %} <strong>{{ booking.full_name }}</strong></span>{% endif %}
+        <span>{% icon "users" 15 %} {{ booking.get_household_display }} · {{ booking.occupants }} {{ booking.occupants|pluralize:"person,people" }}</span>
+        <span>{% icon "key" 15 %} Move-in {{ booking.move_in_date|date:"M j, Y" }}</span>
+        {% if booking.visit_date %}<span>{% icon "calendar" 15 %} Viewing {{ booking.visit_date|date:"M j" }}</span>{% endif %}
+        {% if mode == "landlord" %}
+          <span>{% icon "phone" 15 %} <a href="tel:{{ booking.phone }}">{{ booking.phone }}</a></span>
+          <span>{% icon "mail" 15 %} <a href="mailto:{{ booking.email }}">{{ booking.email }}</a></span>
+        {% endif %}
+      </div>
+    </div>
+    <div class="text-right">
+      {% if booking.status == "pending" %}<div class="text-sm text-muted">{% icon "clock" 14 %} Held until<br><strong>{{ booking.expires_at|date:"M j, g:i A" }}</strong></div>{% endif %}
+    </div>
+  </div>
+
+  {% if booking.message %}
+    <div class="booking-note"><strong>{% if mode == "landlord" %}Message from renter:{% else %}Your message:{% endif %}</strong> {{ booking.message|linebreaksbr }}</div>
+  {% endif %}
+  {% if booking.landlord_note %}
+    <div class="booking-note"><strong>{% if mode == "landlord" %}Your reply:{% else %}Landlord's reply:{% endif %}</strong> {{ booking.landlord_note|linebreaksbr }}</div>
+  {% endif %}
+
+  {% if mode == "tenant" and booking.status == "accepted" %}
+    <div class="booking-note" style="background:var(--success-bg)">
+      {% icon "check" 16 %} <strong>Contact {{ apartment.contact_name }}</strong> to arrange the viewing and move-in:
+      {% if apartment.contact_phone %}<a href="tel:{{ apartment.contact_phone }}">{{ apartment.contact_phone }}</a>{% endif %}
+      {% if apartment.contact_email %} · <a href="mailto:{{ apartment.contact_email }}">{{ apartment.contact_email }}</a>{% endif %}
+    </div>
+  {% endif %}
+
+  {% if mode == "tenant" and booking.is_open %}
+    <div class="booking-actions">
+      <a class="btn btn-outline btn-sm" href="{{ apartment.get_absolute_url }}">{% icon "eye" 14 %} View apartment</a>
+      <form method="post" action="{% url 'bookings:cancel' booking.pk %}">
+        {% csrf_token %}
+        <button class="btn btn-danger-soft btn-sm" type="submit" data-confirm="Cancel this booking? The apartment will be released for others.">{% icon "x" 14 %} Cancel booking</button>
+      </form>
+    </div>
+  {% endif %}
+
+  {% if mode == "landlord" and booking.status == "pending" %}
+    <form method="post" action="{% url 'bookings:respond' booking.pk %}" class="booking-actions" novalidate>
+      {% csrf_token %}
+      <input type="hidden" name="next" value="{{ request.get_full_path }}">
+      <textarea name="note" rows="1" maxlength="2000" placeholder="Optional message to {{ booking.full_name }} (e.g. viewing time)" aria-label="Message to renter"></textarea>
+      <button class="btn btn-primary btn-sm" name="action" value="accept" type="submit">{% icon "check" 14 %} Accept</button>
+      <button class="btn btn-danger-soft btn-sm" name="action" value="decline" type="submit" data-confirm="Decline this booking? The apartment will become available again.">{% icon "x" 14 %} Decline</button>
+    </form>
+  {% elif mode == "landlord" and booking.status == "accepted" %}
+    <form method="post" action="{% url 'bookings:complete' booking.pk %}" class="booking-actions">
+      {% csrf_token %}
+      <input type="hidden" name="next" value="{{ request.get_full_path }}">
+      <span class="text-sm text-muted" style="flex:1">When the tenancy is settled:</span>
+      <button class="btn btn-outline btn-sm" name="relist" value="0" type="submit">{% icon "key" 14 %} Mark as rented</button>
+      <button class="btn btn-outline btn-sm" name="relist" value="1" type="submit" data-confirm="Make this apartment available for booking again?">{% icon "refresh" 14 %} Available again</button>
+    </form>
+  {% endif %}
+</article>
+{% endwith %}

@@ -7,6 +7,7 @@ app_name = "admin_panel"
 urlpatterns = [
     path("", views.dashboard_view, name="dashboard"),
     path("requests/", views.request_list_view, name="requests"),
+    path("bookings/", views.booking_list_view, name="bookings"),
     path("requests/<int:pk>/", views.request_review_view, name="request_review"),
     path("apartments/", views.apartment_list_view, name="apartments"),
     path("apartments/new/", views.apartment_create_view, name="apartment_create"),

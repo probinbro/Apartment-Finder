@@ -1,0 +1,17 @@
+{% extends "bookings/emails/base.html" %}
+{% block content %}
+<h2 style="margin:0 0 8px;font-size:20px">New booking request</h2>
+<p style="margin:0;color:#334155;font-size:14px">{{ booking.full_name }} wants to book your apartment. It is now marked <strong>Booked</strong> and held for them while you decide.</p>
+{% include "bookings/emails/_apartment_box.html" %}
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="font-size:14px;line-height:1.8;color:#334155">
+  <tr><td style="width:40%;color:#64748b">Name</td><td><strong>{{ booking.full_name }}</strong></td></tr>
+  <tr><td style="color:#64748b">Phone</td><td><a href="tel:{{ booking.phone }}" style="color:#0f766e">{{ booking.phone }}</a></td></tr>
+  <tr><td style="color:#64748b">Email</td><td><a href="mailto:{{ booking.email }}" style="color:#0f766e">{{ booking.email }}</a></td></tr>
+  <tr><td style="color:#64748b">Household</td><td>{{ booking.get_household_display }} · {{ booking.occupants }} {{ booking.occupants|pluralize:"person,people" }}</td></tr>
+  <tr><td style="color:#64748b">Move-in</td><td>{{ booking.move_in_date|date:"j M Y" }}</td></tr>
+  {% if booking.visit_date %}<tr><td style="color:#64748b">Viewing</td><td>{{ booking.visit_date|date:"j M Y" }}</td></tr>{% endif %}
+</table>
+{% if booking.message %}<p style="background:#fff7ed;border-left:3px solid #f97352;padding:10px 12px;font-size:14px;color:#334155;margin:14px 0">“{{ booking.message|linebreaksbr }}”</p>{% endif %}
+<p style="font-size:14px;color:#334155">Please respond within {{ booking.expires_at|timeuntil }} — after that the request expires and the apartment becomes available again.</p>
+<p style="margin:20px 0 0"><a href="{{ landlord_url }}" style="background:#0f766e;color:#ffffff;text-decoration:none;padding:12px 20px;border-radius:10px;font-weight:700;display:inline-block">Accept or decline</a></p>
+{% endblock %}

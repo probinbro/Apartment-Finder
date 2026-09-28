@@ -1,0 +1,8 @@
+{% autoescape off %}Hi {{ booking.full_name }},
+
+The landlord didn't respond in time to your booking request for "{{ apartment.title }}" ({{ apartment.location_display }}), so your hold has ended. You can book it again if it's still available.
+
+View apartment: {{ apartment_url }}
+
+— {{ SITE_NAME }}
+{% endautoescape %}

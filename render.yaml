@@ -27,3 +27,11 @@ services:
         value: apartment-media
       - key: SUPABASE_OAUTH_PROVIDERS
         value: google
+      - key: BREVO_API_KEY
+        sync: false
+      - key: DEFAULT_FROM_EMAIL
+        sync: false
+      - key: ADMIN_NOTIFICATION_EMAILS
+        sync: false
+      - key: TIME_ZONE
+        value: Asia/Dhaka

@@ -35,6 +35,7 @@
           <span class="badge badge-brand">{{ apartment.property_type }}</span>
           {% if apartment.availability == "available" %}<span class="badge badge-success badge-dot">{{ apartment.get_availability_display }}</span>
           {% elif apartment.availability == "coming_soon" %}<span class="badge badge-warning badge-dot">{{ apartment.get_availability_display }}{% if apartment.available_from %} · {{ apartment.available_from|date:"M j" }}{% endif %}</span>
+          {% elif apartment.availability == "booked" %}<span class="badge badge-info badge-dot">{% icon "lock" 12 %} Booked</span>
           {% else %}<span class="badge badge-danger badge-dot">{{ apartment.get_availability_display }}</span>{% endif %}
         </div>
       </div>
@@ -68,8 +69,12 @@
         <div class="key-facts">
           <div class="key-fact">{% icon "bed" 22 %}<strong>{{ apartment.bedrooms_display }}</strong><span>Bedrooms</span></div>
           <div class="key-fact">{% icon "bath" 22 %}<strong>{{ apartment.bathrooms }}</strong><span>Bathroom{{ apartment.bathrooms|pluralize }}</span></div>
-          <div class="key-fact">{% icon "ruler" 22 %}<strong>{% if apartment.size_sqft %}{{ apartment.size_sqft|floatformat:"0g" }} ft²{% else %}—{% endif %}</strong><span>Size</span></div>
+          <div class="key-fact">{% icon "ruler" 22 %}<strong>{% if apartment.size_sqft %}{{ apartment.size_sqft|floatformat:"0g" }} sft{% else %}—{% endif %}</strong><span>Size</span></div>
           <div class="key-fact">{% icon "sofa" 22 %}<strong>{{ apartment.get_furnishing_display }}</strong><span>Furnishing</span></div>
+          <div class="key-fact">{% icon "users" 22 %}<strong>{{ apartment.get_tenant_preference_display }}</strong><span>Suitable for</span></div>
+          <div class="key-fact">{% icon "building" 22 %}<strong>{% if apartment.floor_number is not None %}{% if apartment.floor_number == 0 %}Ground{% else %}{{ apartment.floor_number }}{% endif %}{% if apartment.total_floors %} / {{ apartment.total_floors }}{% endif %}{% else %}—{% endif %}</strong><span>Floor</span></div>
+          <div class="key-fact">{% icon "key" 22 %}<strong>{{ apartment.advance_months }} month{{ apartment.advance_months|pluralize }}</strong><span>Advance</span></div>
+          <div class="key-fact">{% icon "shield" 22 %}<strong>{% if apartment.service_charge %}{{ apartment.service_charge|money }}{% else %}None{% endif %}</strong><span>Service charge</span></div>
         </div>
       </section>
 
@@ -110,24 +115,48 @@
 
     <aside>
       <div class="detail-card contact-card">
-        <div class="price">{{ apartment.rent|money }} <small>/ month</small></div>
+        <div class="flex items-center" style="justify-content:space-between;gap:10px">
+          <div class="price">{{ apartment.rent|money }} <small>/ month</small></div>
+          {% if apartment.is_published %}{% include "partials/save_button.html" %}{% endif %}
+        </div>
+        <ul class="cost-breakdown">
+          <li><span>Advance ({{ apartment.advance_months }} month{{ apartment.advance_months|pluralize }})</span><strong>{{ apartment.advance_amount|money }}</strong></li>
+          <li><span>Service charge</span><strong>{% if apartment.service_charge %}{{ apartment.service_charge|money }}/mo{% else %}Included{% endif %}</strong></li>
+          <li class="total"><span>Due at move-in (advance + 1st month)</span><strong>{{ apartment.move_in_cost|money }}</strong></li>
+        </ul>
+
+        {% if is_owner %}
+          <div class="alert alert-info alert-inline mb-0">{% icon "home" 16 %}<span>This is your listing. Booking requests appear in <a href="{% url 'bookings:landlord_requests' %}">your dashboard</a>.</span></div>
+        {% elif my_booking and my_booking.is_open %}
+          <div class="booking-status {% if my_booking.status == 'accepted' %}accepted{% endif %}">
+            {% if my_booking.status == "accepted" %}{% icon "check" 18 %} <div><strong>Your booking is accepted!</strong><span>Contact the landlord below to arrange the move-in.</span></div>
+            {% else %}{% icon "clock" 18 %} <div><strong>Booking request sent</strong><span>Waiting for the landlord. Held until {{ my_booking.expires_at|date:"M j, g:i A" }}.</span></div>{% endif %}
+          </div>
+          <a class="btn btn-outline btn-block" href="{% url 'bookings:my_bookings' %}">View my booking</a>
+        {% elif apartment.is_bookable %}
+          <a class="btn btn-accent btn-lg btn-block" href="{% url 'bookings:book' apartment.slug %}">{% icon "calendar" 18 %} Book this apartment</a>
+          <p class="text-sm text-muted mt-2 mb-0">Free to request. The apartment is held for you while the landlord responds (up to {{ BOOKING_HOLD_DAYS }} days).</p>
+        {% elif apartment.is_published %}
+          <button class="btn btn-outline btn-lg btn-block" disabled>{% icon "lock" 18 %} {% if apartment.availability == "booked" %}Currently booked{% else %}Not available{% endif %}</button>
+          <p class="text-sm text-muted mt-2 mb-0">Someone has booked this apartment. <a href="#similar">See similar apartments</a> or save it to check back later.</p>
+        {% endif %}
+
         <div class="contact-person">
           <span class="avatar">{{ apartment.contact_name|slice:":1"|upper }}</span>
-          <div><strong>{{ apartment.contact_name }}</strong><span>Listing contact</span></div>
+          <div><strong>{{ apartment.contact_name }}</strong><span>{% if apartment.owner %}Landlord{% else %}Listing manager{% endif %}</span></div>
         </div>
-        {% if apartment.contact_phone %}
-          <a class="btn btn-primary btn-block" href="tel:{{ apartment.contact_phone }}">{% icon "phone" 18 %} {{ apartment.contact_phone }}</a>
+        {% if show_contact %}
+          {% if apartment.contact_phone %}<a class="btn btn-primary btn-block" href="tel:{{ apartment.contact_phone }}">{% icon "phone" 18 %} {{ apartment.contact_phone }}</a>{% endif %}
+          {% if apartment.contact_email %}<a class="btn btn-outline btn-block" href="mailto:{{ apartment.contact_email }}?subject={{ apartment.title|urlencode }}">{% icon "mail" 18 %} {{ apartment.contact_email }}</a>{% endif %}
+        {% else %}
+          <p class="text-sm text-muted mb-0">{% icon "lock" 14 %} The landlord's phone number is shared once your booking is accepted. Never pay any advance before visiting the property.</p>
         {% endif %}
-        {% if apartment.contact_email %}
-          <a class="btn btn-outline btn-block" href="mailto:{{ apartment.contact_email }}?subject={{ apartment.title|urlencode }}">{% icon "mail" 18 %} Email contact</a>
-        {% endif %}
-        <p class="text-sm text-muted mt-2 mb-0">Mention {{ SITE_NAME }} when you get in touch. Never send money before viewing a property.</p>
       </div>
     </aside>
   </div>
 
   {% if similar %}
-  <section class="section-sm" style="padding-top:0;padding-bottom:72px">
+  <section class="section-sm" id="similar" style="padding-top:0;padding-bottom:72px">
     <div class="section-head"><h2 class="mb-0">More in {{ apartment.city }}</h2></div>
     <div class="grid grid-3">
       {% for apartment in similar %}{% include "partials/apartment_card.html" %}{% endfor %}

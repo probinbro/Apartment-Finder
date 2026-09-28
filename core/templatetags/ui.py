@@ -65,6 +65,8 @@ ICONS = {
     "layers": '<polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/>',
     "sparkles": '<path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/>',
     "refresh": '<path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/>',
+    "heart-filled": '<path fill="currentColor" d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>',
+    "clock": '<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>',
     "lock": '<rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>',
 }
 
@@ -79,15 +81,36 @@ def icon(name, size=20, css_class=""):
     )
 
 
-@register.filter
-def money(value):
-    """Format a rent amount: 1250.00 -> $1,250"""
+def group_lakh(integer_digits):
+    """South-Asian digit grouping: 1234567 -> 12,34,567"""
+    if len(integer_digits) <= 3:
+        return integer_digits
+    head, tail = integer_digits[:-3], integer_digits[-3:]
+    groups = []
+    while len(head) > 2:
+        groups.insert(0, head[-2:])
+        head = head[:-2]
+    if head:
+        groups.insert(0, head)
+    return ",".join(groups + [tail])
+
+
+def format_money(value):
     try:
         amount = Decimal(value)
     except (InvalidOperation, TypeError, ValueError):
         return ""
     amount = amount.quantize(Decimal("1")) if amount == amount.to_integral() else amount.quantize(Decimal("0.01"))
-    return f"{settings.CURRENCY_SYMBOL}{intcomma(amount)}"
+    sign = "-" if amount < 0 else ""
+    integer, _, fraction = str(abs(amount)).partition(".")
+    grouped = group_lakh(integer) if settings.USE_LAKH_GROUPING else intcomma(integer)
+    return f"{sign}{settings.CURRENCY_SYMBOL}{grouped}{'.' + fraction if fraction else ''}"
+
+
+@register.filter
+def money(value):
+    """Format an amount in the site currency: 150000 -> ৳1,50,000"""
+    return format_money(value)
 
 
 @register.filter

@@ -3,22 +3,22 @@
 {% block content %}
 <section class="hero">
   <div class="container">
-    <span class="eyebrow" style="color:#5eead4">Apartments for rent</span>
+    <span class="eyebrow" style="color:#5eead4">Flats &amp; apartments for rent across Bangladesh</span>
     <h1>Find a place you'll <em>love</em> to live</h1>
-    <p class="hero-lead">Search verified apartment listings with real photos, clear prices and direct contact details — all in one place.</p>
+    <p class="hero-lead">From Gulshan to Chattogram — find verified To-Let listings with real photos, clear rent &amp; advance, and book a flat online in minutes.</p>
 
     <form class="search-panel" method="get" action="{% url 'apartments:list' %}" role="search">
       <div class="sp-field">
         <label for="hero-q">Location</label>
-        <input id="hero-q" type="text" name="q" placeholder="City, area or address" autocomplete="off">
+        <input id="hero-q" type="text" name="q" placeholder="Gulshan, Dhanmondi, Uttara..." autocomplete="off">
       </div>
       <div class="sp-field">
         <label for="hero-min">Min rent</label>
-        <input id="hero-min" type="number" name="min_rent" min="0" step="50" placeholder="No min">
+        <input id="hero-min" type="number" name="min_rent" min="0" step="1000" placeholder="৳ No min">
       </div>
       <div class="sp-field">
         <label for="hero-max">Max rent</label>
-        <input id="hero-max" type="number" name="max_rent" min="0" step="50" placeholder="No max">
+        <input id="hero-max" type="number" name="max_rent" min="0" step="1000" placeholder="৳ No max">
       </div>
       <div class="sp-field">
         <label for="{{ search_form.bedrooms.id_for_label }}">Bedrooms</label>
@@ -34,7 +34,7 @@
     <div class="hero-stats">
       <div><strong>{{ listing_count }}</strong><span>Active listings</span></div>
       <div><strong>{{ locations|length }}</strong><span>Cities</span></div>
-      <div><strong>100%</strong><span>Free to browse</span></div>
+      <div><strong>0 ৳</strong><span>Booking fee</span></div>
     </div>
   </div>
 </section>
@@ -86,29 +86,29 @@
     <div class="section-head">
       <div>
         <span class="eyebrow">Why choose us</span>
-        <h2>Apartment hunting, minus the hassle</h2>
+        <h2>No more walking around looking for To-Let signs</h2>
       </div>
     </div>
     <div class="grid grid-4">
       <div class="feature">
         <div class="feature-icon">{% icon "layers" 24 %}</div>
         <h3>Centralized information</h3>
-        <p>Rent, size, amenities, photos and contacts for every listing — no more jumping between sites.</p>
+        <p>Rent, advance, service charge, floor, gas and lift — every detail in one place, no more calling around.</p>
       </div>
       <div class="feature">
-        <div class="feature-icon">{% icon "search" 24 %}</div>
-        <h3>Easy search</h3>
-        <p>Filter by location, budget, bedrooms, property type and more to find matches in seconds.</p>
+        <div class="feature-icon">{% icon "calendar" 24 %}</div>
+        <h3>Book online</h3>
+        <p>Send a booking request in a minute. The flat is held for you while the landlord responds.</p>
       </div>
       <div class="feature">
         <div class="feature-icon">{% icon "shield" 24 %}</div>
-        <h3>Organized listings</h3>
-        <p>Every apartment is reviewed and kept up to date by our team before it goes live.</p>
+        <h3>Verified listings</h3>
+        <p>Every flat is reviewed by our team before it goes live, and landlord numbers are shared only after they accept.</p>
       </div>
       <div class="feature">
         <div class="feature-icon">{% icon "sparkles" 24 %}</div>
-        <h3>Convenient browsing</h3>
-        <p>A fast, clean experience on any device — phone, tablet or desktop.</p>
+        <h3>For families &amp; bachelors</h3>
+        <p>Filter by who the landlord is renting to — family, bachelor or female-only — so you don't waste time.</p>
       </div>
     </div>
   </div>

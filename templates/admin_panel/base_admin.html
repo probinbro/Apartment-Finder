@@ -5,6 +5,7 @@
 <div class="dash-nav-title">Admin</div>
 <a href="{% url 'admin_panel:dashboard' %}" class="{% if url_name == 'dashboard' %}active{% endif %}">{% icon "dashboard" 18 %} Dashboard</a>
 <a href="{% url 'admin_panel:requests' %}" class="{% if 'request' in url_name %}active{% endif %}">{% icon "mail" 18 %} Listing requests{% if pending_request_count %}<span class="count">{{ pending_request_count }}</span>{% endif %}</a>
+<a href="{% url 'admin_panel:bookings' %}" class="{% if url_name == 'bookings' %}active{% endif %}">{% icon "calendar" 18 %} Bookings{% if pending_booking_count %}<span class="count">{{ pending_booking_count }}</span>{% endif %}</a>
 <a href="{% url 'admin_panel:apartments' %}" class="{% if 'apartment' in url_name %}active{% endif %}">{% icon "building" 18 %} Apartments</a>
 <a href="{% url 'admin_panel:apartment_create' %}" class="{% if url_name == 'apartment_create' %}active{% endif %}">{% icon "plus" 18 %} Add apartment</a>
 <a href="{% url 'admin_panel:media' %}" class="{% if url_name == 'media' %}active{% endif %}">{% icon "image" 18 %} Media</a>

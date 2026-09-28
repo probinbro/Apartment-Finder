@@ -1,0 +1,19 @@
+{% extends "bookings/emails/base.html" %}
+{% block content %}
+{% if booking.status == "accepted" %}
+  <h2 style="margin:0 0 8px;font-size:20px">Good news — your booking was accepted 🎉</h2>
+  <p style="margin:0;color:#334155;font-size:14px">Hi {{ booking.full_name }}, the landlord accepted your request. Contact them to arrange the viewing and move-in.</p>
+  {% include "bookings/emails/_apartment_box.html" %}
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="font-size:14px;line-height:1.8;color:#334155">
+    <tr><td style="width:40%;color:#64748b">Contact</td><td><strong>{{ apartment.contact_name }}</strong></td></tr>
+    {% if apartment.contact_phone %}<tr><td style="color:#64748b">Phone</td><td><a href="tel:{{ apartment.contact_phone }}" style="color:#0f766e">{{ apartment.contact_phone }}</a></td></tr>{% endif %}
+    {% if apartment.contact_email %}<tr><td style="color:#64748b">Email</td><td><a href="mailto:{{ apartment.contact_email }}" style="color:#0f766e">{{ apartment.contact_email }}</a></td></tr>{% endif %}
+  </table>
+{% else %}
+  <h2 style="margin:0 0 8px;font-size:20px">Update on your booking request</h2>
+  <p style="margin:0;color:#334155;font-size:14px">Hi {{ booking.full_name }}, unfortunately the landlord couldn't accept your request for this apartment.</p>
+  {% include "bookings/emails/_apartment_box.html" %}
+{% endif %}
+{% if booking.landlord_note %}<p style="background:#f1f5f9;border-left:3px solid #0f766e;padding:10px 12px;font-size:14px;color:#334155;margin:14px 0"><strong>Landlord's message:</strong> {{ booking.landlord_note|linebreaksbr }}</p>{% endif %}
+<p style="margin:20px 0 0"><a href="{{ tenant_url }}" style="background:#0f766e;color:#ffffff;text-decoration:none;padding:12px 20px;border-radius:10px;font-weight:700;display:inline-block">{% if booking.status == "accepted" %}View booking{% else %}Find other apartments{% endif %}</a></p>
+{% endblock %}

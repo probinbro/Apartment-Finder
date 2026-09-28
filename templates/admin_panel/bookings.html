@@ -1,0 +1,27 @@
+{% extends "admin_panel/base_admin.html" %}
+
+{% block title %}Bookings{% endblock %}
+
+{% block dash_content %}
+<div class="dash-head">
+  <div>
+    <h1>Bookings</h1>
+    <p>Every booking on the platform. Landlords handle their own listings; you respond for listings without a landlord account.</p>
+  </div>
+</div>
+
+<div class="tabs">
+  <a href="{% url 'admin_panel:bookings' %}" class="{% if not status %}active{% endif %}">All</a>
+  {% for value, label in status_choices %}<a href="?status={{ value }}" class="{% if status == value %}active{% endif %}">{{ label }}</a>{% endfor %}
+</div>
+
+{% if page_obj.object_list %}
+  {% for booking in page_obj %}
+    {% if not booking.apartment.owner %}<p class="text-sm text-muted" style="margin:16px 0 6px">{% icon "info" 14 %} No landlord account — you manage this booking.</p>{% else %}<p class="text-sm text-muted" style="margin:16px 0 6px">Landlord: {{ booking.apartment.owner.email }}</p>{% endif %}
+    {% include "bookings/partials/booking_card.html" with mode="landlord" %}
+  {% endfor %}
+  {% include "partials/pagination.html" %}
+{% else %}
+  {% include "partials/empty_state.html" with empty_icon="calendar" title="No bookings" text="Bookings made by renters will appear here." %}
+{% endif %}
+{% endblock %}

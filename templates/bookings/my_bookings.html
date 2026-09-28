@@ -1,0 +1,20 @@
+{% extends "users/account_base.html" %}
+
+{% block title %}My bookings{% endblock %}
+
+{% block dash_content %}
+<div class="dash-head">
+  <div>
+    <h1>My bookings</h1>
+    <p>Apartments you've requested and what the landlords said.</p>
+  </div>
+  <a class="btn btn-primary" href="{% url 'apartments:list' %}">{% icon "search" 18 %} Find apartments</a>
+</div>
+
+{% if bookings %}
+  {% for booking in bookings %}{% include "bookings/partials/booking_card.html" with mode="tenant" %}{% endfor %}
+{% else %}
+  {% url 'apartments:list' as list_url %}
+  {% include "partials/empty_state.html" with empty_icon="calendar" title="No bookings yet" text="Found a place you like? Press “Book this apartment” on its page — the landlord gets your request instantly." action_url=list_url action_label="Browse apartments" %}
+{% endif %}
+{% endblock %}

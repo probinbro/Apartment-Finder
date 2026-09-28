@@ -75,6 +75,7 @@ INSTALLED_APPS = [
     "core",
     "users",
     "apartments",
+    "bookings",
     "admin_panel",
 ]
 
@@ -104,6 +105,7 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
                 "core.context_processors.site",
                 "core.context_processors.admin_badges",
+                "core.context_processors.user_badges",
             ],
             "builtins": ["core.templatetags.ui"],
         },
@@ -211,12 +213,45 @@ if not DEBUG:
 # --------------------------------------------------------------------------
 
 LANGUAGE_CODE = "en-us"
-TIME_ZONE = env("TIME_ZONE", "UTC")
+TIME_ZONE = env("TIME_ZONE", "Asia/Dhaka")
 USE_I18N = True
 USE_TZ = True
 
-# Display-only currency symbol for rents.
-CURRENCY_SYMBOL = env("CURRENCY_SYMBOL", "$")
+# Rents are in Bangladeshi Taka, shown with South-Asian (lakh) digit grouping: ৳1,50,000.
+CURRENCY_SYMBOL = env("CURRENCY_SYMBOL", "৳")
+USE_LAKH_GROUPING = env_bool("USE_LAKH_GROUPING", True)
+
+# --------------------------------------------------------------------------
+# Bookings
+# --------------------------------------------------------------------------
+
+# An unanswered booking request holds the apartment for this many days, then expires.
+BOOKING_HOLD_DAYS = int(env("BOOKING_HOLD_DAYS", "3"))
+# Anti-abuse: how many open (pending/accepted) bookings one user may hold at once.
+MAX_ACTIVE_BOOKINGS_PER_USER = int(env("MAX_ACTIVE_BOOKINGS_PER_USER", "3"))
+
+# --------------------------------------------------------------------------
+# Email — booking notifications
+# --------------------------------------------------------------------------
+# Priority: Brevo HTTP API (works on hosts that block SMTP, e.g. Render free) →
+# SMTP (e.g. Gmail with an app password) → console output (development).
+
+DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL", f"{SITE_NAME} <no-reply@example.com>")
+BREVO_API_KEY = env("BREVO_API_KEY", "")
+EMAIL_HOST = env("EMAIL_HOST", "")
+EMAIL_TIMEOUT = 10
+if BREVO_API_KEY:
+    EMAIL_BACKEND = "core.email_backends.BrevoEmailBackend"
+elif EMAIL_HOST:
+    EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+    EMAIL_PORT = int(env("EMAIL_PORT", "587"))
+    EMAIL_HOST_USER = env("EMAIL_HOST_USER", "")
+    EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD", "")
+    EMAIL_USE_TLS = env_bool("EMAIL_USE_TLS", True)
+else:
+    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+# Fallback recipients for bookings on listings that have no landlord account.
+ADMIN_NOTIFICATION_EMAILS = env_list("ADMIN_NOTIFICATION_EMAILS", "")
 
 # --------------------------------------------------------------------------
 # Static & media files

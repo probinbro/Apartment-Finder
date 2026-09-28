@@ -166,7 +166,7 @@ class _BaseClient:
         if response.status_code == 429:
             code = code or "over_request_rate_limit"
         message = AUTH_ERROR_MESSAGES.get(str(code)) if code else None
-        logger.info("Supabase error status=%s code=%s", response.status_code, code)
+        logger.debug("Supabase error status=%s code=%s", response.status_code, code)
         return error_cls(message, code=code, status=response.status_code)
 
 

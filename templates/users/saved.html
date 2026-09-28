@@ -6,9 +6,15 @@
 <div class="dash-head">
   <div>
     <h1>Saved apartments</h1>
-    <p>Keep track of the places you like.</p>
+    <p>Places you've tapped the ♥ on. Booked ones may become available again — check back.</p>
   </div>
 </div>
-{% url 'apartments:list' as list_url %}
-{% include "partials/empty_state.html" with empty_icon="heart" title="Favorites are coming soon" text="Soon you'll be able to save apartments with one click and find them here. In the meantime, keep exploring!" action_url=list_url action_label="Browse apartments" %}
+{% if apartments %}
+  <div class="grid grid-3" style="grid-template-columns:repeat(auto-fill,minmax(250px,1fr))">
+    {% for apartment in apartments %}{% include "partials/apartment_card.html" %}{% endfor %}
+  </div>
+{% else %}
+  {% url 'apartments:list' as list_url %}
+  {% include "partials/empty_state.html" with empty_icon="heart" title="No saved apartments yet" text="Tap the heart on any apartment to save it here for later." action_url=list_url action_label="Browse apartments" %}
+{% endif %}
 {% endblock %}

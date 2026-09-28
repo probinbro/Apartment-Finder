@@ -158,7 +158,10 @@ def auth_session_view(request):
 
 @login_required
 def dashboard_view(request):
+    from bookings.models import Booking
+
     context = {
+        "open_booking_count": Booking.objects.filter(tenant=request.user).open().count(),
         "recent_apartments": Apartment.objects.published().with_cover()[:3],
         "published_count": Apartment.objects.published().count(),
     }
@@ -187,5 +190,5 @@ def profile_view(request):
 
 @login_required
 def saved_apartments_view(request):
-    # Placeholder for the upcoming favourites feature (see README → Future improvements).
-    return render(request, "users/saved.html")
+    apartments = Apartment.objects.published().with_cover().filter(saved_by__user=request.user).order_by("-saved_by__created_at")
+    return render(request, "users/saved.html", {"apartments": apartments})

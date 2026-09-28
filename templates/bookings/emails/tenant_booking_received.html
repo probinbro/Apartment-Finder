@@ -1,0 +1,8 @@
+{% extends "bookings/emails/base.html" %}
+{% block content %}
+<h2 style="margin:0 0 8px;font-size:20px">Your booking request was sent ✅</h2>
+<p style="margin:0;color:#334155;font-size:14px">Hi {{ booking.full_name }}, we've sent your request to the landlord. The apartment is on hold for you until <strong>{{ booking.expires_at|date:"j M, g:i A" }}</strong>.</p>
+{% include "bookings/emails/_apartment_box.html" %}
+<p style="font-size:14px;color:#334155">You'll get another email when the landlord responds. Once accepted, their phone number is shared with you.</p>
+<p style="margin:20px 0 0"><a href="{{ tenant_url }}" style="background:#0f766e;color:#ffffff;text-decoration:none;padding:12px 20px;border-radius:10px;font-weight:700;display:inline-block">View my bookings</a></p>
+{% endblock %}

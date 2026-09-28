@@ -59,12 +59,17 @@
 
   <div class="form-section">
     <h3>Rent &amp; details</h3>
-    <p>Monthly rent in {{ CURRENCY_SYMBOL }}. Use 0 bedrooms for a studio.</p>
+    <p>Monthly rent in Taka ({{ CURRENCY_SYMBOL }}). Advance is usually 2–3 months. Use 0 bedrooms for a studio or seat.</p>
     <div class="form-grid">
       {% include "partials/field.html" with field=form.rent %}
       {% include "partials/field.html" with field=form.size_sqft %}
       {% include "partials/field.html" with field=form.bedrooms %}
       {% include "partials/field.html" with field=form.bathrooms %}
+      {% include "partials/field.html" with field=form.advance_months %}
+      {% include "partials/field.html" with field=form.service_charge %}
+      {% include "partials/field.html" with field=form.floor_number %}
+      {% include "partials/field.html" with field=form.total_floors %}
+      {% include "partials/field.html" with field=form.tenant_preference %}
       {% include "partials/field.html" with field=form.availability %}
       {% include "partials/field.html" with field=form.available_from %}
       {% include "partials/field.html" with field=form.amenities span=True %}

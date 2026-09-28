@@ -11,5 +11,6 @@ urlpatterns = [
     path("my-listings/<int:pk>/edit/", owner_views.edit_listing_view, name="edit_listing"),
     path("my-listings/<int:pk>/delete/", owner_views.delete_listing_view, name="delete_listing"),
     path("my-listings/<int:pk>/photos/<int:image_pk>/delete/", owner_views.delete_listing_photo_view, name="delete_listing_photo"),
+    path("<slug:slug>/save/", views.toggle_save_view, name="toggle_save"),
     path("<slug:slug>/", views.apartment_detail_view, name="detail"),
 ]
