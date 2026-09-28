@@ -1,0 +1,11 @@
+{% if messages %}
+<div class="messages" role="status" aria-live="polite">
+  {% for message in messages %}
+    <div class="alert alert-{{ message.tags|default:'info' }}">
+      {% if message.tags == "success" %}{% icon "check" 18 %}{% elif message.tags == "error" or message.tags == "warning" %}{% icon "alert" 18 %}{% else %}{% icon "info" 18 %}{% endif %}
+      <span>{{ message }}</span>
+      <button type="button" class="alert-close" aria-label="Dismiss">{% icon "x" 16 %}</button>
+    </div>
+  {% endfor %}
+</div>
+{% endif %}

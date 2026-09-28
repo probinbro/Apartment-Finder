@@ -1,0 +1,25 @@
+# Secrets — never commit real credentials
+.env
+.env.*
+!.env.example
+
+# Python
+venv/
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Django
+db.sqlite3
+staticfiles/
+media/*
+!media/.gitkeep
+
+# Tooling / OS
+.idea/
+.vscode/
+.coverage
+htmlcov/
+.DS_Store
+Thumbs.db

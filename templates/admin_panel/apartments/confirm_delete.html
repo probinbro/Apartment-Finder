@@ -1,0 +1,17 @@
+{% extends "admin_panel/base_admin.html" %}
+
+{% block title %}Delete {{ apartment.title }}{% endblock %}
+
+{% block dash_content %}
+<div class="status-card" style="margin-top:24px">
+  <div class="empty-icon" style="background:var(--danger-bg);color:var(--danger)">{% icon "trash" 28 %}</div>
+  <h1 style="font-size:1.5rem">Delete this apartment?</h1>
+  <p class="text-muted"><strong>{{ apartment.title }}</strong> and its {{ apartment.images.count }} image{{ apartment.images.count|pluralize }} will be permanently deleted. This cannot be undone.</p>
+  <p class="text-sm text-muted">Tip: to hide a listing temporarily, unpublish or archive it instead.</p>
+  <form method="post" class="btn-row" style="justify-content:center">
+    {% csrf_token %}
+    <a class="btn btn-outline" href="{% url 'admin_panel:apartments' %}">Cancel</a>
+    <button class="btn btn-danger" type="submit">{% icon "trash" 16 %} Delete permanently</button>
+  </form>
+</div>
+{% endblock %}

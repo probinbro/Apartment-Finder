@@ -1,0 +1,52 @@
+{% extends "users/account_base.html" %}
+
+{% block title %}My profile{% endblock %}
+
+{% block dash_content %}
+<div class="dash-head">
+  <div>
+    <h1>Profile</h1>
+    <p>Manage the personal information shown on your account.</p>
+  </div>
+</div>
+
+<form method="post" enctype="multipart/form-data" class="form-card" style="max-width:760px" novalidate>
+  {% csrf_token %}
+  {% include "partials/form_errors.html" %}
+
+  <div class="form-section">
+    <h3>Profile photo</h3>
+    <p>JPG, PNG or WEBP, up to 5 MB. We'll crop and resize it for you.</p>
+    <div class="media-avatar-preview">
+      {% include "partials/avatar.html" with person=user large=True id="avatar-preview" %}
+      <div class="field grow" style="flex:1">
+        {{ form.avatar }}
+        {% for error in form.avatar.errors %}<p class="error">{{ error }}</p>{% endfor %}
+        {% if user.avatar %}<label class="check text-sm mt-2">{{ form.remove_avatar }} Remove current photo</label>{% endif %}
+      </div>
+    </div>
+  </div>
+
+  <div class="form-section">
+    <h3>Personal details</h3>
+    <p>Your email address is managed by your login and can't be changed here.</p>
+    <div class="form-grid">
+      {% include "partials/field.html" with field=form.full_name %}
+      {% include "partials/field.html" with field=form.phone %}
+      <div class="field span-2">
+        <label for="email">Email</label>
+        <input id="email" type="email" value="{{ user.email }}" disabled>
+      </div>
+      <div class="field">
+        <span class="label">Account type</span>
+        <div><span class="badge {% if user.is_admin %}badge-brand{% endif %}">{{ user.get_role_display }}</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <a class="btn btn-ghost" href="{% url 'users:dashboard' %}">Cancel</a>
+    <button class="btn btn-primary" type="submit">{% icon "check" 18 %} Save changes</button>
+  </div>
+</form>
+{% endblock %}

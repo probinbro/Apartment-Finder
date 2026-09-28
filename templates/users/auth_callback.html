@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Signing you in{% endblock %}
+{% block body_attrs %}data-session-url="{% url 'users:auth_session' %}"{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="status-card">
+    {% csrf_token %}
+    <div class="empty-icon">{% icon "key" 28 %}</div>
+    <h1 style="font-size:1.6rem">Signing you in…</h1>
+    <div id="callback-status" class="text-muted"><p>Please wait while we confirm your account.</p></div>
+    <div id="callback-actions" class="btn-row" style="justify-content:center" hidden>
+      <a class="btn btn-primary" href="{% url 'users:login' %}">Go to log in</a>
+      <a class="btn btn-outline" href="{% url 'core:home' %}">Home</a>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}<script src="{% static 'js/auth-callback.js' %}" defer></script>{% endblock %}

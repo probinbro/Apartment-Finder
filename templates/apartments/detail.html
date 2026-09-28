@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+
+{% block title %}{{ apartment.title }}{% endblock %}
+{% block meta_description %}{{ apartment.description|truncatechars:155 }}{% endblock %}
+
+{% block content %}
+{% if not apartment.is_published %}
+<div class="preview-banner">
+  <div class="container">
+    <span>{% icon "eye-off" 16 %} Preview — this listing is <strong>{{ apartment.get_status_display|lower }}</strong> and not visible to the public.</span>
+    {% if user.is_admin %}
+      <span class="btn-row">
+        {% if apartment.status == "pending" %}<a class="btn btn-sm btn-primary" href="{% url 'admin_panel:request_review' apartment.pk %}">{% icon "check" 14 %} Review request</a>{% endif %}
+        <a class="btn btn-sm btn-outline" href="{% url 'admin_panel:apartment_edit' apartment.pk %}">{% icon "edit" 14 %} Edit listing</a>
+      </span>
+    {% elif apartment.owner_can_edit %}
+      <a class="btn btn-sm btn-outline" href="{% url 'apartments:edit_listing' apartment.pk %}">{% icon "edit" 14 %} Edit my listing</a>
+    {% endif %}
+  </div>
+</div>
+{% endif %}
+
+<div class="container">
+  <div class="detail-top">
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="{% url 'core:home' %}">Home</a> {% icon "chevron-right" 14 %}
+      <a href="{% url 'apartments:list' %}">Apartments</a> {% icon "chevron-right" 14 %}
+      <a href="{% url 'apartments:list' %}?city={{ apartment.city|urlencode }}">{{ apartment.city }}</a>
+    </nav>
+    <div class="detail-title-row">
+      <div>
+        <h1>{{ apartment.title }}</h1>
+        <div class="detail-meta">
+          <span>{% icon "map-pin" 16 %} {{ apartment.address }}, {{ apartment.location_display }}</span>
+          <span class="badge badge-brand">{{ apartment.property_type }}</span>
+          {% if apartment.availability == "available" %}<span class="badge badge-success badge-dot">{{ apartment.get_availability_display }}</span>
+          {% elif apartment.availability == "coming_soon" %}<span class="badge badge-warning badge-dot">{{ apartment.get_availability_display }}{% if apartment.available_from %} · {{ apartment.available_from|date:"M j" }}{% endif %}</span>
+          {% else %}<span class="badge badge-danger badge-dot">{{ apartment.get_availability_display }}</span>{% endif %}
+        </div>
+      </div>
+      <div class="detail-price">
+        <strong>{{ apartment.rent|money }}</strong>
+        <span>per month</span>
+      </div>
+    </div>
+  </div>
+
+  {% if images %}
+    <div class="gallery{% if images|length < 3 %} count-{{ images|length }}{% endif %}">
+      {% for image in images|slice:":3" %}
+        <button type="button" class="gallery-item" data-gallery-index="{{ forloop.counter0 }}" aria-label="Open photo {{ forloop.counter }} of {{ images|length }}">
+          <img src="{{ image.image.url }}" alt="{{ image.caption|default:apartment.title }}" {% if not forloop.first %}loading="lazy"{% endif %}>
+          {% if forloop.last and images|length > 1 %}
+            <span class="gallery-more">{% icon "image" 16 %} {{ images|length }} photo{{ images|length|pluralize }}</span>
+          {% endif %}
+        </button>
+      {% endfor %}
+    </div>
+    {{ gallery_data|json_script:"gallery-data" }}
+  {% else %}
+    <div class="gallery-empty img-placeholder">{% icon "image" 56 %}</div>
+  {% endif %}
+
+  <div class="detail-layout">
+    <div>
+      <section class="detail-card">
+        <h2>Key facts</h2>
+        <div class="key-facts">
+          <div class="key-fact">{% icon "bed" 22 %}<strong>{{ apartment.bedrooms_display }}</strong><span>Bedrooms</span></div>
+          <div class="key-fact">{% icon "bath" 22 %}<strong>{{ apartment.bathrooms }}</strong><span>Bathroom{{ apartment.bathrooms|pluralize }}</span></div>
+          <div class="key-fact">{% icon "ruler" 22 %}<strong>{% if apartment.size_sqft %}{{ apartment.size_sqft|floatformat:"0g" }} ft²{% else %}—{% endif %}</strong><span>Size</span></div>
+          <div class="key-fact">{% icon "sofa" 22 %}<strong>{{ apartment.get_furnishing_display }}</strong><span>Furnishing</span></div>
+        </div>
+      </section>
+
+      <section class="detail-card">
+        <h2>About this apartment</h2>
+        <div class="description">{{ apartment.description }}</div>
+      </section>
+
+      <section class="detail-card">
+        <h2>Amenities</h2>
+        {% with amenities=apartment.amenities.all %}
+          {% if amenities %}
+            <ul class="amenity-list">
+              {% for amenity in amenities %}
+                <li><span class="icon-wrap">{% icon amenity.icon|default:"check" 18 %}</span>{{ amenity.name }}</li>
+              {% endfor %}
+            </ul>
+          {% else %}
+            <p class="text-muted mb-0">No amenities listed for this apartment.</p>
+          {% endif %}
+        {% endwith %}
+      </section>
+
+      <section class="detail-card">
+        <h2>Details</h2>
+        <dl class="info-list">
+          <div><dt>Property type</dt><dd>{{ apartment.property_type }}</dd></div>
+          <div><dt>Availability</dt><dd>{{ apartment.get_availability_display }}</dd></div>
+          <div><dt>Available from</dt><dd>{{ apartment.available_from|date:"M j, Y"|default:"Now" }}</dd></div>
+          <div><dt>City</dt><dd>{{ apartment.city }}</dd></div>
+          <div><dt>Area</dt><dd>{{ apartment.area }}</dd></div>
+          <div><dt>Postal code</dt><dd>{{ apartment.postal_code|default:"—" }}</dd></div>
+          <div><dt>Listed</dt><dd>{{ apartment.published_at|default:apartment.created_at|date:"M j, Y" }}</dd></div>
+          <div><dt>Last updated</dt><dd>{{ apartment.updated_at|date:"M j, Y" }}</dd></div>
+        </dl>
+      </section>
+    </div>
+
+    <aside>
+      <div class="detail-card contact-card">
+        <div class="price">{{ apartment.rent|money }} <small>/ month</small></div>
+        <div class="contact-person">
+          <span class="avatar">{{ apartment.contact_name|slice:":1"|upper }}</span>
+          <div><strong>{{ apartment.contact_name }}</strong><span>Listing contact</span></div>
+        </div>
+        {% if apartment.contact_phone %}
+          <a class="btn btn-primary btn-block" href="tel:{{ apartment.contact_phone }}">{% icon "phone" 18 %} {{ apartment.contact_phone }}</a>
+        {% endif %}
+        {% if apartment.contact_email %}
+          <a class="btn btn-outline btn-block" href="mailto:{{ apartment.contact_email }}?subject={{ apartment.title|urlencode }}">{% icon "mail" 18 %} Email contact</a>
+        {% endif %}
+        <p class="text-sm text-muted mt-2 mb-0">Mention {{ SITE_NAME }} when you get in touch. Never send money before viewing a property.</p>
+      </div>
+    </aside>
+  </div>
+
+  {% if similar %}
+  <section class="section-sm" style="padding-top:0;padding-bottom:72px">
+    <div class="section-head"><h2 class="mb-0">More in {{ apartment.city }}</h2></div>
+    <div class="grid grid-3">
+      {% for apartment in similar %}{% include "partials/apartment_card.html" %}{% endfor %}
+    </div>
+  </section>
+  {% endif %}
+</div>
+
+{% if images %}
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo gallery" aria-hidden="true">
+  <span class="lightbox-counter"></span>
+  <button type="button" class="lightbox-btn lightbox-close" aria-label="Close gallery">{% icon "x" 22 %}</button>
+  <div class="lightbox-stage">
+    <button type="button" class="lightbox-btn lightbox-prev" aria-label="Previous photo">{% icon "chevron-left" 24 %}</button>
+    <img src="" alt="">
+    <button type="button" class="lightbox-btn lightbox-next" aria-label="Next photo">{% icon "chevron-right" 24 %}</button>
+  </div>
+  <div class="lightbox-caption"></div>
+  <div class="lightbox-thumbs"></div>
+</div>
+{% endif %}
+{% endblock %}

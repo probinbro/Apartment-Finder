@@ -1,0 +1,25 @@
+{% with cover=apartment.cover_image %}
+<article class="apt-card">
+  <div class="apt-card-media">
+    {% if cover %}
+      <img src="{{ cover.image.url }}" alt="{{ cover.caption|default:apartment.title }}" loading="lazy">
+    {% else %}
+      <div class="img-placeholder">{% icon "building" 48 %}</div>
+    {% endif %}
+    <div class="apt-card-badges">
+      {% if apartment.is_featured %}<span class="badge badge-accent">{% icon "star" 12 %} Featured</span>{% endif %}
+      <span class="badge">{{ apartment.property_type }}</span>
+    </div>
+    <div class="apt-card-price">{{ apartment.rent|money }} <small>/ month</small></div>
+  </div>
+  <div class="apt-card-body">
+    <h3 class="apt-card-title"><a href="{{ apartment.get_absolute_url }}">{{ apartment.title }}</a></h3>
+    <div class="apt-card-location">{% icon "map-pin" 15 %} {{ apartment.location_display }}</div>
+    <div class="apt-card-specs">
+      <span>{% icon "bed" 16 %} {{ apartment.bedrooms_display }}</span>
+      <span>{% icon "bath" 16 %} {{ apartment.bathrooms }} bath</span>
+      {% if apartment.size_sqft %}<span>{% icon "ruler" 16 %} {{ apartment.size_sqft|floatformat:"0g" }} ft²</span>{% endif %}
+    </div>
+  </div>
+</article>
+{% endwith %}

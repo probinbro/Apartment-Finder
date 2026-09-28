@@ -1,0 +1,19 @@
+{% extends "users/auth_base.html" %}
+
+{% block title %}Log in{% endblock %}
+{% block aside_title %}Welcome back{% endblock %}
+
+{% block auth_content %}
+<h1>Log in</h1>
+<p>Good to see you again. Enter your details to continue.</p>
+{% include "partials/social_login.html" %}
+<form method="post" novalidate>
+  {% csrf_token %}
+  <input type="hidden" name="next" value="{{ next }}">
+  {% include "partials/form_errors.html" %}
+  {% include "partials/field.html" with field=form.email %}
+  {% include "partials/field.html" with field=form.password %}
+  <button class="btn btn-primary btn-lg btn-block" type="submit">{% icon "login" 18 %} Log in</button>
+</form>
+<p class="auth-switch">New here? <a href="{% url 'users:register' %}">Create a free account</a></p>
+{% endblock %}

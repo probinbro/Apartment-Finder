@@ -1,0 +1,52 @@
+{% extends "admin_panel/base_admin.html" %}
+
+{% block title %}Types & amenities{% endblock %}
+
+{% block dash_content %}
+<div class="dash-head">
+  <div>
+    <h1>Property types &amp; amenities</h1>
+    <p>Options available when creating listings and filtering searches.</p>
+  </div>
+</div>
+
+<div class="two-col" style="grid-template-columns:1fr 1fr">
+  <div class="panel" style="align-self:start">
+    <div class="panel-head"><h2>Property types</h2></div>
+    <ul class="list-simple">
+      {% for item in property_types %}
+        <li>{% icon "building" 18 %}<div class="grow">{{ item.name }}</div><span class="meta">{{ item.n }} listing{{ item.n|pluralize }}</span>
+          <form method="post" action="{% url 'admin_panel:taxonomy_delete' 'type' item.pk %}">{% csrf_token %}<button class="btn btn-ghost btn-sm btn-icon" type="submit" title="Delete" data-confirm="Delete “{{ item.name }}”?" {% if item.n %}disabled{% endif %}>{% icon "trash" 15 %}</button></form>
+        </li>
+      {% endfor %}
+    </ul>
+    <form method="post" class="panel-body" style="border-top:1px solid var(--line)" novalidate>
+      {% csrf_token %}<input type="hidden" name="kind" value="type">
+      <div class="form-grid">
+        {% include "partials/field.html" with field=type_form.name %}
+        {% include "partials/field.html" with field=type_form.sort_order %}
+      </div>
+      <button class="btn btn-primary btn-sm mt-2" type="submit">{% icon "plus" 14 %} Add type</button>
+    </form>
+  </div>
+
+  <div class="panel" style="align-self:start">
+    <div class="panel-head"><h2>Amenities</h2></div>
+    <ul class="list-simple">
+      {% for item in amenities %}
+        <li>{% icon item.icon|default:"check" 18 %}<div class="grow">{{ item.name }}</div><span class="meta">{{ item.n }} listing{{ item.n|pluralize }}</span>
+          <form method="post" action="{% url 'admin_panel:taxonomy_delete' 'amenity' item.pk %}">{% csrf_token %}<button class="btn btn-ghost btn-sm btn-icon" type="submit" title="Delete" data-confirm="Delete “{{ item.name }}”? It will be removed from {{ item.n }} listing{{ item.n|pluralize }}.">{% icon "trash" 15 %}</button></form>
+        </li>
+      {% endfor %}
+    </ul>
+    <form method="post" class="panel-body" style="border-top:1px solid var(--line)" novalidate>
+      {% csrf_token %}<input type="hidden" name="kind" value="amenity">
+      <div class="form-grid">
+        {% include "partials/field.html" with field=amenity_form.name %}
+        {% include "partials/field.html" with field=amenity_form.icon %}
+      </div>
+      <button class="btn btn-primary btn-sm mt-2" type="submit">{% icon "plus" 14 %} Add amenity</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

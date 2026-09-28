@@ -1,0 +1,49 @@
+{% extends "admin_panel/base_admin.html" %}
+
+{% block title %}Users{% endblock %}
+
+{% block dash_content %}
+<div class="dash-head">
+  <div>
+    <h1>Users</h1>
+    <p>Registered accounts. Passwords and login credentials are managed by Supabase Auth and never shown here.</p>
+  </div>
+</div>
+
+<div class="toolbar">
+  <form method="get" role="search">
+    <input type="search" name="q" value="{{ query }}" placeholder="Search name or email" aria-label="Search users">
+    <select name="role" aria-label="Filter by role">
+      <option value="">All roles</option>
+      {% for value, label in role_choices %}<option value="{{ value }}" {% if role == value %}selected{% endif %}>{{ label }}</option>{% endfor %}
+    </select>
+    <button class="btn btn-outline" type="submit">{% icon "search" 16 %} Filter</button>
+  </form>
+</div>
+
+<div class="panel">
+  {% if page_obj.object_list %}
+  <div class="table-wrap">
+    <table class="table">
+      <thead><tr><th>User</th><th>Role</th><th>Status</th><th class="hide-sm">Listings</th><th class="hide-sm">Joined</th><th class="hide-sm">Last login</th><th></th></tr></thead>
+      <tbody>
+        {% for member in page_obj %}
+        <tr>
+          <td><div class="cell-user">{% include "partials/avatar.html" with person=member %}<div><span class="row-title">{{ member.display_name }}{% if member.pk == user.pk %} <span class="badge">You</span>{% endif %}</span><span class="row-sub">{{ member.email }}</span></div></div></td>
+          <td>{% if member.role == "admin" %}<span class="badge badge-brand">Admin</span>{% else %}<span class="badge">User</span>{% endif %}</td>
+          <td>{% if member.is_active %}<span class="badge badge-success badge-dot">Active</span>{% else %}<span class="badge badge-danger badge-dot">Disabled</span>{% endif %}</td>
+          <td class="hide-sm">{{ member.listing_count }}</td>
+          <td class="hide-sm row-sub">{{ member.created_at|date:"M j, Y" }}</td>
+          <td class="hide-sm row-sub">{{ member.last_login|date:"M j, Y"|default:"Never" }}</td>
+          <td class="text-right"><a class="btn btn-outline btn-sm" href="{% url 'admin_panel:user_edit' member.pk %}">Manage</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+    <div class="panel-body">{% include "partials/empty_state.html" with empty_icon="users" title="No users found" text="Try a different search." %}</div>
+  {% endif %}
+</div>
+{% include "partials/pagination.html" %}
+{% endblock %}

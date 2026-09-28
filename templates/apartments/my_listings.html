@@ -1,0 +1,56 @@
+{% extends "users/account_base.html" %}
+
+{% block title %}My listings{% endblock %}
+
+{% block dash_content %}
+<div class="dash-head">
+  <div>
+    <h1>My listings</h1>
+    <p>Homes you've listed for rent and their review status.</p>
+  </div>
+  <a class="btn btn-primary" href="{% url 'apartments:submit' %}">{% icon "plus" 18 %} List a home</a>
+</div>
+
+{% if listings %}
+  <div class="grid" style="gap:16px">
+    {% for apartment in listings %}
+      {% with cover=apartment.cover_image %}
+      <div class="listing-row">
+        <div class="listing-row-media">
+          {% if cover %}<img src="{{ cover.image.url }}" alt="">{% else %}<div class="img-placeholder">{% icon "image" 28 %}</div>{% endif %}
+        </div>
+        <div class="listing-row-body">
+          <div class="flex items-center gap-2" style="flex-wrap:wrap">
+            {% include "admin_panel/partials/status_badge.html" %}
+            <span class="text-sm text-muted">Submitted {{ apartment.created_at|date:"M j, Y" }}</span>
+          </div>
+          <h3 class="mb-0 mt-0" style="margin-top:6px">{{ apartment.title }}</h3>
+          <div class="text-sm text-muted">{{ apartment.location_display }} · {{ apartment.rent|money }}/month · {{ apartment.bedrooms_display }}</div>
+
+          {% if apartment.status == "pending" %}
+            <p class="text-sm mb-0 mt-2">{% icon "info" 14 %} Our team is reviewing your listing. You'll see it here once it's approved.</p>
+          {% elif apartment.status == "rejected" %}
+            <div class="alert alert-error alert-inline mt-2 mb-0">{% icon "alert" 16 %}<div><strong>Changes requested:</strong> {{ apartment.review_note|default:"Please review your listing details." }}</div></div>
+          {% elif apartment.status == "published" %}
+            <p class="text-sm mb-0 mt-2" style="color:var(--success)">{% icon "check" 14 %} Live on the site{% if apartment.published_at %} since {{ apartment.published_at|date:"M j, Y" }}{% endif %}.</p>
+          {% endif %}
+        </div>
+        <div class="listing-row-actions">
+          <a class="btn btn-outline btn-sm" href="{{ apartment.get_absolute_url }}">{% icon "eye" 14 %} {% if apartment.is_published %}View{% else %}Preview{% endif %}</a>
+          {% if apartment.owner_can_edit %}
+            <a class="btn btn-outline btn-sm" href="{% url 'apartments:edit_listing' apartment.pk %}">{% icon "edit" 14 %} {% if apartment.status == "rejected" %}Fix &amp; resubmit{% else %}Edit{% endif %}</a>
+          {% endif %}
+          <form method="post" action="{% url 'apartments:delete_listing' apartment.pk %}">
+            {% csrf_token %}
+            <button class="btn btn-danger-soft btn-sm" type="submit" data-confirm="Remove “{{ apartment.title }}” permanently?">{% icon "trash" 14 %} Remove</button>
+          </form>
+        </div>
+      </div>
+      {% endwith %}
+    {% endfor %}
+  </div>
+{% else %}
+  {% url 'apartments:submit' as submit_url %}
+  {% include "partials/empty_state.html" with empty_icon="key" title="You haven't listed a home yet" text="Have a place for rent? List it for free — our team reviews it and publishes it for renters to find." action_url=submit_url action_label="List your home" %}
+{% endif %}
+{% endblock %}

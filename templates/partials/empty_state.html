@@ -1,0 +1,6 @@
+<div class="empty">
+  <div class="empty-icon">{% icon empty_icon|default:"search" 28 %}</div>
+  <h3>{{ title }}</h3>
+  {% if text %}<p>{{ text }}</p>{% endif %}
+  {% if action_url %}<a class="btn btn-primary" href="{{ action_url }}">{{ action_label }}</a>{% endif %}
+</div>

@@ -1,0 +1,80 @@
+{% extends "admin_panel/base_admin.html" %}
+
+{% block title %}Images · {{ apartment.title }}{% endblock %}
+
+{% block dash_content %}
+<div class="dash-head">
+  <div>
+    <nav class="breadcrumbs"><a href="{% url 'admin_panel:apartments' %}">Apartments</a> {% icon "chevron-right" 14 %} <a href="{% url 'admin_panel:apartment_edit' apartment.pk %}">{{ apartment.title|truncatechars:40 }}</a> {% icon "chevron-right" 14 %} <span>Images</span></nav>
+    <h1>Manage images</h1>
+    <p>The primary image is used on listing cards and as the first gallery photo.</p>
+  </div>
+  <div class="btn-row">
+    <a class="btn btn-outline" href="{% url 'admin_panel:apartment_edit' apartment.pk %}">{% icon "edit" 16 %} Edit details</a>
+    <a class="btn btn-outline" href="{{ apartment.get_absolute_url }}" target="_blank" rel="noopener">{% icon "eye" 16 %} View listing</a>
+  </div>
+</div>
+
+<div class="panel mb-3">
+  <div class="panel-head"><h2>Upload photos</h2></div>
+  <div class="panel-body">
+    <form method="post" enctype="multipart/form-data" novalidate>
+      {% csrf_token %}
+      <div class="dropzone">
+        {% icon "upload" 32 %}
+        <p class="mb-0"><strong>Drag &amp; drop images here</strong> or choose files</p>
+        <p class="hint">JPG, PNG or WEBP · max 5 MB each · up to 10 at a time. Images are resized and optimized automatically.</p>
+        {{ form.images }}
+      </div>
+      {% for error in form.images.errors %}<p class="error mt-2">{{ error }}</p>{% endfor %}
+      <div class="flex gap-3 mt-2" style="flex-wrap:wrap;align-items:end">
+        <div class="field" style="flex:1;min-width:220px">
+          <label for="{{ form.caption.id_for_label }}">Caption (optional)</label>
+          {{ form.caption }}
+        </div>
+        <button class="btn btn-primary" type="submit">{% icon "upload" 18 %} Upload</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="panel">
+  <div class="panel-head"><h2>Photos ({{ images|length }})</h2></div>
+  <div class="panel-body">
+    {% if images %}
+      <div class="image-grid">
+        {% for image in images %}
+          <div class="image-tile{% if image.is_primary %} is-primary{% endif %}">
+            <div class="image-tile-media">
+              <img src="{{ image.image.url }}" alt="{{ image.caption }}" loading="lazy">
+              {% if image.is_primary %}<span class="badge badge-accent">{% icon "star" 12 %} Primary</span>{% endif %}
+            </div>
+            <div class="image-tile-body">
+              <form method="post" action="{% url 'admin_panel:image_caption' image.pk %}" class="caption-form" data-no-loading>
+                {% csrf_token %}
+                <input type="text" name="caption" value="{{ image.caption }}" maxlength="150" placeholder="Add a caption" aria-label="Caption">
+                <button class="btn btn-outline btn-sm" type="submit">Save</button>
+              </form>
+              <div class="meta">{{ image.width }}×{{ image.height }} · {{ image.file_size|filesizeformat }} · {{ image.created_at|date:"M j, Y" }}</div>
+              <div class="image-actions">
+                {% if not image.is_primary %}
+                  <form method="post" action="{% url 'admin_panel:image_primary' image.pk %}">{% csrf_token %}<button class="btn btn-outline btn-sm" type="submit">{% icon "star" 14 %} Set primary</button></form>
+                {% endif %}
+                <button class="btn btn-outline btn-sm" type="button" data-toggle="replace-{{ image.pk }}">{% icon "refresh" 14 %} Replace</button>
+                <form method="post" action="{% url 'admin_panel:image_delete' image.pk %}">{% csrf_token %}<button class="btn btn-danger-soft btn-sm" type="submit" data-confirm="Delete this image permanently?">{% icon "trash" 14 %}</button></form>
+              </div>
+              <form method="post" enctype="multipart/form-data" action="{% url 'admin_panel:image_replace' image.pk %}" class="replace-form" id="replace-{{ image.pk }}">
+                {% csrf_token %}
+                <input type="file" name="image" accept="image/jpeg,image/png,image/webp" required aria-label="Replacement image">
+                <button class="btn btn-primary btn-sm" type="submit">Upload replacement</button>
+              </form>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      {% include "partials/empty_state.html" with empty_icon="image" title="No photos yet" text="Listings with photos get far more attention. Upload a few above." %}
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

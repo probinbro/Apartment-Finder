@@ -1,0 +1,51 @@
+{% with url_name=request.resolver_match.url_name namespace=request.resolver_match.namespace %}
+<header class="site-header">
+  <nav class="nav container" aria-label="Main">
+    <a class="brand" href="{% url 'core:home' %}">
+      <span class="brand-mark">{% icon "home" 20 %}</span>
+      {{ SITE_NAME }}
+    </a>
+
+    <button class="nav-toggle" type="button" aria-label="Toggle menu" aria-expanded="false">{% icon "menu" 22 %}</button>
+
+    <div class="nav-links">
+      <a href="{% url 'core:home' %}" class="{% if url_name == 'home' %}active{% endif %}">Home</a>
+      <a href="{% url 'apartments:list' %}" class="{% if namespace == 'apartments' %}active{% endif %}">Apartments</a>
+      <a href="{% url 'core:about' %}" class="{% if url_name == 'about' %}active{% endif %}">About</a>
+      <a href="{% url 'core:contact' %}" class="{% if url_name == 'contact' %}active{% endif %}">Contact</a>
+    </div>
+
+    <div class="nav-actions">
+      <a class="btn btn-ghost btn-sm" href="{% url 'apartments:submit' %}">{% icon "plus" 16 %} List your home</a>
+      {% if user.is_authenticated %}
+        {% if user.is_admin %}
+          <a class="btn btn-outline btn-sm" href="{% url 'admin_panel:dashboard' %}">{% icon "dashboard" 16 %} Admin</a>
+        {% endif %}
+        <div class="user-menu">
+          <button class="user-menu-btn" type="button" data-dropdown="user-dropdown" aria-haspopup="true" aria-expanded="false">
+            {% include "partials/avatar.html" with person=user %}
+            <span class="truncate" style="max-width:140px">{{ user.display_name }}</span>
+            {% icon "chevron-down" 16 %}
+          </button>
+          <div class="dropdown" id="user-dropdown">
+            <div class="dropdown-head"><strong>{{ user.display_name }}</strong>{{ user.email }}</div>
+            <a href="{% url 'users:dashboard' %}">{% icon "dashboard" 18 %} Dashboard</a>
+            <a href="{% url 'users:profile' %}">{% icon "user" 18 %} Profile</a>
+            <a href="{% url 'apartments:my_listings' %}">{% icon "building" 18 %} My listings</a>
+            <a href="{% url 'users:saved' %}">{% icon "heart" 18 %} Saved apartments</a>
+            {% if user.is_admin %}<a href="{% url 'admin_panel:dashboard' %}">{% icon "settings" 18 %} Admin panel</a>{% endif %}
+            <hr>
+            <form method="post" action="{% url 'users:logout' %}" data-no-loading>
+              {% csrf_token %}
+              <button type="submit">{% icon "logout" 18 %} Log out</button>
+            </form>
+          </div>
+        </div>
+      {% else %}
+        <a class="btn btn-ghost" href="{% url 'users:login' %}">Log in</a>
+        <a class="btn btn-primary" href="{% url 'users:register' %}">Sign up</a>
+      {% endif %}
+    </div>
+  </nav>
+</header>
+{% endwith %}

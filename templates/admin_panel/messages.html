@@ -1,0 +1,39 @@
+{% extends "admin_panel/base_admin.html" %}
+
+{% block title %}Messages{% endblock %}
+
+{% block dash_content %}
+<div class="dash-head">
+  <div>
+    <h1>Contact messages</h1>
+    <p>Messages sent through the public contact form.</p>
+  </div>
+</div>
+
+{% if page_obj.object_list %}
+  {% for msg in page_obj %}
+    <div class="panel">
+      <div class="panel-head">
+        <div>
+          <h3>{% if not msg.is_read %}<span class="badge badge-accent">New</span> {% endif %}{{ msg.subject }}</h3>
+          <div class="text-sm text-muted">{{ msg.name }} · <a href="mailto:{{ msg.email }}">{{ msg.email }}</a> · {{ msg.created_at|date:"M j, Y H:i" }}</div>
+        </div>
+        <form method="post" action="{% url 'admin_panel:message_action' msg.pk %}" class="btn-row">
+          {% csrf_token %}
+          <input type="hidden" name="next" value="{{ request.get_full_path }}">
+          {% if msg.is_read %}
+            <button class="btn btn-outline btn-sm" name="action" value="unread">Mark unread</button>
+          {% else %}
+            <button class="btn btn-outline btn-sm" name="action" value="read">{% icon "check" 14 %} Mark read</button>
+          {% endif %}
+          <button class="btn btn-danger-soft btn-sm btn-icon" name="action" value="delete" title="Delete" data-confirm="Delete this message?">{% icon "trash" 14 %}</button>
+        </form>
+      </div>
+      <div class="panel-body description">{{ msg.message }}</div>
+    </div>
+  {% endfor %}
+  {% include "partials/pagination.html" %}
+{% else %}
+  {% include "partials/empty_state.html" with empty_icon="message" title="No messages" text="Messages from the contact page will appear here." %}
+{% endif %}
+{% endblock %}

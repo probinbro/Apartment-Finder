@@ -1,0 +1,1 @@
+<span class="avatar{% if large %} avatar-lg{% endif %}" {% if id %}id="{{ id }}"{% endif %}>{% if person.avatar %}<img src="{{ person.avatar.url }}" alt="">{% else %}{{ person.initials }}{% endif %}</span>

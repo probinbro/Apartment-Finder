@@ -1,0 +1,80 @@
+{% extends "admin_panel/base_admin.html" %}
+
+{% block title %}Manage apartments{% endblock %}
+
+{% block dash_content %}
+<div class="dash-head">
+  <div>
+    <h1>Apartments</h1>
+    <p>Create, edit, publish and remove listings.</p>
+  </div>
+  <a class="btn btn-primary" href="{% url 'admin_panel:apartment_create' %}">{% icon "plus" 18 %} Add apartment</a>
+</div>
+
+<div class="tabs">
+  <a href="{% url 'admin_panel:apartments' %}" class="{% if not status %}active{% endif %}">All</a>
+  {% for value, label in status_choices %}
+    <a href="?status={{ value }}" class="{% if status == value %}active{% endif %}">{{ label }}</a>
+  {% endfor %}
+</div>
+
+<div class="toolbar">
+  <form method="get" role="search">
+    {% if status %}<input type="hidden" name="status" value="{{ status }}">{% endif %}
+    <input type="search" name="q" value="{{ query }}" placeholder="Search title, city or area" aria-label="Search apartments">
+    <button class="btn btn-outline" type="submit">{% icon "search" 16 %} Search</button>
+  </form>
+</div>
+
+<div class="panel">
+  {% if page_obj.object_list %}
+  <div class="table-wrap">
+    <table class="table">
+      <thead>
+        <tr><th></th><th>Listing</th><th class="hide-sm">Rent</th><th class="hide-sm">Rooms</th><th>Status</th><th class="hide-sm">Updated</th><th class="text-right">Actions</th></tr>
+      </thead>
+      <tbody>
+        {% for apartment in page_obj %}
+          {% with cover=apartment.cover_image %}
+          <tr>
+            <td style="width:80px">{% if cover %}<img class="thumb" src="{{ cover.image.url }}" alt="">{% else %}<div class="thumb img-placeholder">{% icon "image" 18 %}</div>{% endif %}</td>
+            <td>
+              <a class="row-title" href="{% url 'admin_panel:apartment_edit' apartment.pk %}">{{ apartment.title|truncatechars:52 }}</a>
+              <span class="row-sub">{{ apartment.location_display }} · {{ apartment.property_type }}{% if apartment.is_featured %} · ★ Featured{% endif %}</span>
+            </td>
+            <td class="hide-sm"><strong>{{ apartment.rent|money }}</strong></td>
+            <td class="hide-sm row-sub">{{ apartment.bedrooms_display }} · {{ apartment.bathrooms }} ba</td>
+            <td>{% include "admin_panel/partials/status_badge.html" %}</td>
+            <td class="hide-sm row-sub">{{ apartment.updated_at|date:"M j, Y" }}</td>
+            <td>
+              <div class="actions">
+                <form method="post" action="{% url 'admin_panel:apartment_status' apartment.pk %}">
+                  {% csrf_token %}
+                  <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                  {% if apartment.status == "published" %}
+                    <button class="btn btn-outline btn-sm" name="status" value="draft" title="Unpublish">{% icon "eye-off" 14 %}<span class="hide-mobile">Unpublish</span></button>
+                  {% else %}
+                    <button class="btn btn-primary btn-sm" name="status" value="published" title="Publish">{% icon "eye" 14 %}<span class="hide-mobile">Publish</span></button>
+                  {% endif %}
+                </form>
+                <a class="btn btn-ghost btn-sm btn-icon" href="{{ apartment.get_absolute_url }}" title="View" target="_blank" rel="noopener">{% icon "arrow-right" 16 %}</a>
+                <a class="btn btn-ghost btn-sm btn-icon" href="{% url 'admin_panel:apartment_images' apartment.pk %}" title="Images">{% icon "image" 16 %}</a>
+                <a class="btn btn-ghost btn-sm btn-icon" href="{% url 'admin_panel:apartment_edit' apartment.pk %}" title="Edit">{% icon "edit" 16 %}</a>
+                <a class="btn btn-danger-soft btn-sm btn-icon" href="{% url 'admin_panel:apartment_delete' apartment.pk %}" title="Delete">{% icon "trash" 16 %}</a>
+              </div>
+            </td>
+          </tr>
+          {% endwith %}
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+    <div class="panel-body">
+      {% url 'admin_panel:apartment_create' as create_url %}
+      {% include "partials/empty_state.html" with empty_icon="building" title="No apartments found" text="Try a different search or add a new listing." action_url=create_url action_label="Add apartment" %}
+    </div>
+  {% endif %}
+</div>
+{% include "partials/pagination.html" %}
+{% endblock %}

@@ -1,0 +1,91 @@
+{% extends "admin_panel/base_admin.html" %}
+
+{% block title %}Admin dashboard{% endblock %}
+
+{% block dash_content %}
+<div class="dash-head">
+  <div>
+    <h1>Admin dashboard</h1>
+    <p>Overview of listings, users and platform activity.</p>
+  </div>
+  <a class="btn btn-primary" href="{% url 'admin_panel:apartment_create' %}">{% icon "plus" 18 %} Add apartment</a>
+</div>
+
+<div class="stat-grid">
+  <a class="stat" href="{% url 'admin_panel:apartments' %}"><div class="stat-icon">{% icon "building" 22 %}</div><div><strong>{{ stats.total }}</strong><span>Total apartments</span></div></a>
+  <a class="stat" href="{% url 'admin_panel:apartments' %}?status=published"><div class="stat-icon info">{% icon "eye" 22 %}</div><div><strong>{{ stats.published }}</strong><span>Active listings</span></div></a>
+  <a class="stat" href="{% url 'admin_panel:apartments' %}?status=draft"><div class="stat-icon warning">{% icon "eye-off" 22 %}</div><div><strong>{{ stats.inactive }}</strong><span>Inactive listings</span></div></a>
+  <a class="stat" href="{% url 'admin_panel:users' %}"><div class="stat-icon accent">{% icon "users" 22 %}</div><div><strong>{{ stats.users }}</strong><span>Registered users</span></div></a>
+</div>
+
+{% if pending_requests %}
+<div class="panel mb-3" style="border-color:var(--info);box-shadow:0 0 0 3px var(--info-bg)">
+  <div class="panel-head">
+    <h2>{% icon "mail" 18 %} {{ stats.pending }} listing request{{ stats.pending|pluralize }} waiting for review</h2>
+    <a class="btn btn-primary btn-sm" href="{% url 'admin_panel:requests' %}">Review requests</a>
+  </div>
+  <ul class="list-simple">
+    {% for apartment in pending_requests %}
+      {% with cover=apartment.cover_image %}
+      <li>
+        {% if cover %}<img class="thumb" style="width:56px;height:42px;border-radius:8px;object-fit:cover" src="{{ cover.image.url }}" alt="">{% endif %}
+        <div class="grow"><a href="{% url 'admin_panel:request_review' apartment.pk %}"><strong>{{ apartment.title }}</strong></a><div class="meta">{{ apartment.location_display }} · {{ apartment.rent|money }}/mo · by {{ apartment.owner.email }}</div></div>
+        <span class="meta hide-mobile">{{ apartment.created_at|timesince }} ago</span>
+      </li>
+      {% endwith %}
+    {% endfor %}
+  </ul>
+</div>
+{% endif %}
+
+<div class="two-col">
+  <div class="panel">
+    <div class="panel-head"><h2>Recently added apartments</h2><a class="text-sm" href="{% url 'admin_panel:apartments' %}">Manage all</a></div>
+    {% if recent_apartments %}
+    <div class="table-wrap">
+      <table class="table">
+        <tbody>
+          {% for apartment in recent_apartments %}
+            {% with cover=apartment.cover_image %}
+            <tr>
+              <td style="width:80px">{% if cover %}<img class="thumb" src="{{ cover.image.url }}" alt="">{% else %}<div class="thumb img-placeholder">{% icon "image" 18 %}</div>{% endif %}</td>
+              <td><a class="row-title" href="{% url 'admin_panel:apartment_edit' apartment.pk %}">{{ apartment.title|truncatechars:48 }}</a><span class="row-sub">{{ apartment.location_display }} · {{ apartment.rent|money }}/mo</span></td>
+              <td class="hide-sm">{% include "admin_panel/partials/status_badge.html" %}</td>
+              <td class="row-sub hide-sm">{{ apartment.created_at|timesince }} ago</td>
+            </tr>
+            {% endwith %}
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+      <div class="panel-body"><p class="text-muted mb-0">No apartments yet. <a href="{% url 'admin_panel:apartment_create' %}">Add the first one</a>.</p></div>
+    {% endif %}
+  </div>
+
+  <div>
+    <div class="panel">
+      <div class="panel-head"><h2>At a glance</h2></div>
+      <ul class="list-simple">
+        <li>{% icon "mail" 18 %}<div class="grow"><a href="{% url 'admin_panel:requests' %}">Pending requests</a></div><strong>{{ stats.pending }}</strong></li>
+        <li>{% icon "x" 18 %}<div class="grow">Rejected</div><strong>{{ stats.rejected }}</strong></li>
+        <li>{% icon "eye-off" 18 %}<div class="grow">Unpublished</div><strong>{{ stats.unpublished }}</strong></li>
+        <li>{% icon "layers" 18 %}<div class="grow">Archived</div><strong>{{ stats.archived }}</strong></li>
+        <li>{% icon "image" 18 %}<div class="grow">Images stored</div><strong>{{ stats.images }}</strong></li>
+        <li>{% icon "shield" 18 %}<div class="grow">Administrators</div><strong>{{ stats.admins }}</strong></li>
+        <li>{% icon "message" 18 %}<div class="grow"><a href="{% url 'admin_panel:messages' %}">Unread messages</a></div><strong>{{ stats.unread_messages }}</strong></li>
+      </ul>
+    </div>
+    <div class="panel">
+      <div class="panel-head"><h2>New users</h2><a class="text-sm" href="{% url 'admin_panel:users' %}">All users</a></div>
+      <ul class="list-simple">
+        {% for member in recent_users %}
+          <li>{% include "partials/avatar.html" with person=member %}<div class="grow"><div class="truncate"><strong>{{ member.display_name }}</strong></div><div class="meta truncate">{{ member.email }}</div></div><span class="meta">{{ member.created_at|date:"M j" }}</span></li>
+        {% empty %}
+          <li class="text-muted">No users yet.</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,81 @@
+{% extends "admin_panel/base_admin.html" %}
+
+{% block title %}{% if is_create %}Add apartment{% else %}Edit {{ apartment.title }}{% endif %}{% endblock %}
+
+{% block dash_content %}
+<div class="dash-head">
+  <div>
+    <nav class="breadcrumbs"><a href="{% url 'admin_panel:apartments' %}">Apartments</a> {% icon "chevron-right" 14 %} <span>{% if is_create %}New{% else %}Edit{% endif %}</span></nav>
+    <h1>{% if is_create %}Add apartment{% else %}Edit apartment{% endif %}</h1>
+    <p>{% if is_create %}Fill in the listing details. You can add photos on the next step.{% else %}{{ apartment.title }}{% endif %}</p>
+  </div>
+  {% if not is_create %}
+    <div class="btn-row">
+      <a class="btn btn-outline" href="{{ apartment.get_absolute_url }}" target="_blank" rel="noopener">{% icon "eye" 16 %} View</a>
+      <a class="btn btn-outline" href="{% url 'admin_panel:apartment_images' apartment.pk %}">{% icon "image" 16 %} Images ({{ apartment.images.count }})</a>
+    </div>
+  {% endif %}
+</div>
+
+<form method="post" class="form-card" novalidate>
+  {% csrf_token %}
+  {% include "partials/form_errors.html" %}
+
+  <div class="form-section">
+    <h3>Basics</h3>
+    <p>What renters see first.</p>
+    <div class="form-grid">
+      {% include "partials/field.html" with field=form.title span=True %}
+      {% include "partials/field.html" with field=form.property_type %}
+      {% include "partials/field.html" with field=form.status %}
+      {% include "partials/field.html" with field=form.description span=True %}
+      {% include "partials/field.html" with field=form.is_featured span=True %}
+    </div>
+  </div>
+
+  <div class="form-section">
+    <h3>Location</h3>
+    <p>Latitude/longitude are optional and reserved for the upcoming map view.</p>
+    <div class="form-grid">
+      {% include "partials/field.html" with field=form.address span=True %}
+      {% include "partials/field.html" with field=form.city %}
+      {% include "partials/field.html" with field=form.area %}
+      {% include "partials/field.html" with field=form.postal_code %}
+      <div></div>
+      {% include "partials/field.html" with field=form.latitude %}
+      {% include "partials/field.html" with field=form.longitude %}
+    </div>
+  </div>
+
+  <div class="form-section">
+    <h3>Price &amp; specs</h3>
+    <p>Rent is per month. Use 0 bedrooms for a studio.</p>
+    <div class="form-grid">
+      {% include "partials/field.html" with field=form.rent %}
+      {% include "partials/field.html" with field=form.size_sqft %}
+      {% include "partials/field.html" with field=form.bedrooms %}
+      {% include "partials/field.html" with field=form.bathrooms %}
+      {% include "partials/field.html" with field=form.furnishing %}
+      {% include "partials/field.html" with field=form.availability %}
+      {% include "partials/field.html" with field=form.available_from %}
+      {% include "partials/field.html" with field=form.amenities span=True %}
+    </div>
+  </div>
+
+  <div class="form-section">
+    <h3>Contact</h3>
+    <p>Shown on the listing page. Provide at least a phone number or email.</p>
+    <div class="form-grid">
+      {% include "partials/field.html" with field=form.contact_name %}
+      {% include "partials/field.html" with field=form.owner %}
+      {% include "partials/field.html" with field=form.contact_phone %}
+      {% include "partials/field.html" with field=form.contact_email %}
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <a class="btn btn-ghost" href="{% url 'admin_panel:apartments' %}">Cancel</a>
+    <button class="btn btn-primary" type="submit">{% icon "check" 18 %} {% if is_create %}Create &amp; add photos{% else %}Save changes{% endif %}</button>
+  </div>
+</form>
+{% endblock %}

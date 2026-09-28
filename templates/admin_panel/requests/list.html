@@ -1,0 +1,55 @@
+{% extends "admin_panel/base_admin.html" %}
+
+{% block title %}Listing requests{% endblock %}
+
+{% block dash_content %}
+<div class="dash-head">
+  <div>
+    <h1>Listing requests</h1>
+    <p>Homes submitted by users. Review each one, then approve it to publish or reject it with a note to the owner.</p>
+  </div>
+</div>
+
+<div class="panel">
+  <div class="panel-head"><h2>Waiting for review ({{ page_obj.paginator.count }})</h2></div>
+  {% if page_obj.object_list %}
+  <div class="table-wrap">
+    <table class="table">
+      <thead><tr><th></th><th>Listing</th><th class="hide-sm">Owner</th><th class="hide-sm">Rent</th><th class="hide-sm">Submitted</th><th></th></tr></thead>
+      <tbody>
+        {% for apartment in page_obj %}
+          {% with cover=apartment.cover_image %}
+          <tr>
+            <td style="width:80px">{% if cover %}<img class="thumb" src="{{ cover.image.url }}" alt="">{% else %}<div class="thumb img-placeholder">{% icon "image" 18 %}</div>{% endif %}</td>
+            <td><a class="row-title" href="{% url 'admin_panel:request_review' apartment.pk %}">{{ apartment.title|truncatechars:52 }}</a><span class="row-sub">{{ apartment.location_display }} · {{ apartment.property_type }} · {{ apartment.images.all|length }} photo{{ apartment.images.all|length|pluralize }}</span></td>
+            <td class="hide-sm"><span class="row-title">{{ apartment.owner.display_name|default:"—" }}</span><span class="row-sub">{{ apartment.owner.email }}</span></td>
+            <td class="hide-sm"><strong>{{ apartment.rent|money }}</strong></td>
+            <td class="hide-sm row-sub">{{ apartment.created_at|timesince }} ago</td>
+            <td class="text-right"><a class="btn btn-primary btn-sm" href="{% url 'admin_panel:request_review' apartment.pk %}">Review</a></td>
+          </tr>
+          {% endwith %}
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+    <div class="panel-body">{% include "partials/empty_state.html" with empty_icon="check" title="All caught up" text="There are no listing requests waiting for review." %}</div>
+  {% endif %}
+</div>
+{% include "partials/pagination.html" %}
+
+{% if recently_reviewed %}
+<div class="panel mt-3">
+  <div class="panel-head"><h2>Recently reviewed</h2></div>
+  <ul class="list-simple">
+    {% for apartment in recently_reviewed %}
+      <li>
+        {% include "admin_panel/partials/status_badge.html" %}
+        <div class="grow"><a href="{% url 'admin_panel:request_review' apartment.pk %}" class="truncate" style="display:block">{{ apartment.title }}</a><div class="meta">by {{ apartment.owner.email|default:"deleted user" }}</div></div>
+        <span class="meta">{{ apartment.reviewed_by.display_name|default:"—" }} · {{ apartment.reviewed_at|date:"M j" }}</span>
+      </li>
+    {% endfor %}
+  </ul>
+</div>
+{% endif %}
+{% endblock %}

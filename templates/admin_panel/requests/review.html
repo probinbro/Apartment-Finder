@@ -1,0 +1,81 @@
+{% extends "admin_panel/base_admin.html" %}
+
+{% block title %}Review · {{ apartment.title }}{% endblock %}
+
+{% block dash_content %}
+<div class="dash-head">
+  <div>
+    <nav class="breadcrumbs"><a href="{% url 'admin_panel:requests' %}">Listing requests</a> {% icon "chevron-right" 14 %} <span>Review</span></nav>
+    <h1>{{ apartment.title }}</h1>
+    <p>{% include "admin_panel/partials/status_badge.html" %} &nbsp;Submitted {{ apartment.created_at|date:"M j, Y H:i" }} by {{ apartment.owner.email|default:"a deleted user" }}</p>
+  </div>
+  <div class="btn-row">
+    <a class="btn btn-outline" href="{{ apartment.get_absolute_url }}" target="_blank" rel="noopener">{% icon "eye" 16 %} Preview page</a>
+    <a class="btn btn-outline" href="{% url 'admin_panel:apartment_edit' apartment.pk %}">{% icon "edit" 16 %} Edit</a>
+  </div>
+</div>
+
+<div class="two-col">
+  <div>
+    <div class="panel">
+      <div class="panel-head"><h2>Photos ({{ apartment.images.all|length }})</h2><a class="text-sm" href="{% url 'admin_panel:apartment_images' apartment.pk %}">Manage photos</a></div>
+      <div class="panel-body">
+        {% if apartment.images.all %}
+          <div class="review-photos">{% for image in apartment.images.all %}<a href="{{ image.image.url }}" target="_blank" rel="noopener"><img src="{{ image.image.url }}" alt="{{ image.caption }}"></a>{% endfor %}</div>
+        {% else %}
+          <p class="text-muted mb-0">{% icon "alert" 16 %} No photos were uploaded.</p>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head"><h2>Details</h2></div>
+      <div class="panel-body">
+        <dl class="info-list">
+          <div><dt>Rent</dt><dd>{{ apartment.rent|money }}/month</dd></div>
+          <div><dt>Type</dt><dd>{{ apartment.property_type }}</dd></div>
+          <div><dt>Bedrooms</dt><dd>{{ apartment.bedrooms_display }}</dd></div>
+          <div><dt>Bathrooms</dt><dd>{{ apartment.bathrooms }}</dd></div>
+          <div><dt>Size</dt><dd>{% if apartment.size_sqft %}{{ apartment.size_sqft }} ft²{% else %}—{% endif %}</dd></div>
+          <div><dt>Furnishing</dt><dd>{{ apartment.get_furnishing_display }}</dd></div>
+          <div><dt>Address</dt><dd>{{ apartment.address }}</dd></div>
+          <div><dt>Area / city</dt><dd>{{ apartment.location_display }}</dd></div>
+          <div><dt>Availability</dt><dd>{{ apartment.get_availability_display }}</dd></div>
+          <div><dt>Available from</dt><dd>{{ apartment.available_from|date:"M j, Y"|default:"Now" }}</dd></div>
+        </dl>
+        <h3 class="mt-3">Description</h3>
+        <div class="description">{{ apartment.description }}</div>
+        <h3 class="mt-3">Amenities</h3>
+        <div class="chip-group">{% for amenity in apartment.amenities.all %}<span class="badge badge-brand">{{ amenity.name }}</span>{% empty %}<span class="text-muted">None listed</span>{% endfor %}</div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="panel">
+      <div class="panel-head"><h2>Decision</h2></div>
+      <form method="post" class="panel-body" novalidate>
+        {% csrf_token %}
+        {% if apartment.status != "pending" %}
+          <div class="alert alert-info alert-inline">{% icon "info" 16 %}<span>This listing was already {{ apartment.get_status_display|lower }}{% if apartment.reviewed_by %} by {{ apartment.reviewed_by.display_name }}{% endif %}. You can still change the decision.</span></div>
+        {% endif %}
+        {% include "partials/field.html" with field=form.note %}
+        <div class="btn-row mt-2">
+          <button class="btn btn-primary" name="action" value="approve" type="submit">{% icon "check" 16 %} Approve &amp; publish</button>
+          <button class="btn btn-danger-soft" name="action" value="reject" type="submit">{% icon "x" 16 %} Reject</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head"><h2>Owner &amp; contact</h2></div>
+      <ul class="list-simple">
+        {% if apartment.owner %}<li>{% include "partials/avatar.html" with person=apartment.owner %}<div class="grow"><strong>{{ apartment.owner.display_name }}</strong><div class="meta">{{ apartment.owner.email }}</div></div><a class="text-sm" href="{% url 'admin_panel:user_edit' apartment.owner.pk %}">Profile</a></li>{% endif %}
+        <li><div class="grow text-muted">Contact name</div>{{ apartment.contact_name }}</li>
+        <li><div class="grow text-muted">Phone</div>{{ apartment.contact_phone|default:"—" }}</li>
+        <li><div class="grow text-muted">Email</div><span class="truncate" style="max-width:180px">{{ apartment.contact_email|default:"—" }}</span></li>
+      </ul>
+    </div>
+  </div>
+</div>
+{% endblock %}

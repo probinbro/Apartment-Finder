@@ -1,0 +1,60 @@
+{% extends "users/account_base.html" %}
+
+{% block title %}My dashboard{% endblock %}
+
+{% block dash_content %}
+<div class="dash-head">
+  <div>
+    <h1>Hi, {{ user.display_name }} 👋</h1>
+    <p>Here's what's happening on {{ SITE_NAME }} today.</p>
+  </div>
+  <a class="btn btn-primary" href="{% url 'apartments:list' %}">{% icon "search" 18 %} Find apartments</a>
+</div>
+
+<div class="stat-grid">
+  <div class="stat"><div class="stat-icon">{% icon "building" 22 %}</div><div><strong>{{ published_count }}</strong><span>Apartments available</span></div></div>
+  <div class="stat"><div class="stat-icon accent">{% icon "heart" 22 %}</div><div><strong>0</strong><span>Saved apartments</span></div></div>
+  <div class="stat"><div class="stat-icon info">{% icon "calendar" 22 %}</div><div><strong>{{ user.created_at|date:"M Y" }}</strong><span>Member since</span></div></div>
+  <div class="stat"><div class="stat-icon warning">{% icon "user" 22 %}</div><div><strong>{% if user.full_name and user.phone %}100%{% elif user.full_name or user.phone %}60%{% else %}30%{% endif %}</strong><span>Profile complete</span></div></div>
+</div>
+
+<div class="two-col">
+  <div class="panel">
+    <div class="panel-head"><h2>Newest listings</h2><a href="{% url 'apartments:list' %}" class="text-sm">View all</a></div>
+    <div class="panel-body">
+      {% if recent_apartments %}
+        <div class="grid grid-3" style="grid-template-columns:repeat(auto-fill,minmax(220px,1fr))">
+          {% for apartment in recent_apartments %}{% include "partials/apartment_card.html" %}{% endfor %}
+        </div>
+      {% else %}
+        <p class="text-muted mb-0">No listings yet — check back soon.</p>
+      {% endif %}
+    </div>
+  </div>
+  <div>
+    <div class="panel">
+      <div class="panel-head"><h2>Your profile</h2></div>
+      <div class="panel-body">
+        <div class="profile-head">
+          {% include "partials/avatar.html" with person=user large=True %}
+          <div>
+            <strong>{{ user.full_name|default:"Add your name" }}</strong>
+            <div class="text-sm text-muted">{{ user.email }}</div>
+            <div class="text-sm text-muted">{{ user.phone|default:"No phone added" }}</div>
+          </div>
+        </div>
+        <a class="btn btn-outline btn-sm mt-2" href="{% url 'users:profile' %}">{% icon "edit" 14 %} Edit profile</a>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-head"><h2>Coming soon</h2></div>
+      <ul class="list-simple">
+        <li>{% icon "heart" 18 %}<div class="grow">Save favorite apartments</div></li>
+        <li>{% icon "message" 18 %}<div class="grow">Message owners directly</div></li>
+        <li>{% icon "star" 18 %}<div class="grow">Reviews &amp; ratings</div></li>
+        <li>{% icon "sparkles" 18 %}<div class="grow">Personalized recommendations</div></li>
+      </ul>
+    </div>
+  </div>
+</div>
+{% endblock %}

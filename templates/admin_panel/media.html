@@ -1,0 +1,48 @@
+{% extends "admin_panel/base_admin.html" %}
+
+{% block title %}Media library{% endblock %}
+
+{% block dash_content %}
+<div class="dash-head">
+  <div>
+    <h1>Media library</h1>
+    <p>All uploaded apartment images · {{ totals.count }} file{{ totals.count|pluralize }} · {{ totals.bytes|default:0|filesizeformat }} total</p>
+  </div>
+</div>
+
+<div class="panel">
+  {% if page_obj.object_list %}
+  <div class="table-wrap">
+    <table class="table">
+      <thead><tr><th>Preview</th><th>Apartment</th><th class="hide-sm">Details</th><th class="hide-sm">Uploaded</th><th class="text-right">Actions</th></tr></thead>
+      <tbody>
+        {% for image in page_obj %}
+        <tr>
+          <td style="width:80px"><a href="{{ image.image.url }}" target="_blank" rel="noopener"><img class="thumb" src="{{ image.image.url }}" alt="{{ image.caption }}" loading="lazy"></a></td>
+          <td>
+            <a class="row-title" href="{% url 'admin_panel:apartment_images' image.apartment_id %}">{{ image.apartment.title|truncatechars:44 }}</a>
+            <span class="row-sub">{% if image.is_primary %}★ Primary · {% endif %}{{ image.caption|default:"No caption" }}</span>
+          </td>
+          <td class="hide-sm row-sub">{{ image.width }}×{{ image.height }}<br>{{ image.file_size|filesizeformat }}</td>
+          <td class="hide-sm row-sub">{{ image.created_at|date:"M j, Y" }}<br>{{ image.uploaded_by.email|default:"—" }}</td>
+          <td>
+            <div class="actions">
+              <a class="btn btn-ghost btn-sm btn-icon" href="{% url 'admin_panel:apartment_images' image.apartment_id %}" title="Manage">{% icon "edit" 16 %}</a>
+              <form method="post" action="{% url 'admin_panel:image_delete' image.pk %}">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                <button class="btn btn-danger-soft btn-sm btn-icon" type="submit" title="Delete" data-confirm="Delete this image permanently?">{% icon "trash" 16 %}</button>
+              </form>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+    <div class="panel-body">{% include "partials/empty_state.html" with empty_icon="image" title="No media yet" text="Images uploaded to apartments will appear here." %}</div>
+  {% endif %}
+</div>
+{% include "partials/pagination.html" %}
+{% endblock %}

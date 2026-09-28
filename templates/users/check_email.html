@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Confirm your email{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="status-card">
+    <div class="empty-icon">{% icon "mail" 28 %}</div>
+    <h1 style="font-size:1.6rem">Check your inbox</h1>
+    <p class="text-muted">If <strong>{{ email }}</strong> can be registered, we've sent a confirmation link to it. Click the link to activate your account and you'll be signed in automatically.</p>
+    <p class="text-sm text-muted">Didn't get it? Check your spam folder, or wait a minute and try registering again.</p>
+    <a class="btn btn-outline" href="{% url 'users:login' %}">Back to log in</a>
+  </div>
+</div>
+{% endblock %}

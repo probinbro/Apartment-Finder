@@ -1,0 +1,117 @@
+{% extends "users/account_base.html" %}
+
+{% block title %}{% if apartment %}Edit listing{% else %}List your home{% endif %}{% endblock %}
+
+{% block dash_content %}
+<div class="dash-head">
+  <div>
+    {% if apartment %}
+      <nav class="breadcrumbs"><a href="{% url 'apartments:my_listings' %}">My listings</a> {% icon "chevron-right" 14 %} <span>Edit</span></nav>
+      <h1>Edit your listing</h1>
+      <p>Saving your changes sends the listing back to our team for review.</p>
+    {% else %}
+      <h1>List your home for rent</h1>
+      <p>Tell renters about your place. Our team reviews every listing before it goes live, usually within a day or two.</p>
+    {% endif %}
+  </div>
+</div>
+
+{% if apartment.status == "rejected" and apartment.review_note %}
+  <div class="alert alert-error alert-inline">{% icon "alert" 18 %}<div><strong>Changes requested by our team</strong><br>{{ apartment.review_note|linebreaksbr }}</div></div>
+{% endif %}
+
+{% if limit_reached %}
+  {% url 'apartments:my_listings' as my_url %}
+  {% include "partials/empty_state.html" with empty_icon="info" title="You have several listings waiting for review" text="To keep things fair we review a few listings per owner at a time. You can submit more once your pending listings have been reviewed." action_url=my_url action_label="View my listings" %}
+{% else %}
+
+<div class="steps">
+  <div class="step"><span>1</span> Describe your home</div>
+  <div class="step"><span>2</span> Add photos</div>
+  <div class="step"><span>3</span> We review &amp; publish</div>
+</div>
+
+<form method="post" enctype="multipart/form-data" class="form-card" novalidate>
+  {% csrf_token %}
+  {% include "partials/form_errors.html" %}
+
+  <div class="form-section">
+    <h3>About the property</h3>
+    <p>A clear title and honest description help your listing get approved quickly.</p>
+    <div class="form-grid">
+      {% include "partials/field.html" with field=form.title span=True %}
+      {% include "partials/field.html" with field=form.property_type %}
+      {% include "partials/field.html" with field=form.furnishing %}
+      {% include "partials/field.html" with field=form.description span=True %}
+    </div>
+  </div>
+
+  <div class="form-section">
+    <h3>Location</h3>
+    <p>The full address is shown on the listing page once approved.</p>
+    <div class="form-grid">
+      {% include "partials/field.html" with field=form.address span=True %}
+      {% include "partials/field.html" with field=form.city %}
+      {% include "partials/field.html" with field=form.area %}
+      {% include "partials/field.html" with field=form.postal_code %}
+    </div>
+  </div>
+
+  <div class="form-section">
+    <h3>Rent &amp; details</h3>
+    <p>Monthly rent in {{ CURRENCY_SYMBOL }}. Use 0 bedrooms for a studio.</p>
+    <div class="form-grid">
+      {% include "partials/field.html" with field=form.rent %}
+      {% include "partials/field.html" with field=form.size_sqft %}
+      {% include "partials/field.html" with field=form.bedrooms %}
+      {% include "partials/field.html" with field=form.bathrooms %}
+      {% include "partials/field.html" with field=form.availability %}
+      {% include "partials/field.html" with field=form.available_from %}
+      {% include "partials/field.html" with field=form.amenities span=True %}
+    </div>
+  </div>
+
+  <div class="form-section">
+    <h3>Photos</h3>
+    <p>{% if apartment %}Add more photos or remove existing ones.{% else %}Add at least one photo — bright, landscape photos work best.{% endif %}</p>
+    {% if images %}
+      <div class="owner-photos">
+        {% for image in images %}
+          <figure>
+            <img src="{{ image.image.url }}" alt="">
+            {% if image.is_primary %}<span class="badge badge-accent">Cover</span>{% endif %}
+            <button class="btn btn-danger-soft btn-sm btn-icon" type="submit" form="delete-photo-{{ image.pk }}" title="Remove photo" data-confirm="Remove this photo?">{% icon "trash" 14 %}</button>
+          </figure>
+        {% endfor %}
+      </div>
+    {% endif %}
+    <div class="dropzone">
+      {% icon "upload" 32 %}
+      <p class="mb-0"><strong>Drag &amp; drop photos here</strong> or choose files</p>
+      <p class="hint">{{ form.photos.help_text }}</p>
+      {{ form.photos }}
+    </div>
+    {% for error in form.photos.errors %}<p class="error mt-2">{{ error }}</p>{% endfor %}
+  </div>
+
+  <div class="form-section">
+    <h3>Contact details</h3>
+    <p>How interested renters can reach you. At least a phone number or email is required.</p>
+    <div class="form-grid">
+      {% include "partials/field.html" with field=form.contact_name span=True %}
+      {% include "partials/field.html" with field=form.contact_phone %}
+      {% include "partials/field.html" with field=form.contact_email %}
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <a class="btn btn-ghost" href="{% url 'apartments:my_listings' %}">Cancel</a>
+    <button class="btn btn-primary btn-lg" type="submit">{% icon "check" 18 %} {% if apartment %}Save &amp; resubmit{% else %}Submit for review{% endif %}</button>
+  </div>
+</form>
+
+{% for image in images %}
+  <form id="delete-photo-{{ image.pk }}" method="post" action="{% url 'apartments:delete_listing_photo' apartment.pk image.pk %}" hidden>{% csrf_token %}</form>
+{% endfor %}
+{% endif %}
+{% endblock %}

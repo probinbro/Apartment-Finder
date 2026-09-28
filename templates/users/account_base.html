@@ -1,0 +1,16 @@
+{% extends "layouts/dashboard.html" %}
+
+{% block sidebar %}
+{% with url_name=request.resolver_match.url_name %}
+<div class="dash-nav-title">My account</div>
+<a href="{% url 'users:dashboard' %}" class="{% if url_name == 'dashboard' %}active{% endif %}">{% icon "dashboard" 18 %} Dashboard</a>
+<a href="{% url 'users:profile' %}" class="{% if url_name == 'profile' %}active{% endif %}">{% icon "user" 18 %} Profile</a>
+<a href="{% url 'users:saved' %}" class="{% if url_name == 'saved' %}active{% endif %}">{% icon "heart" 18 %} Saved apartments</a>
+<div class="dash-nav-title">My properties</div>
+<a href="{% url 'apartments:my_listings' %}" class="{% if url_name == 'my_listings' or url_name == 'edit_listing' %}active{% endif %}">{% icon "building" 18 %} My listings</a>
+<a href="{% url 'apartments:submit' %}" class="{% if url_name == 'submit' %}active{% endif %}">{% icon "plus" 18 %} List your home</a>
+<div class="dash-nav-title">Explore</div>
+<a href="{% url 'apartments:list' %}">{% icon "search" 18 %} Search apartments</a>
+{% if user.is_admin %}<a href="{% url 'admin_panel:dashboard' %}">{% icon "settings" 18 %} Admin panel</a>{% endif %}
+{% endwith %}
+{% endblock %}

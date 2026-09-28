@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="hero">
+  <div class="container">
+    <span class="eyebrow" style="color:#5eead4">Apartments for rent</span>
+    <h1>Find a place you'll <em>love</em> to live</h1>
+    <p class="hero-lead">Search verified apartment listings with real photos, clear prices and direct contact details — all in one place.</p>
+
+    <form class="search-panel" method="get" action="{% url 'apartments:list' %}" role="search">
+      <div class="sp-field">
+        <label for="hero-q">Location</label>
+        <input id="hero-q" type="text" name="q" placeholder="City, area or address" autocomplete="off">
+      </div>
+      <div class="sp-field">
+        <label for="hero-min">Min rent</label>
+        <input id="hero-min" type="number" name="min_rent" min="0" step="50" placeholder="No min">
+      </div>
+      <div class="sp-field">
+        <label for="hero-max">Max rent</label>
+        <input id="hero-max" type="number" name="max_rent" min="0" step="50" placeholder="No max">
+      </div>
+      <div class="sp-field">
+        <label for="{{ search_form.bedrooms.id_for_label }}">Bedrooms</label>
+        {{ search_form.bedrooms }}
+      </div>
+      <div class="sp-field">
+        <label for="{{ search_form.property_type.id_for_label }}">Type</label>
+        {{ search_form.property_type }}
+      </div>
+      <button class="btn btn-accent" type="submit">{% icon "search" 18 %} Search</button>
+    </form>
+
+    <div class="hero-stats">
+      <div><strong>{{ listing_count }}</strong><span>Active listings</span></div>
+      <div><strong>{{ locations|length }}</strong><span>Cities</span></div>
+      <div><strong>100%</strong><span>Free to browse</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Handpicked</span>
+        <h2>Featured apartments</h2>
+        <p>Popular homes our visitors are looking at right now.</p>
+      </div>
+      <a class="btn btn-outline" href="{% url 'apartments:list' %}">View all {% icon "arrow-right" 16 %}</a>
+    </div>
+    {% if featured %}
+      <div class="grid grid-3">
+        {% for apartment in featured %}{% include "partials/apartment_card.html" %}{% endfor %}
+      </div>
+    {% else %}
+      {% include "partials/empty_state.html" with empty_icon="building" title="No listings yet" text="New apartments are added regularly. Check back soon!" %}
+    {% endif %}
+  </div>
+</section>
+
+{% if locations %}
+<section class="section" style="background:var(--surface);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Explore</span>
+        <h2>Browse by location</h2>
+        <p>Jump straight to apartments in the city you want.</p>
+      </div>
+    </div>
+    <div class="grid grid-4">
+      {% for location in locations %}
+        <a class="location-card" href="{% url 'apartments:list' %}?city={{ location.city|urlencode }}">
+          <strong>{{ location.city }}</strong>
+          <span>{{ location.count }} apartment{{ location.count|pluralize }}</span>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Why choose us</span>
+        <h2>Apartment hunting, minus the hassle</h2>
+      </div>
+    </div>
+    <div class="grid grid-4">
+      <div class="feature">
+        <div class="feature-icon">{% icon "layers" 24 %}</div>
+        <h3>Centralized information</h3>
+        <p>Rent, size, amenities, photos and contacts for every listing — no more jumping between sites.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">{% icon "search" 24 %}</div>
+        <h3>Easy search</h3>
+        <p>Filter by location, budget, bedrooms, property type and more to find matches in seconds.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">{% icon "shield" 24 %}</div>
+        <h3>Organized listings</h3>
+        <p>Every apartment is reviewed and kept up to date by our team before it goes live.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">{% icon "sparkles" 24 %}</div>
+        <h3>Convenient browsing</h3>
+        <p>A fast, clean experience on any device — phone, tablet or desktop.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-sm">
+  <div class="container">
+    <div class="owner-cta">
+      <div class="feature-icon" style="margin:0">{% icon "key" 24 %}</div>
+      <div style="flex:1;min-width:240px">
+        <h3 style="margin-bottom:4px">Have a place to rent out?</h3>
+        <p class="text-muted mb-0">List your home for free. Our team reviews every submission, and once approved it goes live for renters to find.</p>
+      </div>
+      <a class="btn btn-primary" href="{% url 'apartments:submit' %}">{% icon "plus" 18 %} List your home</a>
+    </div>
+  </div>
+</section>
+
+<section class="section-sm" style="padding-bottom:80px">
+  <div class="container">
+    <div class="cta">
+      <div>
+        <h2>Ready to find your next home?</h2>
+        <p>Start searching now, or create a free account to access your personal dashboard and upcoming features like saved apartments.</p>
+      </div>
+      <div class="btn-row">
+        <a class="btn btn-accent btn-lg" href="{% url 'apartments:list' %}">{% icon "search" 18 %} Search apartments</a>
+        {% if not user.is_authenticated %}<a class="btn btn-outline btn-lg" href="{% url 'users:register' %}">Create account</a>{% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

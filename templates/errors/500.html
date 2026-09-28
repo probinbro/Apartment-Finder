@@ -1,0 +1,17 @@
+{% load static %}<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Something went wrong</title>
+  <link rel="stylesheet" href="{% static 'css/main.css' %}">
+</head>
+<body>
+  {# Deliberately standalone: no database queries or context processors. #}
+  <main class="container error-page">
+    <div class="error-code">500</div>
+    <h1 style="font-size:1.8rem">Something went wrong on our end</h1>
+    <p>We've logged the problem and will look into it. Please try again in a moment.</p>
+    <a class="btn btn-primary" href="/">Go home</a>
+  </main>
+</body>
+</html>

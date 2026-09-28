@@ -1,0 +1,52 @@
+{% extends "admin_panel/base_admin.html" %}
+
+{% block title %}Manage {{ managed_user.email }}{% endblock %}
+
+{% block dash_content %}
+<div class="dash-head">
+  <div>
+    <nav class="breadcrumbs"><a href="{% url 'admin_panel:users' %}">Users</a> {% icon "chevron-right" 14 %} <span>{{ managed_user.email }}</span></nav>
+    <h1>Manage user</h1>
+  </div>
+</div>
+
+<div class="two-col" style="grid-template-columns:1.4fr 1fr">
+  <form method="post" class="form-card" novalidate>
+    {% csrf_token %}
+    {% include "partials/form_errors.html" %}
+    {% if is_self %}
+      <div class="alert alert-info alert-inline">{% icon "info" 18 %}<span>You can't change your own role or disable your own account.</span></div>
+    {% endif %}
+    <div class="form-grid">
+      {% include "partials/field.html" with field=form.full_name %}
+      {% include "partials/field.html" with field=form.phone %}
+      {% include "partials/field.html" with field=form.role %}
+      <div class="field">
+        <span class="label">Access</span>
+        <label class="check">{{ form.is_active }} {{ form.is_active.label }}</label>
+        <span class="help">Disabled users are logged out and cannot sign in again.</span>
+      </div>
+    </div>
+    <div class="form-actions">
+      <a class="btn btn-ghost" href="{% url 'admin_panel:users' %}">Cancel</a>
+      <button class="btn btn-primary" type="submit">{% icon "check" 18 %} Save</button>
+    </div>
+  </form>
+
+  <div class="panel" style="align-self:start">
+    <div class="panel-head"><h2>Account</h2></div>
+    <div class="panel-body">
+      <div class="profile-head">
+        {% include "partials/avatar.html" with person=managed_user large=True %}
+        <div><strong>{{ managed_user.display_name }}</strong><div class="text-sm text-muted">{{ managed_user.email }}</div></div>
+      </div>
+    </div>
+    <ul class="list-simple">
+      <li><div class="grow text-muted">Joined</div>{{ managed_user.created_at|date:"M j, Y" }}</li>
+      <li><div class="grow text-muted">Last login</div>{{ managed_user.last_login|date:"M j, Y H:i"|default:"Never" }}</li>
+      <li><div class="grow text-muted">Listings owned</div>{{ managed_user.apartments.count }}</li>
+      <li><div class="grow text-muted">Linked to Supabase</div>{% if managed_user.auth_user_id %}Yes{% else %}Not yet{% endif %}</li>
+    </ul>
+  </div>
+</div>
+{% endblock %}

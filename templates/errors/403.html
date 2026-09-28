@@ -1,0 +1,5 @@
+{% extends "errors/error_base.html" %}
+{% block title %}Access denied{% endblock %}
+{% block code %}403{% endblock %}
+{% block heading %}{% if csrf_failure %}Your form session expired{% else %}You don't have access to this page{% endif %}{% endblock %}
+{% block message %}{% if csrf_failure %}For your security, the form could not be submitted. Please go back, refresh the page and try again.{% else %}This area is restricted. If you believe you should have access, contact an administrator.{% endif %}{% endblock %}

@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block title %}{% if is_search %}Search results{% else %}Apartments for rent{% endif %}{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div class="container">
+    <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="{% url 'core:home' %}">Home</a> {% icon "chevron-right" 14 %} <span>Apartments</span></nav>
+    <h1>{% if is_search %}Search results{% else %}Apartments for rent{% endif %}</h1>
+    <p>{% if form.cleaned_data.q %}Showing matches for “{{ form.cleaned_data.q }}”{% elif form.cleaned_data.city %}Apartments in {{ form.cleaned_data.city }}{% else %}Browse every available listing and narrow it down with filters.{% endif %}</p>
+  </div>
+</div>
+
+<div class="container section-sm">
+  <div class="listing-layout">
+    <aside class="filters" id="filters" aria-label="Search filters">
+      <form method="get" action="{% url 'apartments:list' %}">
+        <div class="filters-head">
+          <h3>{% icon "filter" 18 %} Filters</h3>
+          <button type="button" class="btn btn-ghost btn-icon show-mobile" data-filters-toggle aria-label="Close filters">{% icon "x" 20 %}</button>
+        </div>
+
+        <div class="field">
+          <label for="{{ form.q.id_for_label }}">Location or keyword</label>
+          <div class="input-icon">{% icon "search" 16 %}{{ form.q }}</div>
+        </div>
+        <div class="field">
+          <label for="{{ form.city.id_for_label }}">City</label>
+          <input type="text" name="city" id="{{ form.city.id_for_label }}" value="{{ form.city.value|default:'' }}" list="city-options" placeholder="Any city">
+          <datalist id="city-options">{% for city in cities %}<option value="{{ city }}">{% endfor %}</datalist>
+        </div>
+        <div class="field">
+          <span class="label">Monthly rent</span>
+          <div class="field-row">{{ form.min_rent }}{{ form.max_rent }}</div>
+          {% for error in form.max_rent.errors %}<p class="error">{{ error }}</p>{% endfor %}
+          {% for error in form.min_rent.errors %}<p class="error">{{ error }}</p>{% endfor %}
+        </div>
+        <div class="field-row" style="margin-top:14px">
+          <div class="field"><label for="{{ form.bedrooms.id_for_label }}">Bedrooms</label>{{ form.bedrooms }}</div>
+          <div class="field"><label for="{{ form.bathrooms.id_for_label }}">Bathrooms</label>{{ form.bathrooms }}</div>
+        </div>
+        <div class="field">
+          <label for="{{ form.property_type.id_for_label }}">Property type</label>
+          {{ form.property_type }}
+        </div>
+
+        <details {% if form.advanced_active %}open{% endif %}>
+          <summary>More filters {% icon "chevron-down" 16 %}</summary>
+          <div class="field"><label for="{{ form.area.id_for_label }}">Area / neighborhood</label>{{ form.area }}</div>
+          <div class="field"><label for="{{ form.availability.id_for_label }}">Availability</label>{{ form.availability }}</div>
+          <div class="field"><label for="{{ form.furnishing.id_for_label }}">Furnishing</label>{{ form.furnishing }}</div>
+          <div class="field"><label for="{{ form.min_size.id_for_label }}">Min size (sq ft)</label>{{ form.min_size }}</div>
+          <div class="field">
+            <span class="label">Amenities</span>
+            <div class="chip-group">{% for choice in form.amenities %}<label>{{ choice.tag }} {{ choice.choice_label }}</label>{% endfor %}</div>
+          </div>
+        </details>
+
+        <input type="hidden" name="sort" value="{{ form.sort.value|default:'' }}">
+        <div class="filters-actions">
+          <a class="btn btn-outline" href="{% url 'apartments:list' %}">Reset</a>
+          <button class="btn btn-primary" type="submit">Apply</button>
+        </div>
+      </form>
+    </aside>
+
+    <section aria-label="Results">
+      <div class="results-bar">
+        <div class="flex items-center gap-3">
+          <button type="button" class="btn btn-outline btn-sm filters-toggle" data-filters-toggle>
+            {% icon "filter" 16 %} Filters{% if form.active_filter_count %} ({{ form.active_filter_count }}){% endif %}
+          </button>
+          <p><strong>{{ page_obj.paginator.count }}</strong> apartment{{ page_obj.paginator.count|pluralize }} found</p>
+        </div>
+        <form method="get" class="flex items-center gap-2">
+          {% for key, values in request.GET.lists %}{% if key != "sort" and key != "page" %}{% for value in values %}<input type="hidden" name="{{ key }}" value="{{ value }}">{% endfor %}{% endif %}{% endfor %}
+          <label for="sort" class="text-sm text-muted hide-mobile">Sort by</label>
+          <select id="sort" name="sort" data-autosubmit>
+            {% for value, label in form.fields.sort.choices %}
+              <option value="{{ value }}" {% if form.sort.value == value %}selected{% endif %}>{{ label }}</option>
+            {% endfor %}
+          </select>
+          <noscript><button class="btn btn-outline btn-sm" type="submit">Sort</button></noscript>
+        </form>
+      </div>
+
+      {% if apartments %}
+        <div class="grid grid-3" style="grid-template-columns:repeat(auto-fill,minmax(260px,1fr))">
+          {% for apartment in apartments %}{% include "partials/apartment_card.html" %}{% endfor %}
+        </div>
+        {% include "partials/pagination.html" %}
+      {% else %}
+        {% url 'apartments:list' as list_url %}
+        {% if is_search %}
+          {% include "partials/empty_state.html" with title="No apartments match your search" text="Try widening your budget, removing a filter or searching a nearby area." action_url=list_url action_label="Clear all filters" %}
+        {% else %}
+          {% include "partials/empty_state.html" with empty_icon="building" title="No apartments listed yet" text="New listings are added regularly — please check back soon." %}
+        {% endif %}
+      {% endif %}
+    </section>
+  </div>
+</div>
+{% endblock %}

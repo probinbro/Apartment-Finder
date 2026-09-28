@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% comment %}Shared two-column layout for the user account area and the admin panel.{% endcomment %}
+
+{% block footer %}{% endblock %}
+
+{% block content %}
+<div class="dash">
+  <nav class="dash-nav" aria-label="Section">
+    {% block sidebar %}{% endblock %}
+  </nav>
+  <div class="dash-main">
+    {% block dash_content %}{% endblock %}
+  </div>
+</div>
+{% endblock %}

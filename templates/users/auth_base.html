@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block footer %}{% endblock %}
+
+{% block content %}
+<div class="auth-wrap">
+  <aside class="auth-aside">
+    <span class="eyebrow" style="color:#5eead4">{{ SITE_NAME }}</span>
+    <h2>{% block aside_title %}Your next home is waiting{% endblock %}</h2>
+    <p>Join thousands of renters who browse verified listings with real photos and transparent prices.</p>
+    <ul>
+      <li>{% icon "search" 18 %} Powerful search across every listing</li>
+      <li>{% icon "heart" 18 %} Save favorites (coming soon)</li>
+      <li>{% icon "lock" 18 %} Secure sign-in powered by Supabase</li>
+    </ul>
+  </aside>
+  <div class="auth-main">
+    <div class="auth-box">
+      {% block auth_content %}{% endblock %}
+    </div>
+  </div>
+</div>
+{% endblock %}

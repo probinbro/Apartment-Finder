@@ -1,0 +1,18 @@
+{% extends "layouts/dashboard.html" %}
+
+{% block sidebar %}
+{% with url_name=request.resolver_match.url_name %}
+<div class="dash-nav-title">Admin</div>
+<a href="{% url 'admin_panel:dashboard' %}" class="{% if url_name == 'dashboard' %}active{% endif %}">{% icon "dashboard" 18 %} Dashboard</a>
+<a href="{% url 'admin_panel:requests' %}" class="{% if 'request' in url_name %}active{% endif %}">{% icon "mail" 18 %} Listing requests{% if pending_request_count %}<span class="count">{{ pending_request_count }}</span>{% endif %}</a>
+<a href="{% url 'admin_panel:apartments' %}" class="{% if 'apartment' in url_name %}active{% endif %}">{% icon "building" 18 %} Apartments</a>
+<a href="{% url 'admin_panel:apartment_create' %}" class="{% if url_name == 'apartment_create' %}active{% endif %}">{% icon "plus" 18 %} Add apartment</a>
+<a href="{% url 'admin_panel:media' %}" class="{% if url_name == 'media' %}active{% endif %}">{% icon "image" 18 %} Media</a>
+<a href="{% url 'admin_panel:users' %}" class="{% if 'user' in url_name %}active{% endif %}">{% icon "users" 18 %} Users</a>
+<a href="{% url 'admin_panel:taxonomy' %}" class="{% if url_name == 'taxonomy' %}active{% endif %}">{% icon "tag" 18 %} Types &amp; amenities</a>
+<a href="{% url 'admin_panel:messages' %}" class="{% if url_name == 'messages' %}active{% endif %}">{% icon "message" 18 %} Messages</a>
+<div class="dash-nav-title">Site</div>
+<a href="{% url 'core:home' %}">{% icon "home" 18 %} View website</a>
+<a href="{% url 'users:dashboard' %}">{% icon "user" 18 %} My account</a>
+{% endwith %}
+{% endblock %}

@@ -1,0 +1,23 @@
+{% if page_obj.paginator.num_pages > 1 %}
+<nav class="pagination" aria-label="Pagination">
+  {% if page_obj.has_previous %}
+    <a href="{% querystring page=page_obj.previous_page_number %}" aria-label="Previous page">{% icon "chevron-left" 18 %}</a>
+  {% else %}
+    <span class="disabled">{% icon "chevron-left" 18 %}</span>
+  {% endif %}
+  {% for number in page_obj.paginator.get_elided_page_range %}
+    {% if number == page_obj.number %}
+      <span class="current" aria-current="page">{{ number }}</span>
+    {% elif number == page_obj.paginator.ELLIPSIS %}
+      <span class="disabled">…</span>
+    {% else %}
+      <a href="{% querystring page=number %}">{{ number }}</a>
+    {% endif %}
+  {% endfor %}
+  {% if page_obj.has_next %}
+    <a href="{% querystring page=page_obj.next_page_number %}" aria-label="Next page">{% icon "chevron-right" 18 %}</a>
+  {% else %}
+    <span class="disabled">{% icon "chevron-right" 18 %}</span>
+  {% endif %}
+</nav>
+{% endif %}

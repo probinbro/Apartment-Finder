@@ -1,0 +1,17 @@
+{% comment %}Renders one form field. Usage: {% include "partials/field.html" with field=form.title span=True %}{% endcomment %}
+{% with widget=field|field_type %}
+<div class="field{% if field.errors %} has-error{% endif %}{% if span %} span-2{% endif %}">
+  {% if widget == "CheckboxInput" %}
+    <label class="check">{{ field }} {{ field.label }}</label>
+  {% else %}
+    <label for="{{ field.id_for_label }}">{{ field.label }}{% if field.field.required %} <span class="required-mark">*</span>{% endif %}</label>
+    {% if widget == "CheckboxSelectMultiple" %}
+      <div class="chip-group">{% for choice in field %}<label>{{ choice.tag }} {{ choice.choice_label }}</label>{% endfor %}</div>
+    {% else %}
+      {{ field }}
+    {% endif %}
+  {% endif %}
+  {% if field.help_text %}<span class="help">{{ field.help_text }}</span>{% endif %}
+  {% for error in field.errors %}<p class="error">{{ error }}</p>{% endfor %}
+</div>
+{% endwith %}
